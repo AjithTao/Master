@@ -1,0 +1,66 @@
+{
+  "summary": {
+    "total_tests": 8,
+    "passed_tests": 3,
+    "failed_tests": 5,
+    "success_rate": 37.5
+  },
+  "results": [
+    {
+      "test_name": "Server Connectivity",
+      "status": "PASS",
+      "details": "Server responding (status: 200)",
+      "duration": 2.0952436923980713,
+      "timestamp": "2025-09-06T22:36:51.235464"
+    },
+    {
+      "test_name": "API Endpoints",
+      "status": "PASS",
+      "details": "All 4 endpoints responding",
+      "duration": 10.365744352340698,
+      "timestamp": "2025-09-06T22:37:01.603248"
+    },
+    {
+      "test_name": "Sprint Stories Query",
+      "status": "FAIL",
+      "details": "Failed checks: Conversational greeting, Contains 'stories', Contains ticket keys, Substantial response",
+      "duration": 2.061877727508545,
+      "timestamp": "2025-09-06T22:37:03.666948"
+    },
+    {
+      "test_name": "Assignee Query",
+      "status": "FAIL",
+      "details": "Failed checks: Conversational greeting, Contains assignee name, Contains 'work'",
+      "duration": 2.0482442378997803,
+      "timestamp": "2025-09-06T22:37:05.717078"
+    },
+    {
+      "test_name": "Data Consistency",
+      "status": "FAIL",
+      "details": "Responses are inconsistent",
+      "duration": 6.209165811538696,
+      "timestamp": "2025-09-06T22:37:11.928107"
+    },
+    {
+      "test_name": "Response Format",
+      "status": "FAIL",
+      "details": "Failed format checks: Conversational greeting, Structured data, Bullet points, Visual emojis, Multi-line response",
+      "duration": 2.0360660552978516,
+      "timestamp": "2025-09-06T22:37:13.965547"
+    },
+    {
+      "test_name": "Error Handling",
+      "status": "FAIL",
+      "details": "Poor error handling for empty input",
+      "duration": 2.066399097442627,
+      "timestamp": "2025-09-06T22:37:16.032783"
+    },
+    {
+      "test_name": "Performance",
+      "status": "PASS",
+      "details": "Response time: 2.07s",
+      "duration": 2.0651495456695557,
+      "timestamp": "2025-09-06T22:37:18.103595"
+    }
+  ]
+}

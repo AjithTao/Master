@@ -1,0 +1,54 @@
+[
+  {
+    "intent": "assignee_open_stories",
+    "questions": [
+      "open stories for ${ASSIGNEE}",
+      "stories assigned to ${ASSIGNEE} in ${PROJECT}",
+      "${ASSIGNEE} open stories in ${PROJECT}",
+      "give me ${ASSIGNEE} open stories in ${PROJECT}",
+      "list ${ASSIGNEE} open stories ${PROJECT}"
+    ],
+    "jql": "project = ${PROJECT} AND issuetype = Story AND statusCategory != Done AND assignee = \"${ASSIGNEE}\" ORDER BY updated DESC",
+    "response_type": "list"
+  },
+  {
+    "intent": "project_open_bugs",
+    "questions": [
+      "open bugs in ${PROJECT}",
+      "show defects for ${PROJECT}",
+      "how many bugs are pending in ${PROJECT}"
+    ],
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND statusCategory != Done ORDER BY priority DESC, updated DESC",
+    "response_type": "count"
+  },
+  {
+    "intent": "project_all_stories",
+    "questions": [
+      "list ${PROJECT} stories",
+      "show me list of ${PROJECT} stories",
+      "${PROJECT} stories"
+    ],
+    "jql": "project = ${PROJECT} AND issuetype = Story ORDER BY updated DESC",
+    "response_type": "list"
+  },
+  {
+    "intent": "blocked_issues",
+    "questions": [
+      "show me blocked issues",
+      "tasks on hold in ${PROJECT}"
+    ],
+    "jql": "project = ${PROJECT} AND status = Blocked ORDER BY updated DESC",
+    "response_type": "list"
+  },
+  {
+    "intent": "release_signoff",
+    "questions": [
+      "signoff status for release ${VERSION}",
+      "release ${VERSION} defects"
+    ],
+    "jql": "fixVersion = ${VERSION} AND statusCategory != Done ORDER BY priority DESC, updated DESC",
+    "response_type": "list"
+  }
+]
+
+

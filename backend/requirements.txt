@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+aiohttp
+pydantic
+python-dateutil
+# charts/exports you already use:
+reportlab
+python-pptx
+# fuzzy matching (faster than difflib)
+rapidfuzz

@@ -1,0 +1,1191 @@
+[
+  {
+    "intent": "open_sprint_items",
+    "jql": "sprint in openSprints() AND statusCategory != Done",
+    "expected_response": "Hey! There are {count} open items in the current sprint that still need attention. 📋",
+    "questions": [
+      "How many open sprint items?",
+      "Show me open issues in this sprint",
+      "Count of tasks not done in current sprint",
+      "What's pending in active sprint?",
+      "How many stories are open this sprint?"
+    ]
+  },
+  {
+    "intent": "bug_count",
+    "jql": "issuetype = Bug AND statusCategory != Done",
+    "expected_response": "Found {count} unresolved bugs that need fixing. 🐛",
+    "questions": [
+      "How many bugs are open?",
+      "Show me open defects",
+      "Count of unresolved bugs",
+      "Bugs pending now",
+      "List active bug count"
+    ]
+  },
+  {
+    "intent": "story_count",
+    "jql": "issuetype = Story",
+    "expected_response": "We have {count} stories tracked in Jira. 📚",
+    "questions": [
+      "How many stories are there?",
+      "Count of user stories",
+      "List all story tickets",
+      "Total stories",
+      "Show me story count"
+    ]
+  },
+  {
+    "intent": "in_progress",
+    "jql": "status = 'In Progress'",
+    "expected_response": "{count} items are currently in progress.",
+    "questions": [
+      "How many items are in progress?",
+      "Show tickets in progress",
+      "Work happening now",
+      "Current in progress count",
+      "Which issues are ongoing?"
+    ]
+  },
+  {
+    "intent": "done_last_sprint",
+    "jql": "sprint in closedSprints() AND statusCategory = Done ORDER BY updated DESC",
+    "expected_response": "{count} items were completed last sprint.",
+    "questions": [
+      "How many items done last sprint?",
+      "Completed stories last sprint",
+      "Show closed sprint done items",
+      "Finished tickets in last sprint",
+      "What was completed in previous sprint?"
+    ]
+  },
+  {
+    "intent": "assignee_sprint",
+    "jql": "issuetype = Story AND assignee ~ \"Ashwin Thyagarajan\" AND sprint in openSprints() ORDER BY updated DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "stories worked by ashwin in current sprint",
+      "ashwin stories this sprint",
+      "what is ashwin working on",
+      "ashwin current sprint work"
+    ]
+  },
+  {
+    "intent": "assignee_time",
+    "jql": "issuetype = Bug AND status in (Done, Closed) AND assignee ~ \"Priya Sharma\" AND updated >= startOfWeek() ORDER BY updated DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "bugs closed by priya this week",
+      "priya completed bugs",
+      "priya work this week",
+      "what did priya finish"
+    ]
+  },
+  {
+    "intent": "status_project",
+    "jql": "status in (\"In Progress\", \"In Review\") AND (summary ~ \"chart builder\" OR description ~ \"chart builder\") ORDER BY updated DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "tickets in progress for chart builder",
+      "chart builder work in progress",
+      "chart builder active tickets",
+      "chart builder current work"
+    ]
+  },
+  {
+    "intent": "status_blocked",
+    "jql": "status = Blocked OR status = Waiting ORDER BY updated DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "what's blocked right now",
+      "blocked tickets",
+      "waiting tickets",
+      "stuck issues"
+    ]
+  },
+  {
+    "intent": "status_oldest",
+    "jql": "status != Done AND status != Closed ORDER BY created ASC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "oldest open tickets on the board",
+      "longest open tickets",
+      "oldest unresolved issues",
+      "tickets open longest"
+    ]
+  },
+  {
+    "intent": "issue_type_epic",
+    "jql": "issuetype = Epic ORDER BY updated DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "how are our epics progressing",
+      "epic status",
+      "epic progress",
+      "epic tickets"
+    ]
+  },
+  {
+    "intent": "status_done_today",
+    "jql": "status in (Done, Closed) AND updated >= startOfDay() ORDER BY updated DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "what moved to done today",
+      "completed today",
+      "finished today",
+      "done today"
+    ]
+  },
+  {
+    "intent": "sprint_spillover",
+    "jql": "sprint in openSprints() AND created < startOfSprint() ORDER BY created ASC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "slipped from last sprint into this one",
+      "spillover tickets",
+      "carried over tickets",
+      "sprint spillover"
+    ]
+  },
+  {
+    "intent": "bug_sprint",
+    "jql": "issuetype = Bug AND sprint in openSprints() AND status != Done ORDER BY priority DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "how many bugs are open in this sprint",
+      "sprint bugs",
+      "bugs in current sprint",
+      "sprint defect count"
+    ]
+  },
+  {
+    "intent": "assignee_stories",
+    "jql": "issuetype = Story AND assignee ~ \"${ASSIGNEE}\" ORDER BY updated DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "stories assigned to ${ASSIGNEE}",
+      "${ASSIGNEE} stories",
+      "${ASSIGNEE} user stories",
+      "${ASSIGNEE} story tickets",
+      "stories for ${ASSIGNEE}",
+      "${ASSIGNEE} assigned stories",
+      "show me stories assigned to ${ASSIGNEE}",
+      "give me stories assigned to ${ASSIGNEE}",
+      "list stories assigned to ${ASSIGNEE}",
+      "what stories are assigned to ${ASSIGNEE}",
+      "which stories are assigned to ${ASSIGNEE}",
+      "tell me about stories assigned to ${ASSIGNEE}",
+      "show me what stories are assigned to ${ASSIGNEE}",
+      "give me what stories are assigned to ${ASSIGNEE}",
+      "list what stories are assigned to ${ASSIGNEE}",
+      "show me which stories are assigned to ${ASSIGNEE}",
+      "give me which stories are assigned to ${ASSIGNEE}",
+      "list which stories are assigned to ${ASSIGNEE}",
+      "what stories does ${ASSIGNEE} have",
+      "which stories does ${ASSIGNEE} have",
+      "show me what stories does ${ASSIGNEE} have",
+      "give me what stories does ${ASSIGNEE} have",
+      "list what stories does ${ASSIGNEE} have",
+      "show me which stories does ${ASSIGNEE} have",
+      "give me which stories does ${ASSIGNEE} have",
+      "list which stories does ${ASSIGNEE} have",
+      "what stories is ${ASSIGNEE} working on",
+      "which stories is ${ASSIGNEE} working on",
+      "show me what stories is ${ASSIGNEE} working on",
+      "give me what stories is ${ASSIGNEE} working on",
+      "list what stories is ${ASSIGNEE} working on",
+      "show me which stories is ${ASSIGNEE} working on",
+      "give me which stories is ${ASSIGNEE} working on",
+      "list which stories is ${ASSIGNEE} working on",
+      "what stories is ${ASSIGNEE} assigned to",
+      "which stories is ${ASSIGNEE} assigned to",
+      "show me what stories is ${ASSIGNEE} assigned to",
+      "give me what stories is ${ASSIGNEE} assigned to",
+      "list what stories is ${ASSIGNEE} assigned to",
+      "show me which stories is ${ASSIGNEE} assigned to",
+      "give me which stories is ${ASSIGNEE} assigned to",
+      "list which stories is ${ASSIGNEE} assigned to",
+      "what stories are ${ASSIGNEE} working on",
+      "which stories are ${ASSIGNEE} working on",
+      "show me what stories are ${ASSIGNEE} working on",
+      "give me what stories are ${ASSIGNEE} working on",
+      "list what stories are ${ASSIGNEE} working on",
+      "show me which stories are ${ASSIGNEE} working on",
+      "give me which stories are ${ASSIGNEE} working on",
+      "list which stories are ${ASSIGNEE} working on",
+      "what stories are ${ASSIGNEE} assigned to",
+      "which stories are ${ASSIGNEE} assigned to",
+      "show me what stories are ${ASSIGNEE} assigned to",
+      "give me what stories are ${ASSIGNEE} assigned to",
+      "list what stories are ${ASSIGNEE} assigned to",
+      "show me which stories are ${ASSIGNEE} assigned to",
+      "give me which stories are ${ASSIGNEE} assigned to",
+      "list which stories are ${ASSIGNEE} assigned to",
+      "what work is ${ASSIGNEE} doing",
+      "which work is ${ASSIGNEE} doing",
+      "show me what work is ${ASSIGNEE} doing",
+      "give me what work is ${ASSIGNEE} doing",
+      "list what work is ${ASSIGNEE} doing",
+      "show me which work is ${ASSIGNEE} doing",
+      "give me which work is ${ASSIGNEE} doing",
+      "list which work is ${ASSIGNEE} doing",
+      "what tasks is ${ASSIGNEE} working on",
+      "which tasks is ${ASSIGNEE} working on",
+      "show me what tasks is ${ASSIGNEE} working on",
+      "give me what tasks is ${ASSIGNEE} working on",
+      "list what tasks is ${ASSIGNEE} working on",
+      "show me which tasks is ${ASSIGNEE} working on",
+      "give me which tasks is ${ASSIGNEE} working on",
+      "list which tasks is ${ASSIGNEE} working on",
+      "what is ${ASSIGNEE} working on",
+      "which is ${ASSIGNEE} working on",
+      "show me what is ${ASSIGNEE} working on",
+      "give me what is ${ASSIGNEE} working on",
+      "list what is ${ASSIGNEE} working on",
+      "show me which is ${ASSIGNEE} working on",
+      "give me which is ${ASSIGNEE} working on",
+      "list which is ${ASSIGNEE} working on",
+      "what does ${ASSIGNEE} have",
+      "which does ${ASSIGNEE} have",
+      "show me what does ${ASSIGNEE} have",
+      "give me what does ${ASSIGNEE} have",
+      "list what does ${ASSIGNEE} have",
+      "show me which does ${ASSIGNEE} have",
+      "give me which does ${ASSIGNEE} have",
+      "list which does ${ASSIGNEE} have",
+      "what does ${ASSIGNEE} own",
+      "which does ${ASSIGNEE} own",
+      "show me what does ${ASSIGNEE} own",
+      "give me what does ${ASSIGNEE} own",
+      "list what does ${ASSIGNEE} own",
+      "show me which does ${ASSIGNEE} own",
+      "give me which does ${ASSIGNEE} own",
+      "list which does ${ASSIGNEE} own"
+    ]
+  },
+  {
+    "intent": "priority_high",
+    "jql": "priority = Highest ORDER BY updated DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "high priority tickets",
+      "highest priority",
+      "urgent tickets",
+      "critical tickets"
+    ]
+  },
+  {
+    "intent": "time_created_month",
+    "jql": "created >= startOfMonth() ORDER BY created DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "tickets created this month",
+      "new tickets this month",
+      "monthly tickets",
+      "created this month"
+    ]
+  },
+  {
+    "intent": "assignee_unassigned",
+    "jql": "assignee is EMPTY ORDER BY created ASC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "unassigned tickets",
+      "tickets without assignee",
+      "unassigned issues",
+      "no assignee tickets"
+    ]
+  },
+  {
+    "intent": "labels_present",
+    "jql": "labels is not EMPTY ORDER BY updated DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "tickets with labels",
+      "labeled tickets",
+      "tickets with tags",
+      "tagged issues"
+    ]
+  },
+  {
+    "intent": "project_general",
+    "jql": "project = ${PROJECT} ORDER BY updated DESC",
+    "expected_response": "Hey! I found {count} tickets in the ${PROJECT} project.",
+    "questions": [
+      "show me all ${PROJECT} project tickets",
+      "${PROJECT} project tickets",
+      "all ${PROJECT} tickets",
+      "${PROJECT} project issues",
+      "tickets in ${PROJECT} project",
+      "give me ${PROJECT} project details",
+      "${PROJECT} project details",
+      "${PROJECT} project breakdown",
+      "show me ${PROJECT} project details",
+      "${PROJECT} project summary",
+      "${PROJECT} project overview",
+      "what's in ${PROJECT} project",
+      "tell me about ${PROJECT} project",
+      "how many items in ${PROJECT}",
+      "what's the status of ${PROJECT} project",
+      "show me ${PROJECT} project status",
+      "give me details on ${PROJECT} project",
+      "what's happening in ${PROJECT}",
+      "show me what's in ${PROJECT}",
+      "give me breakdown of ${PROJECT}",
+      "what's the breakdown of ${PROJECT} project",
+      "show me breakdown of ${PROJECT}",
+      "tell me about ${PROJECT}",
+      "what's in ${PROJECT}",
+      "show me ${PROJECT}",
+      "give me ${PROJECT}",
+      "what's the status of ${PROJECT}",
+      "how is ${PROJECT} project doing",
+      "what's going on in ${PROJECT}",
+      "show me ${PROJECT} project info",
+      "give me ${PROJECT} project info",
+      "what's the info on ${PROJECT}",
+      "tell me about ${PROJECT} project status",
+      "what's the current status of ${PROJECT}",
+      "show me current status of ${PROJECT}",
+      "give me current status of ${PROJECT}",
+      "what's the current state of ${PROJECT}",
+      "show me current state of ${PROJECT}",
+      "give me current state of ${PROJECT}",
+      "what's the current situation in ${PROJECT}",
+      "show me current situation in ${PROJECT}",
+      "give me current situation in ${PROJECT}",
+      "what's the current situation with ${PROJECT}",
+      "show me current situation with ${PROJECT}",
+      "give me current situation with ${PROJECT}",
+      "what's the current situation of ${PROJECT}",
+      "show me current situation of ${PROJECT}",
+      "give me current situation of ${PROJECT}",
+      "what's the current situation for ${PROJECT}",
+      "show me current situation for ${PROJECT}",
+      "give me current situation for ${PROJECT}",
+      "what's the current situation at ${PROJECT}",
+      "show me current situation at ${PROJECT}",
+      "give me current situation at ${PROJECT}",
+      "what's the current situation in ${PROJECT} project",
+      "show me current situation in ${PROJECT} project",
+      "give me current situation in ${PROJECT} project",
+      "what's the current situation with ${PROJECT} project",
+      "show me current situation with ${PROJECT} project",
+      "give me current situation with ${PROJECT} project",
+      "what's the current situation of ${PROJECT} project",
+      "show me current situation of ${PROJECT} project",
+      "give me current situation of ${PROJECT} project",
+      "what's the current situation for ${PROJECT} project",
+      "show me current situation for ${PROJECT} project",
+      "give me current situation for ${PROJECT} project",
+      "what's the current situation at ${PROJECT} project",
+      "show me current situation at ${PROJECT} project",
+      "give me current situation at ${PROJECT} project"
+    ]
+  },
+  {
+    "intent": "time_updated_yesterday",
+    "jql": "updated >= startOfDay(-1) AND updated < startOfDay() ORDER BY updated DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "tickets updated yesterday",
+      "yesterday updates",
+      "updated yesterday",
+      "yesterday changes"
+    ]
+  },
+  {
+    "intent": "bug_created_week",
+    "jql": "issuetype = Bug AND created >= startOfWeek() ORDER BY created DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "defects reported this week",
+      "bugs this week",
+      "new bugs this week",
+      "weekly bugs"
+    ]
+  },
+  {
+    "intent": "due_date_week",
+    "jql": "duedate >= startOfWeek() AND duedate <= endOfWeek() ORDER BY duedate ASC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "tickets due this week",
+      "due this week",
+      "week deadlines",
+      "due dates this week"
+    ]
+  },
+  {
+    "intent": "story_completed_sprint",
+    "jql": "issuetype = Story AND status in (Done, Closed) AND sprint in closedSprints() ORDER BY resolved DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "stories completed last sprint",
+      "completed stories last sprint",
+      "finished stories last sprint",
+      "done stories last sprint"
+    ]
+  },
+  {
+    "intent": "story_points_high",
+    "jql": "storyPoints >= 8 ORDER BY storyPoints DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "tickets with high story points",
+      "high story points",
+      "large story points",
+      "big story points"
+    ]
+  },
+  {
+    "intent": "current_user_assigned",
+    "jql": "assignee = currentUser() ORDER BY updated DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "tickets assigned to me",
+      "my tickets",
+      "assigned to me",
+      "my assigned tickets"
+    ]
+  },
+  {
+    "intent": "current_user_reported",
+    "jql": "reporter = currentUser() ORDER BY created DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+      "questions": [
+      "tickets I reported",
+      "my reported tickets",
+      "tickets I created",
+      "my created tickets",
+      "issues I reported",
+      "issues I created",
+      "show me tickets I reported",
+      "give me tickets I reported",
+      "list tickets I reported",
+      "what tickets did I report",
+      "which tickets did I report",
+      "tell me about tickets I reported",
+      "show me what tickets did I report",
+      "give me what tickets did I report",
+      "list what tickets did I report",
+      "show me which tickets did I report",
+      "give me which tickets did I report",
+      "list which tickets did I report",
+      "what tickets have I reported",
+      "which tickets have I reported",
+      "show me what tickets have I reported",
+      "give me what tickets have I reported",
+      "list what tickets have I reported",
+      "show me which tickets have I reported",
+      "give me which tickets have I reported",
+      "list which tickets have I reported",
+      "what tickets are reported by me",
+      "which tickets are reported by me",
+      "show me what tickets are reported by me",
+      "give me what tickets are reported by me",
+      "list what tickets are reported by me",
+      "show me which tickets are reported by me",
+      "give me which tickets are reported by me",
+      "list which tickets are reported by me",
+      "what tickets are created by me",
+      "which tickets are created by me",
+      "show me what tickets are created by me",
+      "give me what tickets are created by me",
+      "list what tickets are created by me",
+      "show me which tickets are created by me",
+      "give me which tickets are created by me",
+      "list which tickets are created by me",
+      "what tickets did I create",
+      "which tickets did I create",
+      "show me what tickets did I create",
+      "give me what tickets did I create",
+      "list what tickets did I create",
+      "show me which tickets did I create",
+      "give me which tickets did I create",
+      "list which tickets did I create",
+      "what tickets have I created",
+      "which tickets have I created",
+      "show me what tickets have I created",
+      "give me what tickets have I created",
+      "list what tickets have I created",
+      "show me which tickets have I created",
+      "give me which tickets have I created",
+      "list which tickets have I created"
+    ]
+  },
+  {
+    "intent": "reporter_stories",
+    "jql": "issuetype = Story AND reporter ~ \"${REPORTER}\" ORDER BY created DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "stories reported by ${REPORTER}",
+      "${REPORTER} reported stories",
+      "stories created by ${REPORTER}",
+      "${REPORTER} created stories",
+      "stories from ${REPORTER}",
+      "${REPORTER} stories",
+      "show me stories reported by ${REPORTER}",
+      "give me stories reported by ${REPORTER}",
+      "list stories reported by ${REPORTER}",
+      "what stories are reported by ${REPORTER}",
+      "which stories are reported by ${REPORTER}",
+      "tell me about stories reported by ${REPORTER}",
+      "show me what stories are reported by ${REPORTER}",
+      "give me what stories are reported by ${REPORTER}",
+      "list what stories are reported by ${REPORTER}",
+      "show me which stories are reported by ${REPORTER}",
+      "give me which stories are reported by ${REPORTER}",
+      "list which stories are reported by ${REPORTER}",
+      "what stories does ${REPORTER} report",
+      "which stories does ${REPORTER} report",
+      "show me what stories does ${REPORTER} report",
+      "give me what stories does ${REPORTER} report",
+      "list what stories does ${REPORTER} report",
+      "show me which stories does ${REPORTER} report",
+      "give me which stories does ${REPORTER} report",
+      "list which stories does ${REPORTER} report",
+      "what stories does ${REPORTER} create",
+      "which stories does ${REPORTER} create",
+      "show me what stories does ${REPORTER} create",
+      "give me what stories does ${REPORTER} create",
+      "list what stories does ${REPORTER} create",
+      "show me which stories does ${REPORTER} create",
+      "give me which stories does ${REPORTER} create",
+      "list which stories does ${REPORTER} create",
+      "what stories are from ${REPORTER}",
+      "which stories are from ${REPORTER}",
+      "show me what stories are from ${REPORTER}",
+      "give me what stories are from ${REPORTER}",
+      "list what stories are from ${REPORTER}",
+      "show me which stories are from ${REPORTER}",
+      "give me which stories are from ${REPORTER}",
+      "list which stories are from ${REPORTER}",
+      "what stories belong to ${REPORTER}",
+      "which stories belong to ${REPORTER}",
+      "show me what stories belong to ${REPORTER}",
+      "give me what stories belong to ${REPORTER}",
+      "list what stories belong to ${REPORTER}",
+      "show me which stories belong to ${REPORTER}",
+      "give me which stories belong to ${REPORTER}",
+      "list which stories belong to ${REPORTER}",
+      "what stories are owned by ${REPORTER}",
+      "which stories are owned by ${REPORTER}",
+      "show me what stories are owned by ${REPORTER}",
+      "give me what stories are owned by ${REPORTER}",
+      "list what stories are owned by ${REPORTER}",
+      "show me which stories are owned by ${REPORTER}",
+      "give me which stories are owned by ${REPORTER}",
+      "list which stories are owned by ${REPORTER}"
+    ]
+  },
+  {
+    "intent": "current_user_watched",
+    "jql": "watcher = currentUser() ORDER BY updated DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "tickets watched by me",
+      "my watched tickets",
+      "tickets I'm watching",
+      "watched tickets"
+    ]
+  },
+  {
+    "intent": "backlog_tickets",
+    "jql": "sprint is EMPTY AND status != Done ORDER BY priority DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "tickets in backlog",
+      "backlog tickets",
+      "unscheduled tickets",
+      "backlog items"
+    ]
+  },
+  {
+    "intent": "comments_present",
+    "jql": "commentCount > 0 ORDER BY commentCount DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "tickets with comments",
+      "commented tickets",
+      "tickets with discussion",
+      "commented issues"
+    ]
+  },
+  {
+    "intent": "attachments_present",
+    "jql": "attachmentCount > 0 ORDER BY updated DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "tickets with attachments",
+      "attached files",
+      "tickets with files",
+      "file attachments"
+    ]
+  },
+  {
+    "intent": "subtasks_present",
+    "jql": "subtaskCount > 0 ORDER BY updated DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "tickets with subtasks",
+      "subtask tickets",
+      "tickets with children",
+      "parent tickets"
+    ]
+  },
+  {
+    "intent": "links_present",
+    "jql": "linkCount > 0 ORDER BY updated DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "tickets linked to other tickets",
+      "linked tickets",
+      "tickets with links",
+      "connected tickets"
+    ]
+  },
+  {
+    "intent": "time_tracking_present",
+    "jql": "timespent > 0 ORDER BY timespent DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "tickets with time tracking",
+      "time logged tickets",
+      "tickets with work logged",
+      "time tracked tickets"
+    ]
+  },
+  {
+    "intent": "time_tracking_empty",
+    "jql": "timespent is EMPTY ORDER BY created ASC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "tickets without time tracking",
+      "no time logged",
+      "untracked time",
+      "no work logged"
+    ]
+  },
+  {
+    "intent": "original_estimate_present",
+    "jql": "timeoriginalestimate > 0 ORDER BY timeoriginalestimate DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "tickets with original estimate",
+      "estimated tickets",
+      "tickets with estimates",
+      "original estimates"
+    ]
+  },
+  {
+    "intent": "remaining_estimate_present",
+    "jql": "timeremainingestimate > 0 ORDER BY timeremainingestimate DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "tickets with remaining estimate",
+      "remaining estimates",
+      "left to estimate",
+      "remaining work"
+    ]
+  },
+  {
+    "intent": "over_estimate",
+    "jql": "timespent > timeoriginalestimate ORDER BY (timespent - timeoriginalestimate) DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "tickets over original estimate",
+      "over estimated",
+      "exceeded estimates",
+      "over budget"
+    ]
+  },
+  {
+    "intent": "under_estimate",
+    "jql": "timespent < timeoriginalestimate AND timespent > 0 ORDER BY (timeoriginalestimate - timespent) DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "tickets under original estimate",
+      "under estimated",
+      "under budget",
+      "less than estimated"
+    ]
+  },
+  {
+    "intent": "worklog_today",
+    "jql": "worklogDate >= startOfDay() ORDER BY updated DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "tickets with work logged today",
+      "work logged today",
+      "today's work",
+      "work today"
+    ]
+  },
+  {
+    "intent": "worklog_week",
+    "jql": "worklogDate >= startOfWeek() ORDER BY updated DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "tickets with work logged this week",
+      "work logged this week",
+      "this week's work",
+      "weekly work"
+    ]
+  },
+  {
+    "intent": "worklog_current_user",
+    "jql": "worklogAuthor = currentUser() ORDER BY updated DESC",
+    "expected_response": "Hey! I found {count} tickets matching your query.",
+    "questions": [
+      "tickets with work logged by me",
+      "my work logged",
+      "work I logged",
+      "my logged work"
+    ]
+  },
+  {
+    "intent": "project_open_stories",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND statusCategory != Done ORDER BY updated DESC",
+    "expected_response": "Hey! I found {count} open stories in the ${PROJECT} project.",
+    "questions": [
+      "give me ${PROJECT} project open stories",
+      "${PROJECT} project open stories",
+      "ccm open stories",
+      "${PROJECT} project stories",
+      "show me ${PROJECT} open stories",
+      "list ${PROJECT} open stories",
+      "give me list of ${PROJECT} stories",
+      "show me list of ${PROJECT} stories",
+      "list all ${PROJECT} stories",
+      "show me all ${PROJECT} stories",
+      "give me all ${PROJECT} stories",
+      "what are the ${PROJECT} stories",
+      "show me what are the ${PROJECT} stories",
+      "give me what are the ${PROJECT} stories",
+      "tell me about ${PROJECT} stories",
+      "show me tell me about ${PROJECT} stories",
+      "give me tell me about ${PROJECT} stories",
+      "what stories are in ${PROJECT}",
+      "show me what stories are in ${PROJECT}",
+      "give me what stories are in ${PROJECT}",
+      "which stories are in ${PROJECT}",
+      "show me which stories are in ${PROJECT}",
+      "give me which stories are in ${PROJECT}",
+      "what stories are open in ${PROJECT}",
+      "show me what stories are open in ${PROJECT}",
+      "give me what stories are open in ${PROJECT}",
+      "which stories are open in ${PROJECT}",
+      "show me which stories are open in ${PROJECT}",
+      "give me which stories are open in ${PROJECT}",
+      "what open stories are in ${PROJECT}",
+      "show me what open stories are in ${PROJECT}",
+      "give me what open stories are in ${PROJECT}",
+      "which open stories are in ${PROJECT}",
+      "show me which open stories are in ${PROJECT}",
+      "give me which open stories are in ${PROJECT}",
+      "what open stories are in ${PROJECT} project",
+      "show me what open stories are in ${PROJECT} project",
+      "give me what open stories are in ${PROJECT} project",
+      "which open stories are in ${PROJECT} project",
+      "show me which open stories are in ${PROJECT} project",
+      "give me which open stories are in ${PROJECT} project",
+      "what open stories are in ${PROJECT} project",
+      "show me what open stories are in ${PROJECT} project",
+      "give me what open stories are in ${PROJECT} project",
+      "which open stories are in ${PROJECT} project",
+      "show me which open stories are in ${PROJECT} project",
+      "give me which open stories are in ${PROJECT} project"
+    ]
+  },
+  {
+    "intent": "project_all_stories",
+    "jql": "project = ${PROJECT} AND issuetype = Story ORDER BY updated DESC",
+    "expected_response": "Hey! I found {count} stories in the ${PROJECT} project.",
+    "questions": [
+      "show me list of ${PROJECT} stories",
+      "give me list of ${PROJECT} stories",
+      "list all ${PROJECT} stories",
+      "show me all ${PROJECT} stories",
+      "give me all ${PROJECT} stories",
+      "what are the ${PROJECT} stories",
+      "show me what are the ${PROJECT} stories",
+      "give me what are the ${PROJECT} stories",
+      "tell me about ${PROJECT} stories",
+      "show me tell me about ${PROJECT} stories",
+      "give me tell me about ${PROJECT} stories",
+      "what stories are in ${PROJECT}",
+      "show me what stories are in ${PROJECT}",
+      "give me what stories are in ${PROJECT}",
+      "which stories are in ${PROJECT}",
+      "show me which stories are in ${PROJECT}",
+      "give me which stories are in ${PROJECT}",
+      "what stories are in ${PROJECT} project",
+      "show me what stories are in ${PROJECT} project",
+      "give me what stories are in ${PROJECT} project",
+      "which stories are in ${PROJECT} project",
+      "show me which stories are in ${PROJECT} project",
+      "give me which stories are in ${PROJECT} project",
+      "what stories are in ${PROJECT} project",
+      "show me what stories are in ${PROJECT} project",
+      "give me what stories are in ${PROJECT} project",
+      "which stories are in ${PROJECT} project",
+      "show me which stories are in ${PROJECT} project",
+      "give me which stories are in ${PROJECT} project",
+      "list ${PROJECT} stories",
+      "show ${PROJECT} stories",
+      "give ${PROJECT} stories",
+      "what ${PROJECT} stories",
+      "which ${PROJECT} stories",
+      "tell me ${PROJECT} stories",
+      "show me ${PROJECT} stories",
+      "give me ${PROJECT} stories",
+      "list all ${PROJECT} stories",
+      "show all ${PROJECT} stories",
+      "give all ${PROJECT} stories",
+      "what all ${PROJECT} stories",
+      "which all ${PROJECT} stories",
+      "tell me all ${PROJECT} stories",
+      "show me all ${PROJECT} stories",
+      "give me all ${PROJECT} stories"
+    ]
+  },
+  {
+    "intent": "project_snapshot_open",
+    "jql": "project = ${PROJECT} AND statusCategory != Done",
+    "expected_response": "Open tickets in ${PROJECT}: {count}",
+    "questions": [
+      "how many open tickets in ${PROJECT}",
+      "open issues in ${PROJECT}",
+      "open items for ${PROJECT}",
+      "pending work in ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "project_by_type",
+    "jql": "project = ${PROJECT} AND issuetype in (${ISSUETYPE}) AND statusCategory != Done",
+    "expected_response": "Open ${ISSUETYPE} in ${PROJECT}: {count}",
+    "questions": [
+      "open ${ISSUETYPE} in ${PROJECT}",
+      "how many ${ISSUETYPE} pending in ${PROJECT}",
+      "${PROJECT} ${ISSUETYPE} not done"
+    ]
+  },
+  {
+    "intent": "project_by_priority",
+    "jql": "project = ${PROJECT} AND priority in (${PRIORITY}) AND statusCategory != Done",
+    "expected_response": "Open ${PRIORITY} items in ${PROJECT}: {count}",
+    "questions": [
+      "high priority in ${PROJECT}",
+      "critical tickets in ${PROJECT}",
+      "${PROJECT} urgent issues"
+    ]
+  },
+  {
+    "intent": "current_sprint_open",
+    "jql": "project = ${PROJECT} AND sprint in openSprints() AND statusCategory != Done",
+    "expected_response": "Current sprint open items in ${PROJECT}: {count}",
+    "questions": [
+      "open sprint items in ${PROJECT}",
+      "pending in current sprint ${PROJECT}",
+      "current sprint not done in ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "current_sprint_bugs_open",
+    "jql": "project = ${PROJECT} AND sprint in openSprints() AND issuetype in (Bug, Defect) AND statusCategory != Done",
+    "expected_response": "Open bugs in current sprint (${PROJECT}): {count}",
+    "questions": [
+      "bugs open this sprint in ${PROJECT}",
+      "sprint defects in ${PROJECT}",
+      "current sprint bug count ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "sprint_completed_items",
+    "jql": "project = ${PROJECT} AND sprint in openSprints() AND statusCategory = Done",
+    "expected_response": "Completed items in current sprint (${PROJECT}): {count}",
+    "questions": [
+      "done in current sprint ${PROJECT}",
+      "completed this sprint ${PROJECT}",
+      "finished items in the sprint ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "sprint_spillover_any",
+    "jql": "project = ${PROJECT} AND sprint in openSprints() AND created < startOfSprint()",
+    "expected_response": "Spillover into current sprint (${PROJECT}): {count}",
+    "questions": [
+      "spillover tickets in ${PROJECT}",
+      "carried over to this sprint ${PROJECT}",
+      "slipped from last sprint ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "assignee_current_sprint",
+    "jql": "project = ${PROJECT} AND sprint in openSprints() AND assignee ~ \"${ASSIGNEE}\"",
+    "expected_response": "Current sprint items for ${ASSIGNEE} in ${PROJECT}: {count}",
+    "questions": [
+      "what is ${ASSIGNEE} working on this sprint in ${PROJECT}",
+      "${ASSIGNEE} current sprint work ${PROJECT}",
+      "${ASSIGNEE} items this sprint ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "assignee_type_anytime",
+    "jql": "project = ${PROJECT} AND assignee ~ \"${ASSIGNEE}\" AND issuetype in (${ISSUETYPE})",
+    "expected_response": "${ISSUETYPE} for ${ASSIGNEE} in ${PROJECT}: {count}",
+    "questions": [
+      "${ASSIGNEE} ${ISSUETYPE} in ${PROJECT}",
+      "stories for ${ASSIGNEE} ${PROJECT}",
+      "bugs for ${ASSIGNEE} ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "assignee_done_last_week",
+    "jql": "project = ${PROJECT} AND assignee ~ \"${ASSIGNEE}\" AND statusCategory = Done AND updated >= startOfWeek(-1) AND updated < startOfWeek()",
+    "expected_response": "Done last week by ${ASSIGNEE} in ${PROJECT}: {count}",
+    "questions": [
+      "what did ${ASSIGNEE} finish last week in ${PROJECT}",
+      "${ASSIGNEE} completed last week ${PROJECT}",
+      "closed by ${ASSIGNEE} last week ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "epic_progress",
+    "jql": "\"Epic Link\" = ${EPIC}",
+    "expected_response": "Items under ${EPIC}: {count} (use list to show progress)",
+    "questions": [
+      "epic ${EPIC} progress",
+      "issues under epic ${EPIC}",
+      "epic ${EPIC} items"
+    ]
+  },
+  {
+    "intent": "version_release_notes",
+    "jql": "project = ${PROJECT} AND fixVersion = ${VERSION} ORDER BY priority DESC, updated DESC",
+    "expected_response": "Issues in release ${VERSION} for ${PROJECT}: {count}",
+    "questions": [
+      "release notes for ${VERSION} in ${PROJECT}",
+      "issues in ${VERSION} ${PROJECT}",
+      "fixVersion ${VERSION} ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "labels_filter",
+    "jql": "project = ${PROJECT} AND labels in (${LABEL}) ORDER BY updated DESC",
+    "expected_response": "Tickets with label ${LABEL} in ${PROJECT}: {count}",
+    "questions": [
+      "${PROJECT} with label ${LABEL}",
+      "tickets tagged ${LABEL} in ${PROJECT}",
+      "${LABEL} issues ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "component_open",
+    "jql": "project = ${PROJECT} AND component in (${COMPONENT}) AND statusCategory != Done ORDER BY priority DESC",
+    "expected_response": "Open items in component ${COMPONENT} (${PROJECT}): {count}",
+    "questions": [
+      "open in component ${COMPONENT} ${PROJECT}",
+      "${COMPONENT} backlog ${PROJECT}",
+      "component ${COMPONENT} pending ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "due_this_week",
+    "jql": "project = ${PROJECT} AND duedate >= startOfWeek() AND duedate <= endOfWeek() AND statusCategory != Done ORDER BY duedate ASC",
+    "expected_response": "Due this week in ${PROJECT}: {count}",
+    "questions": [
+      "items due this week ${PROJECT}",
+      "deadlines this week ${PROJECT}",
+      "due soon ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "overdue",
+    "jql": "project = ${PROJECT} AND duedate < startOfDay() AND statusCategory != Done ORDER BY duedate ASC",
+    "expected_response": "Overdue in ${PROJECT}: {count}",
+    "questions": [
+      "overdue tickets ${PROJECT}",
+      "past due ${PROJECT}",
+      "missed deadlines ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "no_assignee",
+    "jql": "project = ${PROJECT} AND assignee is EMPTY AND statusCategory != Done ORDER BY created ASC",
+    "expected_response": "Unassigned open items in ${PROJECT}: {count}",
+    "questions": [
+      "unassigned in ${PROJECT}",
+      "no owner ${PROJECT}",
+      "tickets without assignee ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "no_estimate",
+    "jql": "project = ${PROJECT} AND issuetype in (Story, Task) AND (\"Story Points\" is EMPTY OR timeoriginalestimate is EMPTY) AND statusCategory != Done ORDER BY priority DESC",
+    "expected_response": "Items without estimates in ${PROJECT}: {count}",
+    "questions": [
+      "no estimates ${PROJECT}",
+      "missing story points ${PROJECT}",
+      "unestimated work ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "inactive_long",
+    "jql": "project = ${PROJECT} AND statusCategory != Done AND updated <= -${DAYS}d ORDER BY updated ASC",
+    "expected_response": "Inactive (no updates ≥ ${DAYS}d) in ${PROJECT}: {count}",
+    "questions": [
+      "stale tickets ${PROJECT}",
+      "no updates ${DAYS} days ${PROJECT}",
+      "inactive issues ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "moved_to_done_today",
+    "jql": "project = ${PROJECT} AND status changed TO (Done, Closed) AFTER startOfDay() ORDER BY updated DESC",
+    "expected_response": "Moved to Done today in ${PROJECT}: {count}",
+    "questions": [
+      "done today ${PROJECT}",
+      "finished today ${PROJECT}",
+      "closed today ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "status_changed_last_24h",
+    "jql": "project = ${PROJECT} AND status CHANGED DURING (-1d, now()) ORDER BY updated DESC",
+    "expected_response": "Status changes in last 24h (${PROJECT}): {count}",
+    "questions": [
+      "what changed status in last 24 hours ${PROJECT}",
+      "recent status changes ${PROJECT}",
+      "status updates last day ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "top_oldest_open",
+    "jql": "project = ${PROJECT} AND statusCategory != Done ORDER BY created ASC",
+    "expected_response": "Oldest open items in ${PROJECT}: {count}. Showing oldest first.",
+    "questions": [
+      "oldest open ${PROJECT}",
+      "longest open ${PROJECT}",
+      "aged issues ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "text_search_summary",
+    "jql": "project = ${PROJECT} AND summary ~ \"${TEXT}\" ORDER BY updated DESC",
+    "expected_response": "Items with \"${TEXT}\" in summary (${PROJECT}): {count}",
+    "questions": [
+      "summary contains ${TEXT} ${PROJECT}",
+      "find ${TEXT} in summary ${PROJECT}",
+      "titles with ${TEXT} ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "text_search_description",
+    "jql": "project = ${PROJECT} AND description ~ \"${TEXT}\" ORDER BY updated DESC",
+    "expected_response": "Items mentioning \"${TEXT}\" in description (${PROJECT}): {count}",
+    "questions": [
+      "description mentions ${TEXT} ${PROJECT}",
+      "find ${TEXT} in description ${PROJECT}",
+      "show me description mentions ${TEXT} ${PROJECT}",
+      "give me description mentions ${TEXT} ${PROJECT}",
+      "list description mentions ${TEXT} ${PROJECT}",
+      "what description mentions ${TEXT} ${PROJECT}",
+      "which description mentions ${TEXT} ${PROJECT}",
+      "tell me about description mentions ${TEXT} ${PROJECT}",
+      "show me what description mentions ${TEXT} ${PROJECT}",
+      "give me what description mentions ${TEXT} ${PROJECT}",
+      "list what description mentions ${TEXT} ${PROJECT}",
+      "show me which description mentions ${TEXT} ${PROJECT}",
+      "give me which description mentions ${TEXT} ${PROJECT}",
+      "list which description mentions ${TEXT} ${PROJECT}",
+      "what description has ${TEXT} ${PROJECT}",
+      "which description has ${TEXT} ${PROJECT}",
+      "show me what description has ${TEXT} ${PROJECT}",
+      "give me what description has ${TEXT} ${PROJECT}",
+      "list what description has ${TEXT} ${PROJECT}",
+      "show me which description has ${TEXT} ${PROJECT}",
+      "give me which description has ${TEXT} ${PROJECT}",
+      "list which description has ${TEXT} ${PROJECT}",
+      "what description includes ${TEXT} ${PROJECT}",
+      "which description includes ${TEXT} ${PROJECT}",
+      "show me what description includes ${TEXT} ${PROJECT}",
+      "give me what description includes ${TEXT} ${PROJECT}",
+      "list what description includes ${TEXT} ${PROJECT}",
+      "show me which description includes ${TEXT} ${PROJECT}",
+      "give me which description includes ${TEXT} ${PROJECT}",
+      "list which description includes ${TEXT} ${PROJECT}",
+      "what description contains ${TEXT} ${PROJECT}",
+      "which description contains ${TEXT} ${PROJECT}",
+      "show me what description contains ${TEXT} ${PROJECT}",
+      "give me what description contains ${TEXT} ${PROJECT}",
+      "list what description contains ${TEXT} ${PROJECT}",
+      "show me which description contains ${TEXT} ${PROJECT}",
+      "give me which description contains ${TEXT} ${PROJECT}",
+      "list which description contains ${TEXT} ${PROJECT}",
+      "what description references ${TEXT} ${PROJECT}",
+      "which description references ${TEXT} ${PROJECT}",
+      "show me what description references ${TEXT} ${PROJECT}",
+      "give me what description references ${TEXT} ${PROJECT}",
+      "list what description references ${TEXT} ${PROJECT}",
+      "show me which description references ${TEXT} ${PROJECT}",
+      "give me which description references ${TEXT} ${PROJECT}",
+      "list which description references ${TEXT} ${PROJECT}",
+      "what description talks about ${TEXT} ${PROJECT}",
+      "which description talks about ${TEXT} ${PROJECT}",
+      "show me what description talks about ${TEXT} ${PROJECT}",
+      "give me what description talks about ${TEXT} ${PROJECT}",
+      "list what description talks about ${TEXT} ${PROJECT}",
+      "show me which description talks about ${TEXT} ${PROJECT}",
+      "give me which description talks about ${TEXT} ${PROJECT}",
+      "list which description talks about ${TEXT} ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "comment_contains",
+    "jql": "project = ${PROJECT} AND comment ~ \"${TEXT}\" ORDER BY updated DESC",
+    "expected_response": "Items whose comments mention \"${TEXT}\" (${PROJECT}): {count}",
+    "questions": [
+      "comment mentions ${TEXT} ${PROJECT}",
+      "discussion contains ${TEXT} ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "cycle_time_proxy",
+    "jql": "project = ${PROJECT} AND statusCategory = Done AND resolved >= startOfWeek(-4)",
+    "expected_response": "Done in last 4 weeks for ${PROJECT}: {count}. (Use list to compute cycle time offline.)",
+    "questions": [
+      "cycle time last month ${PROJECT}",
+      "done in last month ${PROJECT}",
+      "completed recently ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "work_logged_week",
+    "jql": "project = ${PROJECT} AND worklogDate >= startOfWeek() ORDER BY updated DESC",
+    "expected_response": "Tickets with work logged this week in ${PROJECT}: {count}",
+    "questions": [
+      "work logged this week ${PROJECT}",
+      "time tracked this week ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "fixversion_unresolved",
+    "jql": "project = ${PROJECT} AND fixVersion = ${VERSION} AND resolution is EMPTY ORDER BY priority DESC",
+    "expected_response": "Unresolved in release ${VERSION} for ${PROJECT}: {count}",
+    "questions": [
+      "remaining in ${VERSION} ${PROJECT}",
+      "open in release ${VERSION} ${PROJECT}"
+    ]
+  },
+  {
+    "intent": "wip_limit_breach_proxy",
+    "jql": "project = ${PROJECT} AND status = 'In Progress' ORDER BY updated DESC",
+    "expected_response": "Items In Progress in ${PROJECT}: {count}. (Compare with WIP policy externally.)",
+    "questions": [
+      "wip items ${PROJECT}",
+      "in progress count ${PROJECT}"
+    ]
+  }
+]

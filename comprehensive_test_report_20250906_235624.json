@@ -1,0 +1,73 @@
+{
+  "summary": {
+    "total_tests": 9,
+    "passed_tests": 3,
+    "failed_tests": 6,
+    "success_rate": 33.33333333333333
+  },
+  "results": [
+    {
+      "test_name": "Server Connectivity",
+      "status": "PASS",
+      "details": "Server responding (status: 200)",
+      "duration": 2.0917465686798096,
+      "timestamp": "2025-09-06T23:56:04.250646"
+    },
+    {
+      "test_name": "Jira Connectivity",
+      "status": "FAIL",
+      "details": "Jira not configured - please configure Jira settings",
+      "duration": 2.0541422367095947,
+      "timestamp": "2025-09-06T23:56:06.305826"
+    },
+    {
+      "test_name": "Enhanced Endpoint Logger Fix",
+      "status": "PASS",
+      "details": "Logger error fixed - enhanced endpoint working",
+      "duration": 2.060398578643799,
+      "timestamp": "2025-09-06T23:56:08.370174"
+    },
+    {
+      "test_name": "Sprint Stories Query",
+      "status": "FAIL",
+      "details": "Failed checks: Conversational greeting, Contains 'stories', Contains ticket keys, Substantial response, Contains count information",
+      "duration": 2.07504940032959,
+      "timestamp": "2025-09-06T23:56:10.447357"
+    },
+    {
+      "test_name": "Assignee Query",
+      "status": "FAIL",
+      "details": "Failed checks: Conversational greeting, Contains assignee name, Contains 'work'",
+      "duration": 2.0399692058563232,
+      "timestamp": "2025-09-06T23:56:12.490710"
+    },
+    {
+      "test_name": "Data Consistency with Jira UI",
+      "status": "FAIL",
+      "details": "Missing elements: inconsistent responses, no ticket keys, no assignee names",
+      "duration": 6.169572591781616,
+      "timestamp": "2025-09-06T23:56:18.661601"
+    },
+    {
+      "test_name": "Response Format",
+      "status": "FAIL",
+      "details": "Failed format checks: Conversational greeting, Structured data, Bullet points, Visual emojis, Multi-line response, Team information",
+      "duration": 2.0494120121002197,
+      "timestamp": "2025-09-06T23:56:20.712172"
+    },
+    {
+      "test_name": "Jira Data Accuracy",
+      "status": "FAIL",
+      "details": "Missing accurate data: Contains CCM-283 ticket, Contains CCM-101 ticket, Contains Ashwin assignee, Contains VijayaSrinivas assignee, Contains ticket details, Contains project details",
+      "duration": 2.0441091060638428,
+      "timestamp": "2025-09-06T23:56:22.757553"
+    },
+    {
+      "test_name": "Performance",
+      "status": "PASS",
+      "details": "Response time: 2.07s",
+      "duration": 2.067258834838867,
+      "timestamp": "2025-09-06T23:56:24.826293"
+    }
+  ]
+}

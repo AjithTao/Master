@@ -1,0 +1,73 @@
+{
+  "summary": {
+    "total_tests": 9,
+    "passed_tests": 0,
+    "failed_tests": 9,
+    "success_rate": 0.0
+  },
+  "results": [
+    {
+      "test_name": "Server Connectivity",
+      "status": "FAIL",
+      "details": "Server not running - start with: cd backend && python -m uvicorn main:app --reload",
+      "duration": 4.085499286651611,
+      "timestamp": "2025-09-06T23:34:54.251023"
+    },
+    {
+      "test_name": "Jira Connectivity",
+      "status": "FAIL",
+      "details": "Error testing Jira connectivity: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/jira/status (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022F9F9C1590>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "duration": 4.062575101852417,
+      "timestamp": "2025-09-06T23:34:58.315837"
+    },
+    {
+      "test_name": "Enhanced Endpoint Logger Fix",
+      "status": "FAIL",
+      "details": "Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/chat/enhanced (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022F9F9C1E50>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "duration": 4.075206995010376,
+      "timestamp": "2025-09-06T23:35:02.391707"
+    },
+    {
+      "test_name": "Sprint Stories Query",
+      "status": "FAIL",
+      "details": "Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/chat/enhanced (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022F9F96E9E0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "duration": 4.048072576522827,
+      "timestamp": "2025-09-06T23:35:06.440878"
+    },
+    {
+      "test_name": "Assignee Query",
+      "status": "FAIL",
+      "details": "Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/chat/enhanced (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022F9F96F100>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "duration": 4.086695432662964,
+      "timestamp": "2025-09-06T23:35:10.529030"
+    },
+    {
+      "test_name": "Data Consistency with Jira UI",
+      "status": "FAIL",
+      "details": "Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/chat/enhanced (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022F9F9997F0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "duration": 4.092951059341431,
+      "timestamp": "2025-09-06T23:35:14.624198"
+    },
+    {
+      "test_name": "Response Format",
+      "status": "FAIL",
+      "details": "Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/chat/enhanced (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022F9F8C79B0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "duration": 4.082978248596191,
+      "timestamp": "2025-09-06T23:35:18.708483"
+    },
+    {
+      "test_name": "Jira Data Accuracy",
+      "status": "FAIL",
+      "details": "Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/chat/enhanced (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022F9F9D08D0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "duration": 4.09734320640564,
+      "timestamp": "2025-09-06T23:35:22.806654"
+    },
+    {
+      "test_name": "Performance",
+      "status": "FAIL",
+      "details": "Error: HTTPConnectionPool(host='localhost', port=8000): Max retries exceeded with url: /api/chat/enhanced (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x0000022F9F9D06B0>: Failed to establish a new connection: [WinError 10061] No connection could be made because the target machine actively refused it'))",
+      "duration": 4.08235502243042,
+      "timestamp": "2025-09-06T23:35:26.891025"
+    }
+  ]
+}

@@ -1,0 +1,6002 @@
+[
+  {
+    "id": "open_issues_project_1",
+    "intent": "open_issues_project",
+    "jql": "project = ${PROJECT} AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "open_issues_project_2",
+    "intent": "open_issues_project",
+    "jql": "project = ${PROJECT} AND fixVersion = ${VERSION} AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "open_issues_project_3",
+    "intent": "open_issues_project",
+    "jql": "project = ${PROJECT} AND issuetype = ${ISSUETYPE} AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "open_issues_project_4",
+    "intent": "open_issues_project",
+    "jql": "project = ${PROJECT} AND assignee = \"${ASSIGNEE}\" AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "open_issues_project_5",
+    "intent": "open_issues_project",
+    "jql": "project = ${PROJECT} AND Sprint = ${SPRINT} AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "open_issues_project_6",
+    "intent": "open_issues_project",
+    "jql": "project = ${PROJECT} AND component = ${COMPONENT} AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "open_issues_project_7",
+    "intent": "open_issues_project",
+    "jql": "project = ${PROJECT} AND labels = ${LABEL} AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "open_issues_project_8",
+    "intent": "open_issues_project",
+    "jql": "project = ${PROJECT} AND priority = ${PRIORITY} AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "open_bugs_project_1",
+    "intent": "open_bugs_project",
+    "jql": "project = ${PROJECT} AND fixVersion = ${VERSION} AND issuetype = Bug AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "open_bugs_project_2",
+    "intent": "open_bugs_project",
+    "jql": "project = ${PROJECT} AND component = ${COMPONENT} AND issuetype = Bug AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "open_bugs_project_3",
+    "intent": "open_bugs_project",
+    "jql": "project = ${PROJECT} AND assignee = \"${ASSIGNEE}\" AND issuetype = Bug AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "open_bugs_project_4",
+    "intent": "open_bugs_project",
+    "jql": "project = ${PROJECT} AND Sprint = ${SPRINT} AND issuetype = Bug AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "open_bugs_project_5",
+    "intent": "open_bugs_project",
+    "jql": "project = ${PROJECT} AND issuetype = ${ISSUETYPE} AND issuetype = Bug AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "open_bugs_project_6",
+    "intent": "open_bugs_project",
+    "jql": "project = ${PROJECT} AND labels = ${LABEL} AND issuetype = Bug AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "open_bugs_project_7",
+    "intent": "open_bugs_project",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "open_bugs_project_8",
+    "intent": "open_bugs_project",
+    "jql": "project = ${PROJECT} AND priority = ${PRIORITY} AND issuetype = Bug AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "open_issues_assignee_1",
+    "intent": "open_issues_assignee",
+    "jql": "project = ${PROJECT} AND assignee = \"${ASSIGNEE}\" AND assignee = \"${ASSIGNEE}\" AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "open_issues_assignee_2",
+    "intent": "open_issues_assignee",
+    "jql": "project = ${PROJECT} AND Sprint = ${SPRINT} AND assignee = \"${ASSIGNEE}\" AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "open_issues_assignee_3",
+    "intent": "open_issues_assignee",
+    "jql": "project = ${PROJECT} AND fixVersion = ${VERSION} AND assignee = \"${ASSIGNEE}\" AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "open_issues_assignee_4",
+    "intent": "open_issues_assignee",
+    "jql": "project = ${PROJECT} AND labels = ${LABEL} AND assignee = \"${ASSIGNEE}\" AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "open_issues_assignee_5",
+    "intent": "open_issues_assignee",
+    "jql": "project = ${PROJECT} AND priority = ${PRIORITY} AND assignee = \"${ASSIGNEE}\" AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "open_issues_assignee_6",
+    "intent": "open_issues_assignee",
+    "jql": "project = ${PROJECT} AND assignee = \"${ASSIGNEE}\" AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "open_issues_assignee_7",
+    "intent": "open_issues_assignee",
+    "jql": "project = ${PROJECT} AND issuetype = ${ISSUETYPE} AND assignee = \"${ASSIGNEE}\" AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "open_issues_assignee_8",
+    "intent": "open_issues_assignee",
+    "jql": "project = ${PROJECT} AND component = ${COMPONENT} AND assignee = \"${ASSIGNEE}\" AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "completed_stories_sprint_1",
+    "intent": "completed_stories_sprint",
+    "jql": "project = ${PROJECT} AND fixVersion = ${VERSION} AND Sprint = ${SPRINT} AND issuetype = Story AND statusCategory = Done",
+    "response_type": "count"
+  },
+  {
+    "id": "completed_stories_sprint_2",
+    "intent": "completed_stories_sprint",
+    "jql": "project = ${PROJECT} AND issuetype = ${ISSUETYPE} AND Sprint = ${SPRINT} AND issuetype = Story AND statusCategory = Done",
+    "response_type": "count"
+  },
+  {
+    "id": "completed_stories_sprint_3",
+    "intent": "completed_stories_sprint",
+    "jql": "project = ${PROJECT} AND priority = ${PRIORITY} AND Sprint = ${SPRINT} AND issuetype = Story AND statusCategory = Done",
+    "response_type": "count"
+  },
+  {
+    "id": "completed_stories_sprint_4",
+    "intent": "completed_stories_sprint",
+    "jql": "project = ${PROJECT} AND Sprint = ${SPRINT} AND issuetype = Story AND statusCategory = Done",
+    "response_type": "count"
+  },
+  {
+    "id": "completed_stories_sprint_5",
+    "intent": "completed_stories_sprint",
+    "jql": "project = ${PROJECT} AND assignee = \"${ASSIGNEE}\" AND Sprint = ${SPRINT} AND issuetype = Story AND statusCategory = Done",
+    "response_type": "count"
+  },
+  {
+    "id": "completed_stories_sprint_6",
+    "intent": "completed_stories_sprint",
+    "jql": "project = ${PROJECT} AND Sprint = ${SPRINT} AND Sprint = ${SPRINT} AND issuetype = Story AND statusCategory = Done",
+    "response_type": "count"
+  },
+  {
+    "id": "completed_stories_sprint_7",
+    "intent": "completed_stories_sprint",
+    "jql": "project = ${PROJECT} AND component = ${COMPONENT} AND Sprint = ${SPRINT} AND issuetype = Story AND statusCategory = Done",
+    "response_type": "count"
+  },
+  {
+    "id": "completed_stories_sprint_8",
+    "intent": "completed_stories_sprint",
+    "jql": "project = ${PROJECT} AND labels = ${LABEL} AND Sprint = ${SPRINT} AND issuetype = Story AND statusCategory = Done",
+    "response_type": "count"
+  },
+  {
+    "id": "blocked_issues_project_1",
+    "intent": "blocked_issues_project",
+    "jql": "project = ${PROJECT} AND issuetype = ${ISSUETYPE} AND status = Blocked",
+    "response_type": "list"
+  },
+  {
+    "id": "blocked_issues_project_2",
+    "intent": "blocked_issues_project",
+    "jql": "project = ${PROJECT} AND Sprint = ${SPRINT} AND status = Blocked",
+    "response_type": "list"
+  },
+  {
+    "id": "blocked_issues_project_3",
+    "intent": "blocked_issues_project",
+    "jql": "project = ${PROJECT} AND assignee = \"${ASSIGNEE}\" AND status = Blocked",
+    "response_type": "list"
+  },
+  {
+    "id": "blocked_issues_project_4",
+    "intent": "blocked_issues_project",
+    "jql": "project = ${PROJECT} AND fixVersion = ${VERSION} AND status = Blocked",
+    "response_type": "list"
+  },
+  {
+    "id": "blocked_issues_project_5",
+    "intent": "blocked_issues_project",
+    "jql": "project = ${PROJECT} AND labels = ${LABEL} AND status = Blocked",
+    "response_type": "list"
+  },
+  {
+    "id": "blocked_issues_project_6",
+    "intent": "blocked_issues_project",
+    "jql": "project = ${PROJECT} AND component = ${COMPONENT} AND status = Blocked",
+    "response_type": "list"
+  },
+  {
+    "id": "blocked_issues_project_7",
+    "intent": "blocked_issues_project",
+    "jql": "project = ${PROJECT} AND priority = ${PRIORITY} AND status = Blocked",
+    "response_type": "list"
+  },
+  {
+    "id": "blocked_issues_project_8",
+    "intent": "blocked_issues_project",
+    "jql": "project = ${PROJECT} AND status = Blocked",
+    "response_type": "list"
+  },
+  {
+    "id": "bugs_by_assignee_1",
+    "intent": "bugs_by_assignee",
+    "jql": "project = ${PROJECT} AND priority = ${PRIORITY} AND issuetype = Bug AND assignee = \"${ASSIGNEE}\" AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "bugs_by_assignee_2",
+    "intent": "bugs_by_assignee",
+    "jql": "project = ${PROJECT} AND component = ${COMPONENT} AND issuetype = Bug AND assignee = \"${ASSIGNEE}\" AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "bugs_by_assignee_3",
+    "intent": "bugs_by_assignee",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND assignee = \"${ASSIGNEE}\" AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "bugs_by_assignee_4",
+    "intent": "bugs_by_assignee",
+    "jql": "project = ${PROJECT} AND issuetype = ${ISSUETYPE} AND issuetype = Bug AND assignee = \"${ASSIGNEE}\" AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "bugs_by_assignee_5",
+    "intent": "bugs_by_assignee",
+    "jql": "project = ${PROJECT} AND fixVersion = ${VERSION} AND issuetype = Bug AND assignee = \"${ASSIGNEE}\" AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "bugs_by_assignee_6",
+    "intent": "bugs_by_assignee",
+    "jql": "project = ${PROJECT} AND assignee = \"${ASSIGNEE}\" AND issuetype = Bug AND assignee = \"${ASSIGNEE}\" AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "bugs_by_assignee_7",
+    "intent": "bugs_by_assignee",
+    "jql": "project = ${PROJECT} AND labels = ${LABEL} AND issuetype = Bug AND assignee = \"${ASSIGNEE}\" AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "bugs_by_assignee_8",
+    "intent": "bugs_by_assignee",
+    "jql": "project = ${PROJECT} AND Sprint = ${SPRINT} AND issuetype = Bug AND assignee = \"${ASSIGNEE}\" AND statusCategory != Done",
+    "response_type": "count"
+  },
+  {
+    "id": "high_priority_bugs_1",
+    "intent": "high_priority_bugs",
+    "jql": "project = ${PROJECT} AND issuetype = ${ISSUETYPE} AND issuetype = Bug AND priority = High AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "high_priority_bugs_2",
+    "intent": "high_priority_bugs",
+    "jql": "project = ${PROJECT} AND Sprint = ${SPRINT} AND issuetype = Bug AND priority = High AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "high_priority_bugs_3",
+    "intent": "high_priority_bugs",
+    "jql": "project = ${PROJECT} AND fixVersion = ${VERSION} AND issuetype = Bug AND priority = High AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "high_priority_bugs_4",
+    "intent": "high_priority_bugs",
+    "jql": "project = ${PROJECT} AND assignee = \"${ASSIGNEE}\" AND issuetype = Bug AND priority = High AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "high_priority_bugs_5",
+    "intent": "high_priority_bugs",
+    "jql": "project = ${PROJECT} AND labels = ${LABEL} AND issuetype = Bug AND priority = High AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "high_priority_bugs_6",
+    "intent": "high_priority_bugs",
+    "jql": "project = ${PROJECT} AND component = ${COMPONENT} AND issuetype = Bug AND priority = High AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "high_priority_bugs_7",
+    "intent": "high_priority_bugs",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND priority = High AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "high_priority_bugs_8",
+    "intent": "high_priority_bugs",
+    "jql": "project = ${PROJECT} AND priority = ${PRIORITY} AND issuetype = Bug AND priority = High AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "overdue_issues_1",
+    "intent": "overdue_issues",
+    "jql": "project = ${PROJECT} AND Sprint = ${SPRINT} AND duedate < now() AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "overdue_issues_2",
+    "intent": "overdue_issues",
+    "jql": "project = ${PROJECT} AND fixVersion = ${VERSION} AND duedate < now() AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "overdue_issues_3",
+    "intent": "overdue_issues",
+    "jql": "project = ${PROJECT} AND component = ${COMPONENT} AND duedate < now() AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "overdue_issues_4",
+    "intent": "overdue_issues",
+    "jql": "project = ${PROJECT} AND labels = ${LABEL} AND duedate < now() AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "overdue_issues_5",
+    "intent": "overdue_issues",
+    "jql": "project = ${PROJECT} AND duedate < now() AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "overdue_issues_6",
+    "intent": "overdue_issues",
+    "jql": "project = ${PROJECT} AND priority = ${PRIORITY} AND duedate < now() AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "overdue_issues_7",
+    "intent": "overdue_issues",
+    "jql": "project = ${PROJECT} AND assignee = \"${ASSIGNEE}\" AND duedate < now() AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "overdue_issues_8",
+    "intent": "overdue_issues",
+    "jql": "project = ${PROJECT} AND issuetype = ${ISSUETYPE} AND duedate < now() AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "issues_by_label_1",
+    "intent": "issues_by_label",
+    "jql": "project = ${PROJECT} AND labels = ${LABEL}",
+    "response_type": "list"
+  },
+  {
+    "id": "issues_by_label_2",
+    "intent": "issues_by_label",
+    "jql": "project = ${PROJECT} AND priority = ${PRIORITY} AND labels = ${LABEL}",
+    "response_type": "list"
+  },
+  {
+    "id": "issues_by_label_3",
+    "intent": "issues_by_label",
+    "jql": "project = ${PROJECT} AND component = ${COMPONENT} AND labels = ${LABEL}",
+    "response_type": "list"
+  },
+  {
+    "id": "issues_by_label_4",
+    "intent": "issues_by_label",
+    "jql": "project = ${PROJECT} AND Sprint = ${SPRINT} AND labels = ${LABEL}",
+    "response_type": "list"
+  },
+  {
+    "id": "issues_by_label_5",
+    "intent": "issues_by_label",
+    "jql": "project = ${PROJECT} AND labels = ${LABEL} AND labels = ${LABEL}",
+    "response_type": "list"
+  },
+  {
+    "id": "issues_by_label_6",
+    "intent": "issues_by_label",
+    "jql": "project = ${PROJECT} AND issuetype = ${ISSUETYPE} AND labels = ${LABEL}",
+    "response_type": "list"
+  },
+  {
+    "id": "issues_by_label_7",
+    "intent": "issues_by_label",
+    "jql": "project = ${PROJECT} AND fixVersion = ${VERSION} AND labels = ${LABEL}",
+    "response_type": "list"
+  },
+  {
+    "id": "issues_by_label_8",
+    "intent": "issues_by_label",
+    "jql": "project = ${PROJECT} AND assignee = \"${ASSIGNEE}\" AND labels = ${LABEL}",
+    "response_type": "list"
+  },
+  {
+    "id": "issues_by_component_1",
+    "intent": "issues_by_component",
+    "jql": "project = ${PROJECT} AND priority = ${PRIORITY} AND component = ${COMPONENT}",
+    "response_type": "list"
+  },
+  {
+    "id": "issues_by_component_2",
+    "intent": "issues_by_component",
+    "jql": "project = ${PROJECT} AND issuetype = ${ISSUETYPE} AND component = ${COMPONENT}",
+    "response_type": "list"
+  },
+  {
+    "id": "issues_by_component_3",
+    "intent": "issues_by_component",
+    "jql": "project = ${PROJECT} AND Sprint = ${SPRINT} AND component = ${COMPONENT}",
+    "response_type": "list"
+  },
+  {
+    "id": "issues_by_component_4",
+    "intent": "issues_by_component",
+    "jql": "project = ${PROJECT} AND component = ${COMPONENT}",
+    "response_type": "list"
+  },
+  {
+    "id": "issues_by_component_5",
+    "intent": "issues_by_component",
+    "jql": "project = ${PROJECT} AND assignee = \"${ASSIGNEE}\" AND component = ${COMPONENT}",
+    "response_type": "list"
+  },
+  {
+    "id": "issues_by_component_6",
+    "intent": "issues_by_component",
+    "jql": "project = ${PROJECT} AND labels = ${LABEL} AND component = ${COMPONENT}",
+    "response_type": "list"
+  },
+  {
+    "id": "issues_by_component_7",
+    "intent": "issues_by_component",
+    "jql": "project = ${PROJECT} AND component = ${COMPONENT} AND component = ${COMPONENT}",
+    "response_type": "list"
+  },
+  {
+    "id": "issues_by_component_8",
+    "intent": "issues_by_component",
+    "jql": "project = ${PROJECT} AND fixVersion = ${VERSION} AND component = ${COMPONENT}",
+    "response_type": "list"
+  },
+  {
+    "id": "release_signoff_1",
+    "intent": "release_signoff",
+    "jql": "fixVersion = ${VERSION} AND statusCategory != Done",
+    "response_type": "list"
+  },
+  {
+    "id": "recently_updated_1",
+    "intent": "recently_updated",
+    "jql": "project = ${PROJECT} AND Sprint = ${SPRINT} AND updated >= ${DATE_RANGE}",
+    "response_type": "list"
+  },
+  {
+    "id": "recently_updated_2",
+    "intent": "recently_updated",
+    "jql": "project = ${PROJECT} AND component = ${COMPONENT} AND updated >= ${DATE_RANGE}",
+    "response_type": "list"
+  },
+  {
+    "id": "recently_updated_3",
+    "intent": "recently_updated",
+    "jql": "project = ${PROJECT} AND issuetype = ${ISSUETYPE} AND updated >= ${DATE_RANGE}",
+    "response_type": "list"
+  },
+  {
+    "id": "recently_updated_4",
+    "intent": "recently_updated",
+    "jql": "project = ${PROJECT} AND assignee = \"${ASSIGNEE}\" AND updated >= ${DATE_RANGE}",
+    "response_type": "list"
+  },
+  {
+    "id": "recently_updated_5",
+    "intent": "recently_updated",
+    "jql": "project = ${PROJECT} AND priority = ${PRIORITY} AND updated >= ${DATE_RANGE}",
+    "response_type": "list"
+  },
+  {
+    "id": "recently_updated_6",
+    "intent": "recently_updated",
+    "jql": "project = ${PROJECT} AND updated >= ${DATE_RANGE}",
+    "response_type": "list"
+  },
+  {
+    "id": "recently_updated_7",
+    "intent": "recently_updated",
+    "jql": "project = ${PROJECT} AND labels = ${LABEL} AND updated >= ${DATE_RANGE}",
+    "response_type": "list"
+  },
+  {
+    "id": "recently_updated_8",
+    "intent": "recently_updated",
+    "jql": "project = ${PROJECT} AND fixVersion = ${VERSION} AND updated >= ${DATE_RANGE}",
+    "response_type": "list"
+  },
+  {
+    "id": "unassigned_issues_1",
+    "intent": "unassigned_issues",
+    "jql": "project = ${PROJECT} AND issuetype = ${ISSUETYPE} AND assignee IS EMPTY",
+    "response_type": "list"
+  },
+  {
+    "id": "unassigned_issues_2",
+    "intent": "unassigned_issues",
+    "jql": "project = ${PROJECT} AND fixVersion = ${VERSION} AND assignee IS EMPTY",
+    "response_type": "list"
+  },
+  {
+    "id": "unassigned_issues_3",
+    "intent": "unassigned_issues",
+    "jql": "project = ${PROJECT} AND priority = ${PRIORITY} AND assignee IS EMPTY",
+    "response_type": "list"
+  },
+  {
+    "id": "unassigned_issues_4",
+    "intent": "unassigned_issues",
+    "jql": "project = ${PROJECT} AND component = ${COMPONENT} AND assignee IS EMPTY",
+    "response_type": "list"
+  },
+  {
+    "id": "unassigned_issues_5",
+    "intent": "unassigned_issues",
+    "jql": "project = ${PROJECT} AND assignee = \"${ASSIGNEE}\" AND assignee IS EMPTY",
+    "response_type": "list"
+  },
+  {
+    "id": "unassigned_issues_6",
+    "intent": "unassigned_issues",
+    "jql": "project = ${PROJECT} AND assignee IS EMPTY",
+    "response_type": "list"
+  },
+  {
+    "id": "unassigned_issues_7",
+    "intent": "unassigned_issues",
+    "jql": "project = ${PROJECT} AND labels = ${LABEL} AND assignee IS EMPTY",
+    "response_type": "list"
+  },
+  {
+    "id": "unassigned_issues_8",
+    "intent": "unassigned_issues",
+    "jql": "project = ${PROJECT} AND Sprint = ${SPRINT} AND assignee IS EMPTY",
+    "response_type": "list"
+  },
+  {
+    "id": "stories_by_status_1",
+    "intent": "stories_by_status",
+    "jql": "project = ${PROJECT} AND assignee = \"${ASSIGNEE}\" AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "stories_by_status_2",
+    "intent": "stories_by_status",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "stories_by_status_3",
+    "intent": "stories_by_status",
+    "jql": "project = ${PROJECT} AND component = ${COMPONENT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "stories_by_status_4",
+    "intent": "stories_by_status",
+    "jql": "project = ${PROJECT} AND priority = ${PRIORITY} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "stories_by_status_5",
+    "intent": "stories_by_status",
+    "jql": "project = ${PROJECT} AND issuetype = ${ISSUETYPE} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "stories_by_status_6",
+    "intent": "stories_by_status",
+    "jql": "project = ${PROJECT} AND fixVersion = ${VERSION} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "stories_by_status_7",
+    "intent": "stories_by_status",
+    "jql": "project = ${PROJECT} AND Sprint = ${SPRINT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "stories_by_status_8",
+    "intent": "stories_by_status",
+    "jql": "project = ${PROJECT} AND labels = ${LABEL} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "critical_blockers_1",
+    "intent": "critical_blockers",
+    "jql": "project = ${PROJECT} AND assignee = \"${ASSIGNEE}\" AND priority = Critical AND status = Blocked",
+    "response_type": "list"
+  },
+  {
+    "id": "critical_blockers_2",
+    "intent": "critical_blockers",
+    "jql": "project = ${PROJECT} AND Sprint = ${SPRINT} AND priority = Critical AND status = Blocked",
+    "response_type": "list"
+  },
+  {
+    "id": "critical_blockers_3",
+    "intent": "critical_blockers",
+    "jql": "project = ${PROJECT} AND priority = Critical AND status = Blocked",
+    "response_type": "list"
+  },
+  {
+    "id": "critical_blockers_4",
+    "intent": "critical_blockers",
+    "jql": "project = ${PROJECT} AND fixVersion = ${VERSION} AND priority = Critical AND status = Blocked",
+    "response_type": "list"
+  },
+  {
+    "id": "critical_blockers_5",
+    "intent": "critical_blockers",
+    "jql": "project = ${PROJECT} AND issuetype = ${ISSUETYPE} AND priority = Critical AND status = Blocked",
+    "response_type": "list"
+  },
+  {
+    "id": "critical_blockers_6",
+    "intent": "critical_blockers",
+    "jql": "project = ${PROJECT} AND priority = ${PRIORITY} AND priority = Critical AND status = Blocked",
+    "response_type": "list"
+  },
+  {
+    "id": "critical_blockers_7",
+    "intent": "critical_blockers",
+    "jql": "project = ${PROJECT} AND component = ${COMPONENT} AND priority = Critical AND status = Blocked",
+    "response_type": "list"
+  },
+  {
+    "id": "critical_blockers_8",
+    "intent": "critical_blockers",
+    "jql": "project = ${PROJECT} AND labels = ${LABEL} AND priority = Critical AND status = Blocked",
+    "response_type": "list"
+  },
+  {
+    "id": "bugs_last_month_1",
+    "intent": "bugs_last_month",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND created >= -30d",
+    "response_type": "count"
+  },
+  {
+    "id": "bugs_last_month_2",
+    "intent": "bugs_last_month",
+    "jql": "project = ${PROJECT} AND assignee = \"${ASSIGNEE}\" AND issuetype = Bug AND created >= -30d",
+    "response_type": "count"
+  },
+  {
+    "id": "bugs_last_month_3",
+    "intent": "bugs_last_month",
+    "jql": "project = ${PROJECT} AND priority = ${PRIORITY} AND issuetype = Bug AND created >= -30d",
+    "response_type": "count"
+  },
+  {
+    "id": "bugs_last_month_4",
+    "intent": "bugs_last_month",
+    "jql": "project = ${PROJECT} AND fixVersion = ${VERSION} AND issuetype = Bug AND created >= -30d",
+    "response_type": "count"
+  },
+  {
+    "id": "bugs_last_month_5",
+    "intent": "bugs_last_month",
+    "jql": "project = ${PROJECT} AND Sprint = ${SPRINT} AND issuetype = Bug AND created >= -30d",
+    "response_type": "count"
+  },
+  {
+    "id": "bugs_last_month_6",
+    "intent": "bugs_last_month",
+    "jql": "project = ${PROJECT} AND issuetype = ${ISSUETYPE} AND issuetype = Bug AND created >= -30d",
+    "response_type": "count"
+  },
+  {
+    "id": "bugs_last_month_7",
+    "intent": "bugs_last_month",
+    "jql": "project = ${PROJECT} AND labels = ${LABEL} AND issuetype = Bug AND created >= -30d",
+    "response_type": "count"
+  },
+  {
+    "id": "bugs_last_month_8",
+    "intent": "bugs_last_month",
+    "jql": "project = ${PROJECT} AND component = ${COMPONENT} AND issuetype = Bug AND created >= -30d",
+    "response_type": "count"
+  },
+  {
+    "id": "epics_in_project_1",
+    "intent": "epics_in_project",
+    "jql": "project = ${PROJECT} AND issuetype = Epic",
+    "response_type": "list"
+  },
+  {
+    "id": "epics_in_project_2",
+    "intent": "epics_in_project",
+    "jql": "project = ${PROJECT} AND labels = ${LABEL} AND issuetype = Epic",
+    "response_type": "list"
+  },
+  {
+    "id": "epics_in_project_3",
+    "intent": "epics_in_project",
+    "jql": "project = ${PROJECT} AND issuetype = ${ISSUETYPE} AND issuetype = Epic",
+    "response_type": "list"
+  },
+  {
+    "id": "epics_in_project_4",
+    "intent": "epics_in_project",
+    "jql": "project = ${PROJECT} AND component = ${COMPONENT} AND issuetype = Epic",
+    "response_type": "list"
+  },
+  {
+    "id": "epics_in_project_5",
+    "intent": "epics_in_project",
+    "jql": "project = ${PROJECT} AND fixVersion = ${VERSION} AND issuetype = Epic",
+    "response_type": "list"
+  },
+  {
+    "id": "epics_in_project_6",
+    "intent": "epics_in_project",
+    "jql": "project = ${PROJECT} AND assignee = \"${ASSIGNEE}\" AND issuetype = Epic",
+    "response_type": "list"
+  },
+  {
+    "id": "epics_in_project_7",
+    "intent": "epics_in_project",
+    "jql": "project = ${PROJECT} AND priority = ${PRIORITY} AND issuetype = Epic",
+    "response_type": "list"
+  },
+  {
+    "id": "epics_in_project_8",
+    "intent": "epics_in_project",
+    "jql": "project = ${PROJECT} AND Sprint = ${SPRINT} AND issuetype = Epic",
+    "response_type": "list"
+  },
+  {
+    "id": "recently_closed_1",
+    "intent": "recently_closed",
+    "jql": "project = ${PROJECT} AND Sprint = ${SPRINT} AND statusCategory = Done AND updated >= -7d",
+    "response_type": "list"
+  },
+  {
+    "id": "recently_closed_2",
+    "intent": "recently_closed",
+    "jql": "project = ${PROJECT} AND statusCategory = Done AND updated >= -7d",
+    "response_type": "list"
+  },
+  {
+    "id": "recently_closed_3",
+    "intent": "recently_closed",
+    "jql": "project = ${PROJECT} AND issuetype = ${ISSUETYPE} AND statusCategory = Done AND updated >= -7d",
+    "response_type": "list"
+  },
+  {
+    "id": "recently_closed_4",
+    "intent": "recently_closed",
+    "jql": "project = ${PROJECT} AND labels = ${LABEL} AND statusCategory = Done AND updated >= -7d",
+    "response_type": "list"
+  },
+  {
+    "id": "recently_closed_5",
+    "intent": "recently_closed",
+    "jql": "project = ${PROJECT} AND component = ${COMPONENT} AND statusCategory = Done AND updated >= -7d",
+    "response_type": "list"
+  },
+  {
+    "id": "recently_closed_6",
+    "intent": "recently_closed",
+    "jql": "project = ${PROJECT} AND priority = ${PRIORITY} AND statusCategory = Done AND updated >= -7d",
+    "response_type": "list"
+  },
+  {
+    "id": "recently_closed_7",
+    "intent": "recently_closed",
+    "jql": "project = ${PROJECT} AND assignee = \"${ASSIGNEE}\" AND statusCategory = Done AND updated >= -7d",
+    "response_type": "list"
+  },
+  {
+    "id": "recently_closed_8",
+    "intent": "recently_closed",
+    "jql": "project = ${PROJECT} AND fixVersion = ${VERSION} AND statusCategory = Done AND updated >= -7d",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_138",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_139",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_140",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_141",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_142",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_143",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_144",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_145",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_146",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_147",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_148",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_149",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_150",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_151",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_152",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_153",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_154",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_155",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_156",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_157",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_158",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_159",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_160",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_161",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_162",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_163",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_164",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_165",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_166",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_167",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_168",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_169",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_170",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_171",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_172",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_173",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_174",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_175",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_176",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_177",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_178",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_179",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_180",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_181",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_182",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_183",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_184",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_185",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_186",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_187",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_188",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_189",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_190",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_191",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_192",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_193",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_194",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_195",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_196",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_197",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_198",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_199",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_200",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_201",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_202",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_203",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_204",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_205",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_206",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_207",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_208",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_209",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_210",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_211",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_212",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_213",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_214",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_215",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_216",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_217",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_218",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_219",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_220",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_221",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_222",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_223",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_224",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_225",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_226",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_227",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_228",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_229",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_230",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_231",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_232",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_233",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_234",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_235",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_236",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_237",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_238",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_239",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_240",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_241",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_242",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_243",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_244",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_245",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_246",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_247",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_248",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_249",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_250",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_251",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_252",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_253",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_254",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_255",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_256",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_257",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_258",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_259",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_260",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_261",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_262",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_263",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_264",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_265",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_266",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_267",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_268",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_269",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_270",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_271",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_272",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_273",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_274",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_275",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_276",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_277",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_278",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_279",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_280",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_281",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_282",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_283",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_284",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_285",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_286",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_287",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_288",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_289",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_290",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_291",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_292",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_293",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_294",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_295",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_296",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_297",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_298",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_299",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_300",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_301",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_302",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_303",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_304",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_305",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_306",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_307",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_308",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_309",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_310",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_311",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_312",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_313",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_314",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_315",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_316",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_317",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_318",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_319",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_320",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_321",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_322",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_323",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_324",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_325",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_326",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_327",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_328",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_329",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_330",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_331",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_332",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_333",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_334",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_335",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_336",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_337",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_338",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_339",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_340",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_341",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_342",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_343",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_344",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_345",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_346",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_347",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_348",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_349",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_350",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_351",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_352",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_353",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_354",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_355",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_356",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_357",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_358",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_359",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_360",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_361",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_362",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_363",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_364",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_365",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_366",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_367",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_368",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_369",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_370",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_371",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_372",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_373",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_374",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_375",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_376",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_377",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_378",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_379",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_380",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_381",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_382",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_383",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_384",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_385",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_386",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_387",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_388",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_389",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_390",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_391",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_392",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_393",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_394",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_395",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_396",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_397",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_398",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_399",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_400",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_401",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_402",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_403",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_404",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_405",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_406",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_407",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_408",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_409",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_410",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_411",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_412",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_413",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_414",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_415",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_416",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_417",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_418",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_419",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_420",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_421",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_422",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_423",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_424",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_425",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_426",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_427",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_428",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_429",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_430",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_431",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_432",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_433",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_434",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_435",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_436",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_437",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_438",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_439",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_440",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_441",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_442",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_443",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_444",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_445",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_446",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_447",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_448",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_449",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_450",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_451",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_452",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_453",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_454",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_455",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_456",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_457",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_458",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_459",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_460",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_461",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_462",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_463",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_464",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_465",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_466",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_467",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_468",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_469",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_470",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_471",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_472",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_473",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_474",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_475",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_476",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_477",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_478",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_479",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_480",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_481",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_482",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_483",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_484",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_485",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_486",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_487",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_488",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_489",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_490",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_491",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_492",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_493",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_494",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_495",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_496",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_497",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_498",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_499",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_500",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_501",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_502",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_503",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_504",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_505",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_506",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_507",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_508",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_509",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_510",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_511",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_512",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_513",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_514",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_515",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_516",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_517",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_518",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_519",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_520",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_521",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_522",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_523",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_524",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_525",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_526",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_527",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_528",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_529",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_530",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_531",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_532",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_533",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_534",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_535",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_536",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_537",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_538",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_539",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_540",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_541",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_542",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_543",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_544",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_545",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_546",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_547",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_548",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_549",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_550",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_551",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_552",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_553",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_554",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_555",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_556",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_557",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_558",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_559",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_560",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_561",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_562",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_563",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_564",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_565",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_566",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_567",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_568",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_569",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_570",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_571",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_572",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_573",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_574",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_575",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_576",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_577",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_578",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_579",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_580",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_581",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_582",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_583",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_584",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_585",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_586",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_587",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_588",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_589",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_590",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_591",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_592",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_593",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_594",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_595",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_596",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_597",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_598",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_599",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_600",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_601",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_602",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_603",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_604",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_605",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_606",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_607",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_608",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_609",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_610",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_611",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_612",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_613",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_614",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_615",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_616",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_617",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_618",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_619",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_620",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_621",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_622",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_623",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_624",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_625",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_626",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_627",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_628",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_629",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_630",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_631",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_632",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_633",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_634",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_635",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_636",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_637",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_638",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_639",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_640",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_641",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_642",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_643",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_644",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_645",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_646",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_647",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_648",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_649",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_650",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_651",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_652",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_653",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_654",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_655",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_656",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_657",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_658",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_659",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_660",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_661",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_662",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_663",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_664",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_665",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_666",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_667",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_668",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_669",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_670",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_671",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_672",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_673",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_674",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_675",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_676",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_677",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_678",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_679",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_680",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_681",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_682",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_683",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_684",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_685",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_686",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_687",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_688",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_689",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_690",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_691",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_692",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_693",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_694",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_695",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_696",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_697",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_698",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_699",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_700",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_701",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_702",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_703",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_704",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_705",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_706",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_707",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_708",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_709",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_710",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_711",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_712",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_713",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_714",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_715",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_716",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_717",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_718",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_719",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_720",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_721",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_722",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_723",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_724",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_725",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_726",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_727",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_728",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_729",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_730",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_731",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_732",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_733",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_734",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_735",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_736",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_737",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_738",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_739",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_740",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_741",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_742",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_743",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_744",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_745",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_746",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_747",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_748",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_749",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_750",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_751",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_752",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_753",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_754",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_755",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_756",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_757",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_758",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_759",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_760",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_761",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_762",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_763",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_764",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_765",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_766",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_767",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_768",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_769",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_770",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_771",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_772",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_773",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_774",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_775",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_776",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_777",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_778",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_779",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_780",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_781",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_782",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_783",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_784",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_785",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_786",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_787",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_788",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_789",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_790",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_791",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_792",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_793",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_794",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_795",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_796",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_797",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_798",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_799",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_800",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_801",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_802",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_803",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_804",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_805",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_806",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_807",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_808",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_809",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_810",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_811",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_812",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_813",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_814",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_815",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_816",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_817",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_818",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_819",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_820",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_821",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_822",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_823",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_824",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_825",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_826",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_827",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_828",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_829",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_830",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_831",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_832",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_833",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_834",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_835",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_836",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_837",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_838",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_839",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_840",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_841",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_842",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_843",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_844",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_845",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_846",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_847",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_848",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_849",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_850",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_851",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_852",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_853",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_854",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_855",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_856",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_857",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_858",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_859",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_860",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_861",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_862",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_863",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_864",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_865",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_866",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_867",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_868",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_869",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_870",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_871",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_872",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_873",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_874",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_875",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_876",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_877",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_878",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_879",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_880",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_881",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_882",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_883",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_884",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_885",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_886",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_887",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_888",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_889",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_890",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_891",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_892",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_893",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_894",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_895",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_896",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_897",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_898",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_899",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_900",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_901",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_902",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_903",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_904",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_905",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_906",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_907",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_908",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_909",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_910",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_911",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_912",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_913",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_914",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_915",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_916",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_917",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_918",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_919",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_920",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_921",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_922",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_923",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_924",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_925",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_926",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_927",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_928",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_929",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_930",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_931",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_932",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_933",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_934",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_935",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_936",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_937",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_938",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_939",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_940",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_941",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_942",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_943",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_944",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_945",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_946",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_947",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_948",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_949",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_950",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_951",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_952",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_953",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_954",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_955",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_956",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_957",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_958",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_959",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_960",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_961",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_962",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_963",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_964",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_965",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_966",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_967",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_968",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_969",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_970",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_971",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_972",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_973",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_974",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_975",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_976",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_977",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_978",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_979",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_980",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_981",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_982",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_983",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_984",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_985",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_986",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_987",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_988",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_989",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_990",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_991",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_992",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_993",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_994",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_995",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_996",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_997",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Bug AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_998",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Task AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_999",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Epic AND status = \"${STATUS}\"",
+    "response_type": "list"
+  },
+  {
+    "id": "generated_1000",
+    "intent": "generic_search",
+    "jql": "project = ${PROJECT} AND issuetype = Story AND status = \"${STATUS}\"",
+    "response_type": "list"
+  }
+]
