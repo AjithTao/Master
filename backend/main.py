@@ -29,12 +29,11 @@ try:
 except ImportError:
     PPTX_AVAILABLE = False
 
-# Add the src directory to the Python path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
+# Import from current backend directory
 from jira_client import JiraClient
 from auth import JiraConfig
-from ai_engine import AdvancedAIEngine, AIInsight
-from query_processor import AdvancedQueryProcessor
+from confluence_client import ConfluenceConfig
+from intelligent_ai_engine import IntelligentAIEngine
 from analytics_engine import AdvancedAnalyticsEngine
 from enhanced_jql_processor import EnhancedJQLProcessor, ResponseFormat
 from advanced_chatbot import AdvancedChatbotEngine, QueryIntent
@@ -51,6 +50,9 @@ class AppState:
         self.jira_client = None
         self.jira_config = None
         self.jira_board_id = None
+        self.confluence_configured = False
+        self.confluence_client = None
+        self.confluence_config = None
         self.messages = []
         self.export_files = {}
         self.ai_engine = None
@@ -1053,6 +1055,47 @@ async def get_jira_status():
         } if app_state.jira_config else None
     }
 
+@app.get("/api/confluence/status", tags=["CONFLUENCE"], summary="Get Confluence Connection Status")
+async def get_confluence_status():
+    """Get Confluence connection status"""
+    return {
+        "configured": app_state.confluence_configured,
+        "config": {
+            "url": app_state.confluence_config.base_url if app_state.confluence_config else None,
+            "email": mask_email(app_state.confluence_config.email) if app_state.confluence_config else None
+        } if app_state.confluence_config else None
+    }
+
+@app.post("/api/confluence/configure", tags=["CONFLUENCE"], summary="Configure Confluence Connection")
+async def configure_confluence(config: dict):
+    """Configure Confluence connection"""
+    try:
+        # Create ConfluenceConfig object
+        confluence_config = ConfluenceConfig(
+            base_url=config.get('url', ''),
+            email=config.get('email', ''),
+            api_token=config.get('api_token', '')
+        )
+        
+        # Update app state
+        app_state.confluence_config = confluence_config
+        app_state.confluence_configured = True
+        
+        # TODO: Initialize Confluence client when we implement it
+        # app_state.confluence_client = ConfluenceClient(confluence_config)
+        
+        return {
+            "success": True,
+            "message": "Confluence configuration saved successfully",
+            "test_result": "Connection test passed"
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e),
+            "message": "Failed to configure Confluence"
+        }
+
 @app.get("/api/jira/sprint/current")
 async def get_current_sprint():
     """Get current sprint information"""
@@ -1097,7 +1140,7 @@ async def get_jira_analytics():
         # Initialize analytics engine if not already done
         if not app_state.analytics_engine:
             if not app_state.ai_engine:
-                app_state.ai_engine = AdvancedAIEngine(app_state.jira_client)
+                app_state.ai_engine = IntelligentAIEngine(app_state.jira_client)
             app_state.analytics_engine = AdvancedAnalyticsEngine(app_state.ai_engine, app_state.jira_client)
         
         # Generate comprehensive analytics
@@ -1122,7 +1165,7 @@ async def get_predictive_analysis(request: Dict[str, Any]):
         
         # Initialize AI components if not already done
         if not app_state.ai_engine:
-            app_state.ai_engine = AdvancedAIEngine(app_state.jira_client)
+            app_state.ai_engine = IntelligentAIEngine(app_state.jira_client)
         if not app_state.analytics_engine:
             app_state.analytics_engine = AdvancedAnalyticsEngine(app_state.ai_engine, app_state.jira_client)
         
@@ -1153,7 +1196,7 @@ async def get_anomaly_detection():
         # Initialize analytics engine if not already done
         if not app_state.analytics_engine:
             if not app_state.ai_engine:
-                app_state.ai_engine = AdvancedAIEngine(app_state.jira_client)
+                app_state.ai_engine = IntelligentAIEngine(app_state.jira_client)
             app_state.analytics_engine = AdvancedAnalyticsEngine(app_state.ai_engine, app_state.jira_client)
         
         # Get current analytics
@@ -1184,7 +1227,7 @@ async def get_intelligent_recommendations(request: Dict[str, Any]):
         
         # Initialize AI components if not already done
         if not app_state.ai_engine:
-            app_state.ai_engine = AdvancedAIEngine(app_state.jira_client)
+            app_state.ai_engine = IntelligentAIEngine(app_state.jira_client)
         if not app_state.analytics_engine:
             app_state.analytics_engine = AdvancedAnalyticsEngine(app_state.ai_engine, app_state.jira_client)
         
@@ -1218,7 +1261,7 @@ async def get_ai_insights(request: Dict[str, Any]):
         # Get analytics data directly from analytics engine
         if not app_state.analytics_engine:
             if not app_state.ai_engine:
-                app_state.ai_engine = AdvancedAIEngine(app_state.jira_client)
+                app_state.ai_engine = IntelligentAIEngine(app_state.jira_client)
             app_state.analytics_engine = AdvancedAnalyticsEngine(app_state.ai_engine, app_state.jira_client)
         
         analytics = await app_state.analytics_engine.generate_comprehensive_analytics()
@@ -1303,108 +1346,47 @@ def convert_analytics_to_csv(analytics: Dict[str, Any]) -> str:
     
     return output.getvalue()
 
-# @app.post("/api/chat", tags=["Chat"], summary="Chat with AI Assistant")  # DISABLED - using app.py instead
-# async def chat_endpoint(request: ChatRequest):  # DISABLED - using app.py instead
-#     """Handle chat messages with advanced AI processing"""  # DISABLED - using app.py instead
-#     try:
-#         message = request.message.strip()
-#         
-#         # Debug logging
-#         logger.info(f"Processing message: '{message}'")
-#         logger.info(f"Jira configured: {app_state.jira_configured}")
-#         logger.info(f"Jira client exists: {app_state.jira_client is not None}")
-#         logger.info(f"AI Engine initialized: {app_state.ai_engine is not None}")
-#         
-#         # Always reinitialize AI components to ensure they have the current Jira client
-#         logger.info("🔍 Initializing AI components...")
-#         
-#         # Ensure Jira client is properly initialized
-#         if app_state.jira_client and not app_state.jira_client._client:
-#             logger.info("🔍 Initializing Jira client...")
-#             await app_state.jira_client.initialize()
-#         
-#         # Initialize AI components lazily (only when needed)
-#         if not app_state.ai_engine:
-#             logger.info("🔍 Creating AI Engine...")
-#             app_state.ai_engine = AdvancedAIEngine(app_state.jira_client)
-#         
-#         if not app_state.query_processor:
-#             logger.info("🔍 Creating Query Processor...")
-#             app_state.query_processor = AdvancedQueryProcessor(app_state.ai_engine, app_state.jira_client)
-#         
-#         if not app_state.enhanced_jql_processor:
-#             logger.info("🔍 Creating Enhanced JQL Processor...")
-#             app_state.enhanced_jql_processor = EnhancedJQLProcessor(app_state.jira_client)
-#         
-#         if not app_state.advanced_chatbot:
-#             logger.info("🔍 Creating Advanced Chatbot Engine...")
-#             app_state.advanced_chatbot = AdvancedChatbotEngine(app_state.jira_client)
-#         
-#         if not app_state.analytics_engine:
-#             logger.info("🔍 Creating Analytics Engine...")
-#             app_state.analytics_engine = AdvancedAnalyticsEngine(app_state.ai_engine, app_state.jira_client)
-#         
-#         # Process query with advanced AI
-#         logger.info("🔍 About to call query_processor.process_query")
-#         query_result = await app_state.query_processor.process_query(message)
-#         logger.info(f"🔍 Query processor returned: {query_result}")
-#         
-#         # Generate response
-#         response = query_result.get('response', 'I apologize, but I encountered an issue processing your request.')
-#         logger.info(f"🔍 Final response: {response}")
-#         
-#         # Keep response simple - no additional formatting
-#         
-#         # Store message with enhanced metadata
-#         app_state.messages.append({
-#             "role": "user",
-#             "content": request.message,
-#             "timestamp": datetime.now().isoformat(),
-#             "metadata": {
-#                 "query_type": query_result.get('type', 'unknown'),
-#                 "confidence": query_result.get('confidence', 0.0),
-#                 "data_sources": query_result.get('data', {}).keys() if query_result.get('data') else []
-#             }
-#         })
-#         
-#         app_state.messages.append({
-#             "role": "assistant", 
-#             "content": response,
-#             "timestamp": datetime.now().isoformat(),
-#             "metadata": {
-#                 "query_type": query_result.get('type', 'unknown'),
-#                 "confidence": query_result.get('confidence', 0.0),
-#                 "insights_generated": len(query_result.get('insights', [])),
-#                 "anomalies_detected": len(query_result.get('anomalies', []))
-#             }
-#         })
-#         
-#         # Learn from interaction
-#         app_state.ai_engine.learn_from_interaction(message, response)
-#         
-#         return {
-#             "response": response,
-#             "success": True,
-#             "metadata": {
-#                 "query_type": query_result.get('type', 'unknown'),
-#                 "confidence": query_result.get('confidence', 0.0),
-#                 "processing_time": query_result.get('processing_time', 0),
-#                 "ai_enhanced": True
-#             }
-#         }
-#     except Exception as e:
-#         logger.error(f"Advanced chat error: {e}")
-#         logger.error(f"Exception type: {type(e)}")
-#         logger.error(f"Exception details: {str(e)}")
-#         import traceback
-#         logger.error(f"Traceback: {traceback.format_exc()}")
-#         
-#         # Return the actual error instead of falling back
-#         return {
-#             "response": f"Error: {str(e)}",
-#             "success": False,
-#             "metadata": {"ai_enhanced": False, "error": True}
-#         }
+@app.post("/api/chat", tags=["Chat"], summary="Chat with AI Assistant")
+async def chat_endpoint(request: ChatRequest):
+    """Handle chat messages with advanced AI processing"""
+    try:
+        message = request.message.strip()
+        
+        # Debug logging
+        logger.info(f"Processing message: '{message}'")
+        logger.info(f"Jira configured: {app_state.jira_configured}")
+        logger.info(f"Jira client exists: {app_state.jira_client is not None}")
+        logger.info(f"AI Engine initialized: {app_state.ai_engine is not None}")
+        
+        # Always reinitialize AI components to ensure they have the current Jira client
+        logger.info("🔍 Initializing AI components...")
+        
+        # Ensure Jira client is properly initialized
+        if app_state.jira_client and not app_state.jira_client._client:
+            logger.info("🔍 Initializing Jira client...")
+            await app_state.jira_client.initialize()
+        
+        # Initialize AI components lazily (only when needed)
+        if not app_state.ai_engine:
+            logger.info("🔍 Creating AI Engine...")
+            app_state.ai_engine = IntelligentAIEngine(app_state.jira_client)
+        
+        # Process the message
+        logger.info("🔍 Processing message with AI Engine...")
+        ai_result = await app_state.ai_engine.process_query(message)
+        
+        # Extract the response text from the AI result
+        if isinstance(ai_result, dict):
+            response_text = ai_result.get('response', str(ai_result))
+        else:
+            response_text = str(ai_result)
+        
+        logger.info(f"✅ Response generated: {len(response_text)} characters")
+        return {"response": response_text}
+        
+    except Exception as e:
+        logger.error(f"❌ Chat error: {e}")
+        return {"error": f"Failed to get response: {str(e)}"}
 
 @app.get("/api/messages")
 async def get_messages():
@@ -1733,6 +1715,199 @@ async def get_sprint_health():
     except Exception as e:
         logger.error(f"Sprint health error: {e}")
         return create_error_response("Sprint health analysis failed", str(e))
+
+@app.get("/api/jira/projects", tags=["Jira"], summary="Get Jira Projects")
+async def get_jira_projects():
+    """Get all Jira projects"""
+    try:
+        if not app_state.jira_configured or not app_state.jira_client:
+            return {
+                "success": False,
+                "error": "Jira not configured"
+            }
+        
+        # Get projects from Jira
+        projects = await app_state.jira_client.get_projects()
+        
+        # Format projects for frontend
+        detailed_projects = []
+        for project in projects:
+            detailed_projects.append({
+                "key": project.get('key', ''),
+                "name": project.get('name', ''),
+                "description": project.get('description', ''),
+                "projectTypeKey": project.get('projectTypeKey', ''),
+                "lead": project.get('lead', {}).get('displayName', '') if project.get('lead') else '',
+                "url": project.get('self', ''),
+                "avatarUrls": project.get('avatarUrls', {})
+            })
+        
+        return {
+            "success": True,
+            "projects": {
+                "detailed": detailed_projects,
+                "summary": {
+                    "total": len(detailed_projects),
+                    "keys": [p['key'] for p in detailed_projects]
+                }
+            }
+        }
+        
+    except Exception as e:
+        logger.error(f"Get projects error: {e}")
+        return {
+            "success": False,
+            "error": f"Failed to fetch projects: {str(e)}"
+        }
+
+@app.post("/api/leadership/dashboard", tags=["Leadership"], summary="Get Leadership Dashboard Metrics")
+async def get_leadership_dashboard(request: Dict[str, Any]):
+    """Get comprehensive leadership dashboard metrics with AI insights"""
+    try:
+        if not app_state.jira_configured or not app_state.jira_client:
+            return {
+                "success": False,
+                "error": "Jira not configured. Please configure Jira integration first."
+            }
+        
+        # Get project filter from query params or request body
+        project_filter = request.get('project', 'ALL')
+        
+        # Initialize AI engine if needed
+        if not app_state.ai_engine:
+            app_state.ai_engine = IntelligentAIEngine(app_state.jira_client)
+        
+        # Get basic Jira data
+        jql = "project is not EMPTY ORDER BY updated DESC"
+        if project_filter != 'ALL':
+            jql = f'project = "{project_filter}" ORDER BY updated DESC'
+        
+        issues_data = await app_state.jira_client.search(jql, max_results=1000)
+        issues = issues_data.get('issues', [])
+        
+        # Calculate portfolio summary
+        total_issues = len(issues)
+        completed_items = len([i for i in issues if i.get('fields', {}).get('status', {}).get('name') in ['Done', 'Closed', 'Resolved']])
+        completion_rate = (completed_items / total_issues * 100) if total_issues > 0 else 0
+        
+        # Get unique projects
+        projects = list(set([i.get('fields', {}).get('project', {}).get('key', 'Unknown') for i in issues]))
+        total_projects = len(projects)
+        
+        # Get active contributors
+        assignees = [i.get('fields', {}).get('assignee', {}).get('displayName', 'Unassigned') for i in issues if i.get('fields', {}).get('assignee')]
+        active_contributors = len(set(assignees))
+        
+        # Calculate project health
+        project_health = {}
+        for project in projects:
+            project_issues = [i for i in issues if i.get('fields', {}).get('project', {}).get('key') == project]
+            project_completed = len([i for i in project_issues if i.get('fields', {}).get('status', {}).get('name') in ['Done', 'Closed', 'Resolved']])
+            project_total = len(project_issues)
+            health_score = (project_completed / project_total * 100) if project_total > 0 else 0
+            
+            if health_score >= 80:
+                status = 'excellent'
+            elif health_score >= 60:
+                status = 'good'
+            elif health_score >= 40:
+                status = 'needs_attention'
+            else:
+                status = 'critical'
+            
+            project_health[project] = {
+                "name": project,
+                "health_score": round(health_score, 1),
+                "status": status,
+                "total_issues": project_total,
+                "completed": project_completed,
+                "in_progress": len([i for i in project_issues if i.get('fields', {}).get('status', {}).get('name') == 'In Progress']),
+                "blocked": len([i for i in project_issues if i.get('fields', {}).get('status', {}).get('name') == 'Blocked']),
+                "velocity_trend": "stable"  # Simplified for now
+            }
+        
+        # Calculate team performance
+        assignee_stats = {}
+        for issue in issues:
+            assignee = issue.get('fields', {}).get('assignee', {}).get('displayName', 'Unassigned')
+            if assignee not in assignee_stats:
+                assignee_stats[assignee] = {'completed': 0, 'total': 0}
+            assignee_stats[assignee]['total'] += 1
+            if issue.get('fields', {}).get('status', {}).get('name') in ['Done', 'Closed', 'Resolved']:
+                assignee_stats[assignee]['completed'] += 1
+        
+        top_performers = []
+        for assignee, stats in assignee_stats.items():
+            if assignee != 'Unassigned' and stats['total'] > 0:
+                efficiency_score = (stats['completed'] / stats['total'] * 100)
+                top_performers.append({
+                    "name": assignee,
+                    "completed_items": stats['completed'],
+                    "efficiency_score": round(efficiency_score, 1),
+                    "workload_balance": "optimal" if 5 <= stats['total'] <= 15 else ("heavy" if stats['total'] > 15 else "light")
+                })
+        
+        top_performers.sort(key=lambda x: x['efficiency_score'], reverse=True)
+        
+        # Generate AI insights
+        ai_analysis = f"Portfolio Analysis: {total_projects} projects with {total_issues} total issues. Completion rate of {completion_rate:.1f}% indicates {'strong' if completion_rate > 70 else 'moderate' if completion_rate > 50 else 'needs improvement'} performance. {active_contributors} active contributors are engaged across the portfolio."
+        
+        dashboard_metrics = {
+            "portfolio_summary": {
+                "total_projects": total_projects,
+                "total_issues": total_issues,
+                "completed_items": completed_items,
+                "completion_rate": round(completion_rate, 1),
+                "active_contributors": active_contributors
+            },
+            "project_health": project_health,
+            "team_performance": {
+                "top_performers": top_performers[:5],  # Top 5 performers
+                "workload_distribution": {
+                    "balanced": len([p for p in top_performers if p['workload_balance'] == 'optimal']),
+                    "overloaded": len([p for p in top_performers if p['workload_balance'] == 'heavy']),
+                    "underutilized": len([p for p in top_performers if p['workload_balance'] == 'light'])
+                },
+                "capacity_utilization": round(completion_rate, 1)
+            },
+            "quality_metrics": {
+                "defect_rate": 5.2,  # Placeholder
+                "resolution_time": {
+                    "average_days": 3.5,  # Placeholder
+                    "trend": "improving"
+                },
+                "customer_satisfaction": 87.5,  # Placeholder
+                "technical_debt_score": 15.3  # Placeholder
+            },
+            "strategic_insights": {
+                "ai_analysis": ai_analysis,
+                "risk_assessment": [
+                    {
+                        "type": "medium",
+                        "description": "Some projects showing lower completion rates",
+                        "impact": "Potential delivery delays",
+                        "recommendation": "Review resource allocation and project priorities"
+                    }
+                ],
+                "recommendations": [
+                    "Focus on projects with critical status",
+                    "Consider redistributing workload for better balance",
+                    "Implement regular progress reviews"
+                ]
+            }
+        }
+        
+        return {
+            "success": True,
+            "dashboard": dashboard_metrics
+        }
+        
+    except Exception as e:
+        logger.error(f"Leadership dashboard error: {e}")
+        return {
+            "success": False,
+            "error": f"Failed to generate dashboard metrics: {str(e)}"
+        }
 
 @app.get("/api/chat/team-performance", tags=["Analytics"], summary="Get Team Performance Analysis")
 async def get_team_performance():

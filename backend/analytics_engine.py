@@ -15,13 +15,23 @@ class AdvancedAnalyticsEngine:
         self.ai_engine = ai_engine
         self.jira_client = jira_client
     
-    async def generate_comprehensive_analytics(self) -> Dict[str, Any]:
+    async def generate_comprehensive_analytics(self, project_filter: str = None) -> Dict[str, Any]:
         """Generate comprehensive analytics from Jira data"""
         try:
-            logger.info("Generating comprehensive analytics...")
+            if project_filter:
+                logger.info(f"Generating comprehensive analytics for project: {project_filter}")
+            else:
+                logger.info("Generating comprehensive analytics...")
             
             # Get basic project information
             project_keys = await self.jira_client.get_project_keys()
+            
+            # Filter to specific project if requested
+            if project_filter:
+                project_keys = [key for key in project_keys if key.upper() == project_filter.upper()]
+                if not project_keys:
+                    logger.warning(f"Project filter '{project_filter}' not found in available projects")
+                    # Still return empty structure for consistency
             
             # Initialize analytics structure
             analytics = {

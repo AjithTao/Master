@@ -79,6 +79,59 @@ class AdvancedJQLGenerator:
             q = query.strip()
             logger.debug(f"generate_jql received query: {q}")
             
+            # 0) Check for specific issue keys first (e.g., CCM-283, CES-123)
+            issue_key_pattern = r'\b([A-Z]{2,}-\d+)\b'
+            issue_key_match = re.search(issue_key_pattern, q, re.IGNORECASE)
+            if issue_key_match:
+                specific_issue_key = issue_key_match.group(1)
+                logger.info(f"Detected specific issue key: {specific_issue_key}")
+                
+                # Execute specific issue query
+                jql = f'issue = "{specific_issue_key}"'
+                try:
+                    result = await self.jira_client.search(jql, max_results=1)
+                    issues = result.get('issues', []) if isinstance(result, dict) else result
+                    
+                    if issues:
+                        issue = issues[0]
+                        key = issue.get('key', 'Unknown')
+                        fields = issue.get('fields', {})
+                        summary = fields.get('summary', 'No summary')
+                        status = fields.get('status', {}).get('name', 'Unknown')
+                        assignee = fields.get('assignee', {}).get('displayName', 'Unassigned') if fields.get('assignee') else 'Unassigned'
+                        priority = fields.get('priority', {}).get('name', 'Unknown') if fields.get('priority') else 'Unknown'
+                        reporter = fields.get('reporter', {}).get('displayName', 'Unknown') if fields.get('reporter') else 'Unknown'
+                        
+                        response = f"""**{key}: {summary}**
+
+**Details:**
+- Status: {status}
+- Priority: {priority}  
+- Assignee: {assignee}
+- Reporter: {reporter}
+
+This is a specific issue query for {specific_issue_key}."""
+                        
+                        return {
+                            'success': True,
+                            'jql': jql,
+                            'count': 1,
+                            'response': response
+                        }
+                    else:
+                        return {
+                            'success': True,
+                            'jql': jql,
+                            'count': 0,
+                            'response': f"Issue {specific_issue_key} not found."
+                        }
+                except Exception as e:
+                    logger.error(f"Error querying specific issue {specific_issue_key}: {e}")
+                    return {
+                        'success': False,
+                        'response': f"Error retrieving {specific_issue_key}: {str(e)}"
+                    }
+            
             # 1) Project first (more permissive - don't require validation)
             tokens = [t for t in self.project_token.findall(q)]
             logger.debug(f"candidate project tokens: {tokens}")

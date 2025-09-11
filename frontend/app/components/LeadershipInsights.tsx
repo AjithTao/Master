@@ -20,8 +20,12 @@ import {
   Target,
   Zap,
   Calendar,
+  Info,
+  Sparkles,
   Clock,
-  Award
+  TrendingDown,
+  Award,
+  AlertTriangle
 } from 'lucide-react'
 import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
@@ -53,27 +57,80 @@ interface JiraAnalytics {
   generated_at: string
 }
 
+interface StrategicInsights {
+  ai_analysis: string
+  risk_assessment: Array<{
+    type: 'high' | 'medium' | 'low'
+    description: string
+    impact: string
+    recommendation: string
+  }>
+  opportunities: Array<{
+    title: string
+    description: string
+    potential_impact: string
+  }>
+  key_recommendations: Array<{
+    priority: 'urgent' | 'high' | 'medium'
+    action: string
+    expected_outcome: string
+    timeline: string
+  }>
+}
+
 export function LeadershipInsights() {
   const [analytics, setAnalytics] = useState<JiraAnalytics | null>(null)
+  const [strategicInsights, setStrategicInsights] = useState<StrategicInsights | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [isExporting, setIsExporting] = useState(false)
   const [error, setError] = useState('')
+  const [selectedProject, setSelectedProject] = useState<string>('ALL')
+  const [availableProjects, setAvailableProjects] = useState<any[]>([])
+  const [includeAI, setIncludeAI] = useState(true)
   const printRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    fetchProjects()
     fetchAnalytics()
   }, [])
+
+  useEffect(() => {
+    fetchAnalytics()
+  }, [selectedProject, includeAI])
+
+  const fetchProjects = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/jira/projects')
+      const data = await response.json()
+      if (data.success && data.projects?.detailed) {
+        setAvailableProjects(data.projects.detailed)
+      }
+    } catch (error) {
+      console.error('Failed to fetch projects:', error)
+    }
+  }
 
   const fetchAnalytics = async () => {
     setIsLoading(true)
     setError('')
     
     try {
-      const response = await fetch('http://localhost:8000/api/jira/analytics')
+      const baseUrl = selectedProject === 'ALL' 
+        ? 'http://localhost:8000/api/jira/analytics'
+        : `http://localhost:8000/api/jira/analytics?project=${selectedProject}`
+      
+      const url = includeAI ? `${baseUrl}${selectedProject === 'ALL' ? '?' : '&'}include_strategic_ai=true` : baseUrl
+      
+      const response = await fetch(url)
       const data = await response.json()
       
       if (response.ok && data.success) {
         setAnalytics(data.analytics)
+        if (data.strategic_insights) {
+          setStrategicInsights(data.strategic_insights)
+        } else {
+          setStrategicInsights(null)
+        }
       } else {
         setError(data.detail || 'Failed to fetch analytics')
       }
@@ -122,34 +179,118 @@ export function LeadershipInsights() {
   }
 
   const exportPDF = async () => {
+    if (!printRef.current) return
+    
+    setIsExporting(true)
     try {
-      setIsExporting(true)
       const element = printRef.current
-      if (!element) return
+      
+      // Temporarily adjust styles for better PDF rendering
+      const originalWidth = element.style.width
+      const originalBg = element.style.backgroundColor
+      element.style.width = '1200px'
+      element.style.backgroundColor = '#ffffff'
+      
+      // Force dark mode elements to light for PDF
+      const darkElements = element.querySelectorAll('.dark\\:bg-gray-800, .dark\\:bg-gray-900, .dark\\:text-white')
+      const originalStyles = Array.from(darkElements).map(el => {
+        const original = (el as HTMLElement).style.cssText
+        ;(el as HTMLElement).style.backgroundColor = '#ffffff'
+        ;(el as HTMLElement).style.color = '#000000'
+        return original
+      })
+      
       const canvas = await html2canvas(element, {
         scale: 2,
         useCORS: true,
-        backgroundColor: '#ffffff'
+        backgroundColor: '#ffffff',
+        width: 1200,
+        height: element.scrollHeight,
+        scrollX: 0,
+        scrollY: 0,
+        windowWidth: 1200,
+        windowHeight: element.scrollHeight,
+        allowTaint: true,
+        foreignObjectRendering: true
       })
-      const imgData = canvas.toDataURL('image/png')
+      
+      const imgData = canvas.toDataURL('image/png', 0.95)
       const pdf = new jsPDF('p', 'mm', 'a4')
+      
       const pdfWidth = pdf.internal.pageSize.getWidth()
       const pdfHeight = pdf.internal.pageSize.getHeight()
-      const imgWidth = pdfWidth
-      const imgHeight = (canvas.height * pdfWidth) / canvas.width
+      const imgWidth = pdfWidth - 20 // 10mm margin on each side
+      const imgHeight = (canvas.height * imgWidth) / canvas.width
+      
       let heightLeft = imgHeight
-      let position = 0
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight, undefined, 'FAST')
-      heightLeft -= pdfHeight
+      let position = 10 // 10mm top margin
+      
+      // Add title page
+      pdf.setFontSize(24)
+      pdf.setTextColor(0, 0, 0)
+      pdf.text('Leadership Analytics Report', pdfWidth / 2, 30, { align: 'center' })
+      pdf.setFontSize(12)
+      pdf.text(`Generated: ${new Date().toLocaleString()}`, pdfWidth / 2, 40, { align: 'center' })
+      pdf.text(`Project Filter: ${selectedProject}`, pdfWidth / 2, 50, { align: 'center' })
+      
+      // Add first page of content
+      const firstPageHeight = Math.min(imgHeight, pdfHeight - 70)
+      pdf.addImage(imgData, 'PNG', 10, 60, imgWidth, firstPageHeight, undefined, 'FAST')
+      heightLeft -= firstPageHeight
+      
+      // Add additional pages if needed
       while (heightLeft > 0) {
         pdf.addPage()
-        position = heightLeft - imgHeight
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight, undefined, 'FAST')
-        heightLeft -= pdfHeight
+        const pageHeight = Math.min(heightLeft, pdfHeight - 20)
+        const sourceY = imgHeight - heightLeft
+        
+        // Create a new canvas for this page section
+        const pageCanvas = document.createElement('canvas')
+        const pageCtx = pageCanvas.getContext('2d')
+        pageCanvas.width = canvas.width
+        pageCanvas.height = (pageHeight / imgWidth) * canvas.width
+        
+        if (pageCtx) {
+          pageCtx.drawImage(canvas, 0, (sourceY / imgWidth) * canvas.width, canvas.width, pageCanvas.height, 0, 0, canvas.width, pageCanvas.height)
+          const pageImgData = pageCanvas.toDataURL('image/png', 0.95)
+          pdf.addImage(pageImgData, 'PNG', 10, 10, imgWidth, pageHeight, undefined, 'FAST')
+        }
+        
+        heightLeft -= pageHeight
       }
-      pdf.save(`Leadership_Analytics_${new Date().toISOString().slice(0,10)}.pdf`)
+      
+      pdf.save(`leadership-analytics-${selectedProject}-${new Date().toISOString().split('T')[0]}.pdf`)
+      
+      // Restore original styles
+      element.style.width = originalWidth
+      element.style.backgroundColor = originalBg
+      darkElements.forEach((el, index) => {
+        ;(el as HTMLElement).style.cssText = originalStyles[index]
+      })
+      
+    } catch (error) {
+      console.error('PDF export failed:', error)
+      setError('PDF export failed. Please try again.')
     } finally {
       setIsExporting(false)
+    }
+  }
+
+  const getRiskColor = (type: string) => {
+    switch (type) {
+      case 'high': return 'destructive'
+      case 'medium': return 'default'
+      case 'low': return 'secondary'
+      default: return 'outline'
+    }
+  }
+
+  const getPriorityColor = (priority: string) => {
+    switch (priority) {
+      case 'urgent': return 'destructive'
+      case 'high': return 'default'
+      case 'medium': return 'secondary'
+      default: return 'outline'
     }
   }
 
@@ -222,28 +363,86 @@ export function LeadershipInsights() {
     <div className="h-full min-h-0 flex flex-col overflow-hidden" ref={printRef}>
       <div className="flex-shrink-0">
         {/* Header with Export Options */}
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Leadership Analytics Dashboard
-            </h2>
-            <p className="text-gray-600 dark:text-muted-foreground mt-1">
-              Real-time insights, velocity tracking, and team performance analytics
+        <div className="flex flex-col space-y-4 mb-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Leadership Analytics Dashboard
+              </h2>
+              <p className="text-gray-600 dark:text-muted-foreground mt-1">
+                Real-time insights, velocity tracking, and team performance analytics
+              </p>
+            </div>
+            <div className="flex space-x-2">
+              <Button onClick={exportPDF} disabled={isExporting} className="flex items-center space-x-2 bg-blue-600 text-white hover:bg-blue-700">
+                <Download className="w-4 h-4" />
+                <span>PDF</span>
+              </Button>
+              <Button variant="outline" onClick={() => exportAnalytics('json')} disabled={isExporting} className="flex items-center space-x-2">
+                <Download className="w-4 h-4" />
+                <span>Export</span>
+              </Button>
+              <Button variant="outline" onClick={fetchAnalytics} disabled={isLoading} className="flex items-center space-x-2">
+                <RefreshCw className={`${isLoading ? 'animate-spin' : ''} w-4 h-4`} />
+                <span>Refresh</span>
+              </Button>
+            </div>
+          </div>
+          
+          {/* Project Filter */}
+          <div className="flex flex-col space-y-2">
+            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Project Filter:</h3>
+            <div className="flex flex-wrap gap-2">
+              <label className="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="project-insights"
+                  value="ALL"
+                  checked={selectedProject === 'ALL'}
+                  onChange={(e) => setSelectedProject(e.target.value)}
+                  className="text-blue-600"
+                />
+                <Badge variant={selectedProject === 'ALL' ? 'default' : 'outline'}>All Projects</Badge>
+              </label>
+              {availableProjects.map((proj) => (
+                <label key={proj.key} className="flex items-center space-x-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="project-insights"
+                    value={proj.key}
+                    checked={selectedProject === proj.key}
+                    onChange={(e) => setSelectedProject(e.target.value)}
+                    className="text-blue-600"
+                  />
+                  <Badge variant={selectedProject === proj.key ? 'default' : 'outline'}>
+                    {proj.key} - {proj.name}
+                  </Badge>
+                </label>
+              ))}
+            </div>
+            <p className="text-xs text-gray-500">
+              {selectedProject === 'ALL' ? 'Showing analytics for all projects' : `Showing analytics for ${selectedProject}`}
             </p>
           </div>
-          <div className="flex space-x-2">
-            <Button onClick={exportPDF} disabled={isExporting} className="flex items-center space-x-2 bg-blue-600 text-white hover:bg-blue-700">
-              <Download className="w-4 h-4" />
-              <span>PDF</span>
-            </Button>
-            <Button variant="outline" onClick={() => exportAnalytics('json')} disabled={isExporting} className="flex items-center space-x-2">
-              <Download className="w-4 h-4" />
-              <span>Export</span>
-            </Button>
-            <Button variant="outline" onClick={fetchAnalytics} disabled={isLoading} className="flex items-center space-x-2">
-              <RefreshCw className={`${isLoading ? 'animate-spin' : ''} w-4 h-4`} />
-              <span>Refresh</span>
-            </Button>
+          
+          {/* AI Analysis Toggle */}
+          <div className="flex items-center justify-between p-4 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-lg border border-indigo-200 dark:border-indigo-800">
+            <div className="flex items-center space-x-3">
+              <Sparkles className="w-5 h-5 text-indigo-600 animate-pulse" />
+              <div>
+                <h4 className="font-semibold text-indigo-900 dark:text-indigo-100">AI-Powered Strategic Analysis</h4>
+                <p className="text-sm text-indigo-700 dark:text-indigo-300">Get OpenAI-powered insights, risk assessment, and recommendations</p>
+              </div>
+            </div>
+            <label className="flex items-center space-x-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={includeAI}
+                onChange={(e) => setIncludeAI(e.target.checked)}
+                className="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              />
+              <span className="text-sm font-medium text-indigo-900 dark:text-indigo-100">Enable AI Analysis</span>
+            </label>
           </div>
         </div>
       </div>
@@ -252,30 +451,62 @@ export function LeadershipInsights() {
       <div className="flex-1 min-h-0 overflow-y-auto space-y-6">
         {/* Key Metrics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border-blue-200 dark:border-blue-800">
+          <Card className={`bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border-blue-200 dark:border-blue-800 transition-all duration-500 hover:shadow-lg hover:scale-105 ${isLoading ? 'animate-pulse' : 'animate-in slide-in-from-left-4'}`}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-blue-600 dark:text-blue-300">Total Projects</p>
-                  <p className="text-3xl font-bold text-blue-700 dark:text-blue-200">{analytics.summary.total_projects}</p>
-                  <p className="text-xs text-blue-500 mt-1">Active Projects</p>
+                  <div className="flex items-center gap-2 mb-2">
+                    <p className="text-sm font-medium text-blue-600 dark:text-blue-300">Total Projects</p>
+                    <div className="group relative">
+                      <Info className="h-3 w-3 text-blue-400 cursor-help" />
+                      <div className="absolute left-0 top-5 hidden group-hover:block bg-black text-white text-xs rounded p-2 w-48 z-10">
+                        Active projects with at least 1 issue in the selected timeframe
+                      </div>
+                    </div>
+                  </div>
+                  {isLoading ? (
+                    <div className="h-9 bg-blue-200 rounded animate-pulse mb-1"></div>
+                  ) : (
+                    <p className="text-3xl font-bold text-blue-700 dark:text-blue-200 animate-in fade-in-50 duration-1000">
+                      {analytics.summary.total_projects}
+                    </p>
+                  )}
+                  <p className="text-xs text-blue-500 mt-1 animate-in slide-in-from-bottom-2 duration-700 delay-200">
+                    {selectedProject === 'ALL' ? 'All Projects' : `${selectedProject} Project`}
+                  </p>
                 </div>
-                <div className="p-3 bg-blue-500 rounded-full">
+                <div className="p-3 bg-blue-500 rounded-full animate-in scale-in-75 duration-500 delay-300">
                   <FolderOpen className="w-6 h-6 text-white" />
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 border-green-200 dark:border-green-800">
+          <Card className={`bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 border-green-200 dark:border-green-800 transition-all duration-500 hover:shadow-lg hover:scale-105 ${isLoading ? 'animate-pulse' : 'animate-in slide-in-from-left-4 delay-150'}`}>
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-green-600 dark:text-green-300">Total Stories</p>
-                  <p className="text-3xl font-bold text-green-700 dark:text-green-200">{analytics.summary.total_stories}</p>
-                  <p className="text-xs text-green-500 mt-1">User Stories</p>
+                  <div className="flex items-center gap-2 mb-2">
+                    <p className="text-sm font-medium text-green-600 dark:text-green-300">Total Stories</p>
+                    <div className="group relative">
+                      <Info className="h-3 w-3 text-green-400 cursor-help" />
+                      <div className="absolute left-0 top-5 hidden group-hover:block bg-black text-white text-xs rounded p-2 w-48 z-10">
+                        User stories across all projects and statuses
+                      </div>
+                    </div>
+                  </div>
+                  {isLoading ? (
+                    <div className="h-9 bg-green-200 rounded animate-pulse mb-1"></div>
+                  ) : (
+                    <p className="text-3xl font-bold text-green-700 dark:text-green-200 animate-in fade-in-50 duration-1000 delay-200">
+                      {analytics.summary.total_stories}
+                    </p>
+                  )}
+                  <p className="text-xs text-green-500 mt-1 animate-in slide-in-from-bottom-2 duration-700 delay-400">
+                    User Stories
+                  </p>
                 </div>
-                <div className="p-3 bg-green-500 rounded-full">
+                <div className="p-3 bg-green-500 rounded-full animate-in scale-in-75 duration-500 delay-500">
                   <CheckSquare className="w-6 h-6 text-white" />
                 </div>
               </div>
@@ -558,6 +789,111 @@ export function LeadershipInsights() {
             </CardContent>
           </Card>
         </div>
+
+        {/* AI-Powered Strategic Insights Section */}
+        {strategicInsights && (
+          <Card className="border-0 shadow-xl bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-indigo-900/20 dark:via-purple-900/20 dark:to-pink-900/20">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-indigo-600 animate-pulse" />
+                AI-Powered Strategic Insights
+              </CardTitle>
+              <CardDescription>
+                Intelligent analysis and recommendations powered by OpenAI
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* AI Analysis */}
+              <div className="p-4 rounded-lg bg-white/50 dark:bg-gray-900/50 border border-indigo-200 dark:border-indigo-800">
+                <div className="flex items-start gap-3">
+                  <Target className="h-6 w-6 text-indigo-600 mt-1 flex-shrink-0" />
+                  <div className="text-gray-800 dark:text-gray-200 leading-relaxed whitespace-pre-line">
+                    {strategicInsights.ai_analysis}
+                  </div>
+                </div>
+              </div>
+
+              {/* Risk Assessment */}
+              {strategicInsights.risk_assessment && strategicInsights.risk_assessment.length > 0 && (
+                <div>
+                  <h4 className="font-semibold mb-3 flex items-center gap-2">
+                    <AlertTriangle className="h-4 w-4 text-orange-600" />
+                    Risk Assessment
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {strategicInsights.risk_assessment.map((risk, index) => (
+                      <Card key={index} className="border-l-4 border-l-red-500">
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between mb-2">
+                            <Badge variant={getRiskColor(risk.type)} className="capitalize">
+                              {risk.type} Risk
+                            </Badge>
+                          </div>
+                          <h5 className="font-medium mb-2">{risk.description}</h5>
+                          <p className="text-sm text-muted-foreground mb-2">{risk.impact}</p>
+                          <p className="text-sm font-medium text-blue-600 dark:text-blue-400">
+                            💡 {risk.recommendation}
+                          </p>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Opportunities */}
+              {strategicInsights.opportunities && strategicInsights.opportunities.length > 0 && (
+                <div>
+                  <h4 className="font-semibold mb-3 flex items-center gap-2">
+                    <Zap className="h-4 w-4 text-green-600" />
+                    Growth Opportunities
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {strategicInsights.opportunities.map((opportunity, index) => (
+                      <Card key={index} className="border-l-4 border-l-green-500">
+                        <CardContent className="p-4">
+                          <h5 className="font-medium mb-2">{opportunity.title}</h5>
+                          <p className="text-sm text-muted-foreground mb-2">{opportunity.description}</p>
+                          <p className="text-sm font-medium text-green-600 dark:text-green-400">
+                            🎯 {opportunity.potential_impact}
+                          </p>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Key Recommendations */}
+              {strategicInsights.key_recommendations && strategicInsights.key_recommendations.length > 0 && (
+                <div>
+                  <h4 className="font-semibold mb-3 flex items-center gap-2">
+                    <Target className="h-4 w-4 text-purple-600" />
+                    Key Recommendations
+                  </h4>
+                  <div className="space-y-3">
+                    {strategicInsights.key_recommendations.map((rec, index) => (
+                      <Card key={index} className="border-l-4 border-l-purple-500">
+                        <CardContent className="p-4">
+                          <div className="flex items-start justify-between mb-2">
+                            <Badge variant={getPriorityColor(rec.priority)} className="capitalize">
+                              {rec.priority} Priority
+                            </Badge>
+                            <span className="text-sm text-muted-foreground">{rec.timeline}</span>
+                          </div>
+                          <h5 className="font-medium mb-2">{rec.action}</h5>
+                          <p className="text-sm text-muted-foreground">
+                            Expected outcome: {rec.expected_outcome}
+                          </p>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   )

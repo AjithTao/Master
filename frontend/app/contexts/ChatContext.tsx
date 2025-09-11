@@ -2,11 +2,14 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode, useRef } from 'react'
 
-interface Message {
+export interface Message {
   role: 'user' | 'assistant'
   content: string
   timestamp?: string
   metadata?: any
+  isLeadershipMode?: boolean
+  dataSource?: string
+  lastUpdated?: string
 }
 
 interface CachedIssueDetails {

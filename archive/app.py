@@ -13,6 +13,7 @@ import logging
 import sys
 import asyncio
 from contextlib import asynccontextmanager
+from dotenv import load_dotenv
 
 # Regex for detecting Jira ticket keys (case-insensitive)
 ISSUE_KEY_RE = r"\b([A-Z][A-Z0-9]+-\d+)\b"
@@ -58,7 +59,15 @@ from utils.metrics_utils import (
 )
 from datetime import datetime, timezone
 from intent_router import handle_user_query as ai_handle
+from intelligent_ai_engine import IntelligentAIEngine
 from ai_summarizer import summarize as ai_summarize
+from datetime import datetime, timedelta
+import os
+from openai import OpenAI
+from leadership_access import leadership_access_manager
+
+# Load environment variables from config.env if it exists
+load_dotenv('config.env', override=True)
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -81,6 +90,7 @@ class AppState:
         self.messages = []
         self.export_files = {}
         self.ai_engine = None
+        self.intelligent_ai_engine = None
         self.query_processor = None
         self.analytics_engine = None
         self.enhanced_jql_processor = None
@@ -1126,15 +1136,25 @@ async def configure_confluence(config: ConfluenceConfigRequest):
         # quick ping by doing a trivial search
         try:
             _ = await client.search("home", limit=1)
-        except Exception:
-            pass
+            test_result = "Connection test successful"
+        except Exception as e:
+            test_result = f"Connection test failed: {str(e)}"
 
         app_state.confluence_configured = True
         app_state.confluence_client = client
         app_state.confluence_config = conf_cfg
-        return {"success": True, "message": "Confluence configured"}
+        return {
+            "success": True, 
+            "message": "Confluence configured successfully",
+            "test_result": test_result
+        }
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        logger.error(f"Confluence configuration failed: {e}")
+        return {
+            "success": False,
+            "error": str(e),
+            "message": f"Failed to configure Confluence: {str(e)}"
+        }
 
 @app.post("/api/confluence/disconnect")
 async def disconnect_confluence():
@@ -1172,6 +1192,7 @@ async def configure_jira(config: JiraConfigRequest):
         await jira_client.initialize()
         
         # Test the connection by trying to get current sprint
+        current_sprint = None
         try:
             current_sprint = await jira_client.get_current_sprint()
             logger.info(f"Successfully connected to Jira. Current sprint: {current_sprint}")
@@ -1179,6 +1200,7 @@ async def configure_jira(config: JiraConfigRequest):
             logger.warning(f"Could not get current sprint, but connection may still work: {e}")
         
         # Fetch and cache projects for this session
+        projects_count = 0
         try:
             projects = await jira_client.get_projects()
             key_to_name = {}
@@ -1191,6 +1213,7 @@ async def configure_jira(config: JiraConfigRequest):
                     keys.append(key)
             app_state.jira_projects = key_to_name
             app_state.jira_project_keys = keys
+            projects_count = len(keys)
             # Provide known project keys to NLU for better detection
             try:
                 jql_loader.slot_nlu.set_known_projects(keys)
@@ -1208,19 +1231,21 @@ async def configure_jira(config: JiraConfigRequest):
         return {
             "success": True,
             "message": "Jira configured successfully",
+            "projects": projects_count,
+            "current_sprint": current_sprint,
             "config": {
                 "url": config.url,
                 "email": config.email,
                 "board_id": app_state.jira_board_id
-            },
-            "projects": {
-                "keys": app_state.jira_project_keys,
-                "map": app_state.jira_projects
             }
         }
     except Exception as e:
         logger.error(f"Jira configuration failed: {e}")
-        raise HTTPException(status_code=400, detail=str(e))
+        return {
+            "success": False,
+            "error": str(e),
+            "message": f"Failed to configure Jira: {str(e)}"
+        }
 
 @app.post("/api/jira/disconnect")
 async def disconnect_jira():
@@ -1247,28 +1272,94 @@ async def disconnect_jira():
 @app.get("/api/jira/status", tags=["JIRA"], summary="Get JIRA Connection Status")
 async def get_jira_status():
     """Get Jira connection status"""
-    return {
-        "configured": app_state.jira_configured,
-        "board_id": app_state.jira_board_id,
-        "projects": {
-            "keys": app_state.jira_project_keys,
-            "map": app_state.jira_projects
-        } if app_state.jira_configured else None,
-        "config": {
-            "url": app_state.jira_config.base_url if app_state.jira_config else None,
-            "email": mask_email(app_state.jira_config.email) if app_state.jira_config else None
-        } if app_state.jira_config else None
-    }
+    try:
+        if not app_state.jira_configured:
+            return {
+                "success": False,
+                "configured": False,
+                "message": "Jira not configured"
+            }
+        
+        # Test connection if configured
+        try:
+            if app_state.jira_client:
+                projects = await app_state.jira_client.get_projects()
+                project_count = len(projects) if projects else 0
+                
+                return {
+                    "success": True,
+                    "configured": True,
+                    "message": f"Connected to Jira with {project_count} projects",
+                    "projects": project_count,
+                    "board_id": app_state.jira_board_id,
+                    "config": {
+                        "url": app_state.jira_config.base_url if app_state.jira_config else None,
+                        "email": mask_email(app_state.jira_config.email) if app_state.jira_config else None
+                    }
+                }
+            else:
+                return {
+                    "success": False,
+                    "configured": False,
+                    "message": "Jira client not initialized"
+                }
+        except Exception as e:
+            return {
+                "success": False,
+                "configured": False,
+                "message": f"Jira connection test failed: {str(e)}"
+            }
+    except Exception as e:
+        return {
+            "success": False,
+            "configured": False,
+            "message": f"Error checking Jira status: {str(e)}"
+        }
 
 @app.get("/api/confluence/status")
 async def get_confluence_status():
-    return {
-        "configured": app_state.confluence_configured,
-        "config": {
-            "url": app_state.confluence_config.base_url if app_state.confluence_config else None,
-            "email": mask_email(app_state.confluence_config.email) if app_state.confluence_config else None
-        } if app_state.confluence_config else None
-    }
+    """Get Confluence connection status"""
+    try:
+        if not app_state.confluence_configured:
+            return {
+                "success": False,
+                "configured": False,
+                "message": "Confluence not configured"
+            }
+        
+        # Test connection if configured
+        try:
+            if app_state.confluence_client:
+                # Test with a simple search
+                await app_state.confluence_client.search("home", limit=1)
+                
+                return {
+                    "success": True,
+                    "configured": True,
+                    "message": "Connected to Confluence successfully",
+                    "config": {
+                        "url": app_state.confluence_config.base_url if app_state.confluence_config else None,
+                        "email": mask_email(app_state.confluence_config.email) if app_state.confluence_config else None
+                    }
+                }
+            else:
+                return {
+                    "success": False,
+                    "configured": False,
+                    "message": "Confluence client not initialized"
+                }
+        except Exception as e:
+            return {
+                "success": False,
+                "configured": False,
+                "message": f"Confluence connection test failed: {str(e)}"
+            }
+    except Exception as e:
+        return {
+            "success": False,
+            "configured": False,
+            "message": f"Error checking Confluence status: {str(e)}"
+        }
 
 @app.get("/api/jira/projects", tags=["JIRA"], summary="Get cached Jira projects")
 async def get_cached_projects():
@@ -1296,11 +1387,19 @@ async def get_cached_projects():
         except Exception as e:
             logger.error(f"Failed to fetch Jira projects: {e}")
             raise HTTPException(status_code=500, detail="Failed to fetch Jira projects")
+    # Also get detailed projects from enhanced cache
+    detailed_projects = []
+    try:
+        detailed_projects = app_state.jira_client.get_all_projects()
+    except Exception as e:
+        logger.warning(f"Could not get detailed projects: {e}")
+    
     return {
         "success": True,
         "projects": {
             "keys": app_state.jira_project_keys,
-            "map": app_state.jira_projects
+            "map": app_state.jira_projects,
+            "detailed": detailed_projects
         }
     }
 
@@ -1342,8 +1441,8 @@ async def search_jira_issues(request: Dict[str, Any]):
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.get("/api/jira/analytics")
-async def get_jira_analytics():
-    """Get comprehensive Jira analytics with AI insights"""
+async def get_jira_analytics(project: str = None, include_strategic_ai: bool = False):
+    """Get comprehensive Jira analytics with AI insights, optionally filtered by project"""
     if not app_state.jira_configured or not app_state.jira_client:
         raise HTTPException(status_code=400, detail="Jira not configured")
     
@@ -1354,16 +1453,281 @@ async def get_jira_analytics():
                 app_state.ai_engine = AdvancedAIEngine(app_state.jira_client)
             app_state.analytics_engine = AdvancedAnalyticsEngine(app_state.ai_engine, app_state.jira_client)
         
-        # Generate comprehensive analytics
-        analytics = await app_state.analytics_engine.generate_comprehensive_analytics()
+        # Generate comprehensive analytics (filtered by project if specified)
+        analytics = await app_state.analytics_engine.generate_comprehensive_analytics(project_filter=project)
         
-        return {
+        # Add strategic AI analysis if requested
+        strategic_insights = None
+        if include_strategic_ai:
+            try:
+                # Initialize intelligent AI engine for strategic analysis
+                from intelligent_ai_engine import IntelligentAIEngine
+                intelligent_ai_engine = IntelligentAIEngine(app_state.jira_client)
+                
+                # Generate strategic insights from analytics data
+                strategic_insights = await generate_strategic_insights_from_analytics(
+                    intelligent_ai_engine, analytics, project
+                )
+            except Exception as e:
+                logger.warning(f"Strategic AI analysis failed: {e}")
+                strategic_insights = generate_fallback_strategic_insights(analytics)
+        
+        response = {
             "success": True,
-            "analytics": analytics
+            "analytics": analytics,
+            "project_filter": project
         }
+        
+        if strategic_insights:
+            response["strategic_insights"] = strategic_insights
+            
+        return response
+        
     except Exception as e:
         logger.error(f"Advanced analytics error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+async def generate_strategic_insights_from_analytics(ai_engine, analytics, project_filter):
+    """Generate strategic insights from analytics data using OpenAI"""
+    
+    # Prepare context from analytics data
+    context = f"""
+Analytics Summary for {project_filter or 'All Projects'}:
+- Total Projects: {analytics.get('summary', {}).get('total_projects', 0)}
+- Total Issues: {analytics.get('summary', {}).get('total_issues', 0)}
+- Stories: {analytics.get('summary', {}).get('total_stories', 0)}
+- Defects: {analytics.get('summary', {}).get('total_defects', 0)}
+- Tasks: {analytics.get('summary', {}).get('total_tasks', 0)}
+- Assignees: {analytics.get('summary', {}).get('total_assignees', 0)}
+
+Project Breakdown:
+{format_analytics_for_ai(analytics.get('projects', {}))}
+
+Current Sprint: {analytics.get('current_sprint', {}).get('name', 'Not available')}
+Sprint State: {analytics.get('current_sprint', {}).get('state', 'Unknown')}
+"""
+
+    try:
+        # Use AI engine to generate strategic insights
+        ai_response = await ai_engine.process_query(
+            f"Analyze this Jira analytics data and provide strategic leadership insights, risk assessment, growth opportunities, and key recommendations:\n\n{context}"
+        )
+        
+        if ai_response.get("success") and ai_response.get("response"):
+            ai_analysis = ai_response["response"]
+        else:
+            ai_analysis = "Analytics data processed successfully. Strategic insights are being generated..."
+            
+    except Exception as e:
+        logger.warning(f"AI strategic analysis failed: {e}")
+        ai_analysis = generate_deterministic_strategic_analysis(analytics)
+    
+    # Generate structured insights
+    risk_assessment = generate_analytics_risk_assessment(analytics)
+    opportunities = generate_analytics_opportunities(analytics)
+    recommendations = generate_analytics_recommendations(analytics)
+    
+    return {
+        "ai_analysis": ai_analysis,
+        "risk_assessment": risk_assessment,
+        "opportunities": opportunities,
+        "key_recommendations": recommendations
+    }
+
+def format_analytics_for_ai(projects_data):
+    """Format project analytics data for AI analysis"""
+    formatted = []
+    for key, project in projects_data.items():
+        formatted.append(f"- {project.get('name', key)}: {project.get('total_issues', 0)} issues ({project.get('stories', 0)} stories, {project.get('defects', 0)} defects, {project.get('tasks', 0)} tasks), {project.get('assignee_count', 0)} assignees")
+    return '\n'.join(formatted)
+
+def generate_analytics_risk_assessment(analytics):
+    """Generate risk assessment from analytics data"""
+    risks = []
+    summary = analytics.get('summary', {})
+    projects = analytics.get('projects', {})
+    
+    # Check for high defect rates
+    total_issues = summary.get('total_issues', 0)
+    total_defects = summary.get('total_defects', 0)
+    if total_issues > 0:
+        defect_rate = (total_defects / total_issues) * 100
+        if defect_rate > 20:
+            risks.append({
+                "type": "high",
+                "description": f"High defect rate of {defect_rate:.1f}%",
+                "impact": "Quality concerns and potential customer impact",
+                "recommendation": "Implement enhanced testing and quality gates"
+            })
+        elif defect_rate > 10:
+            risks.append({
+                "type": "medium", 
+                "description": f"Elevated defect rate of {defect_rate:.1f}%",
+                "impact": "Quality monitoring needed",
+                "recommendation": "Review testing processes and increase code reviews"
+            })
+    
+    # Check for projects with no activity
+    inactive_projects = [name for key, project in projects.items() 
+                        if project.get('total_issues', 0) == 0]
+    if inactive_projects:
+        risks.append({
+            "type": "medium",
+            "description": f"{len(inactive_projects)} project(s) with no tracked issues",
+            "impact": "Potential lack of visibility or project abandonment",
+            "recommendation": "Review project status and update tracking"
+        })
+    
+    # Check for workload concentration
+    if len(projects) > 0:
+        avg_assignees = summary.get('total_assignees', 0) / len(projects)
+        low_staffed = [name for key, project in projects.items() 
+                      if project.get('assignee_count', 0) < max(1, avg_assignees * 0.5)]
+        if len(low_staffed) > len(projects) * 0.3:
+            risks.append({
+                "type": "medium",
+                "description": f"{len(low_staffed)} project(s) appear understaffed",
+                "impact": "Potential delivery delays and team burnout",
+                "recommendation": "Review resource allocation and consider redistribution"
+            })
+    
+    return risks
+
+def generate_analytics_opportunities(analytics):
+    """Generate growth opportunities from analytics data"""
+    opportunities = []
+    summary = analytics.get('summary', {})
+    projects = analytics.get('projects', {})
+    
+    # High-performing projects
+    if projects:
+        high_performing = [project for key, project in projects.items() 
+                         if project.get('stories', 0) > 0 and project.get('defects', 0) == 0]
+        if high_performing:
+            opportunities.append({
+                "title": "Scale Best Practices",
+                "description": f"{len(high_performing)} project(s) with excellent quality metrics",
+                "potential_impact": "Apply successful patterns to improve overall portfolio quality"
+            })
+    
+    # Balanced workload opportunities
+    total_assignees = summary.get('total_assignees', 0)
+    if total_assignees > 0 and len(projects) > 1:
+        opportunities.append({
+            "title": "Cross-Project Collaboration",
+            "description": f"{total_assignees} assignees across {len(projects)} projects",
+            "potential_impact": "Enable knowledge sharing and skill development across teams"
+        })
+    
+    # Process improvement opportunities
+    if summary.get('total_tasks', 0) > summary.get('total_stories', 0):
+        opportunities.append({
+            "title": "Story-Driven Development",
+            "description": "High ratio of tasks to user stories detected",
+            "potential_impact": "Improve user-centric development and value delivery"
+        })
+    
+    return opportunities
+
+def generate_analytics_recommendations(analytics):
+    """Generate key recommendations from analytics data"""
+    recommendations = []
+    summary = analytics.get('summary', {})
+    projects = analytics.get('projects', {})
+    
+    # Project consolidation recommendations
+    if len(projects) > 5:
+        recommendations.append({
+            "priority": "medium",
+            "action": f"Review {len(projects)} active projects for potential consolidation",
+            "expected_outcome": "Improved focus and resource utilization",
+            "timeline": "Within 2 weeks"
+        })
+    
+    # Quality improvement recommendations
+    total_issues = summary.get('total_issues', 0)
+    total_defects = summary.get('total_defects', 0)
+    if total_issues > 0 and (total_defects / total_issues) > 0.15:
+        recommendations.append({
+            "priority": "high",
+            "action": "Implement enhanced quality assurance processes",
+            "expected_outcome": "Reduced defect rate and improved customer satisfaction",
+            "timeline": "Within 3 weeks"
+        })
+    
+    # Team scaling recommendations
+    total_assignees = summary.get('total_assignees', 0)
+    if total_assignees > 0 and len(projects) > 0:
+        avg_team_size = total_assignees / len(projects)
+        if avg_team_size < 3:
+            recommendations.append({
+                "priority": "medium",
+                "action": "Consider team size optimization for better collaboration",
+                "expected_outcome": "Improved team dynamics and knowledge sharing",
+                "timeline": "Within 4 weeks"
+            })
+    
+    return recommendations
+
+def generate_fallback_strategic_insights(analytics):
+    """Generate basic strategic insights when AI is not available"""
+    summary = analytics.get('summary', {})
+    projects = analytics.get('projects', {})
+    
+    insights = []
+    
+    # Portfolio overview
+    total_projects = len(projects)
+    total_issues = summary.get('total_issues', 0)
+    if total_issues > 0:
+        insights.append(f"📊 Portfolio consists of {total_projects} active projects with {total_issues} total issues")
+    
+    # Quality assessment
+    total_defects = summary.get('total_defects', 0)
+    if total_issues > 0:
+        defect_rate = (total_defects / total_issues) * 100
+        if defect_rate > 15:
+            insights.append(f"⚠️ Quality attention needed: {defect_rate:.1f}% defect rate")
+        else:
+            insights.append(f"✅ Quality metrics healthy: {defect_rate:.1f}% defect rate")
+    
+    # Team distribution
+    total_assignees = summary.get('total_assignees', 0)
+    if total_assignees > 0:
+        insights.append(f"👥 {total_assignees} active contributors across portfolio")
+    
+    return "\n\n".join(insights)
+
+def generate_deterministic_strategic_analysis(analytics):
+    """Generate deterministic strategic analysis when AI fails"""
+    summary = analytics.get('summary', {})
+    projects = analytics.get('projects', {})
+    
+    analysis_parts = []
+    
+    # Portfolio health
+    total_projects = len(projects)
+    total_issues = summary.get('total_issues', 0)
+    analysis_parts.append(f"🎯 **Portfolio Overview**\nManaging {total_projects} active projects with {total_issues} tracked issues.")
+    
+    # Quality analysis
+    total_defects = summary.get('total_defects', 0)
+    if total_issues > 0:
+        defect_rate = (total_defects / total_issues) * 100
+        if defect_rate > 20:
+            analysis_parts.append(f"🔴 **Quality Alert**\nDefect rate of {defect_rate:.1f}% requires immediate attention.")
+        elif defect_rate > 10:
+            analysis_parts.append(f"🟡 **Quality Watch**\nDefect rate of {defect_rate:.1f}% should be monitored.")
+        else:
+            analysis_parts.append(f"🟢 **Quality Status**\nDefect rate of {defect_rate:.1f}% is within acceptable range.")
+    
+    # Team insights
+    total_assignees = summary.get('total_assignees', 0)
+    if total_assignees > 0 and total_projects > 0:
+        avg_team_size = total_assignees / total_projects
+        analysis_parts.append(f"👥 **Team Distribution**\nAverage team size of {avg_team_size:.1f} contributors per project.")
+    
+    return "\n\n".join(analysis_parts)
 
 @app.post("/api/jira/predictive-analysis")
 async def get_predictive_analysis(request: Dict[str, Any]):
@@ -1561,6 +1925,46 @@ def convert_analytics_to_csv(analytics: Dict[str, Any]) -> str:
 async def chat_endpoint(request: ChatRequest):
     """Handle chat messages with ticket key detection, training-first approach, then AI fallback"""
     jira_available = bool(app_state.jira_configured and app_state.jira_client)
+    
+    # AUTOMATIC LEADERSHIP FALLBACK: If no individual Jira access, try leadership mode
+    if not jira_available:
+        logger.info("No individual Jira access detected - checking leadership access")
+        
+        # Check if leadership access is available
+        shared_client = await leadership_access_manager.get_jira_client_for_leaders()
+        cached_analytics = leadership_access_manager.get_cached_analytics()
+        
+        if shared_client or cached_analytics:
+            logger.info("Leadership access available - automatically routing to leadership mode")
+            # Automatically route to leadership chat
+            leadership_result = await leadership_chat(request)
+            
+            # Add indicator that this was automatic leadership mode
+            if leadership_result.get("success"):
+                leadership_result["auto_leadership_mode"] = True
+                leadership_result["message"] = "💡 Using leadership access (no individual Jira token needed)"
+            
+            return leadership_result
+        else:
+            logger.info("No leadership access available - showing setup instructions")
+            return {
+                "success": False,
+                "response": """🎯 **Welcome to Leadership Quality Tool!**
+
+**For Individual Access:**
+Configure your personal Jira connection in the Integration tab.
+
+**For Leadership Access (No Tokens Needed):**
+Ask your IT administrator to set up shared leadership access:
+- This allows executives to get insights without individual Jira accounts
+- IT can configure this in Integration → Leadership Access
+- Once set up, you'll automatically get executive-level insights
+
+**Need Help?**
+Contact your system administrator to enable leadership access for token-free insights.""",
+                "setup_required": True,
+                "leadership_setup_available": True
+            }
 
     user_q = request.message.strip()
     q_lower_for_global = user_q.lower()
@@ -1656,53 +2060,10 @@ async def chat_endpoint(request: ChatRequest):
                 logger.error(f"Global export failed: {e}")
                 return {"success": True, "mode": "export", "response": f"Export failed: {str(e)}"}
 
-    # Check for ticket key in the query (case-insensitive)
-    ticket_match = re.search(ISSUE_KEY_RE, user_q, re.IGNORECASE)
-    if ticket_match and jira_available:
-        ticket_key = ticket_match.group(1)
-        try:
-            # Get direct issue details
-            issue = await app_state.jira_client.get_issue(ticket_key, fields=[
-                "summary", "status", "issuetype", "priority", "assignee", "reporter", "project"
-            ])
-            
-            # Extract key information
-            fields = issue.get("fields", {})
-            summary = fields.get("summary", "No summary")
-            status = fields.get("status", {}).get("name", "Unknown")
-            issue_type = fields.get("issuetype", {}).get("name", "Unknown")
-            priority = fields.get("priority", {}).get("name", "Unknown")
-            assignee = fields.get("assignee", {})
-            assignee_name = assignee.get("displayName", "Unassigned") if assignee else "Unassigned"
-            reporter = fields.get("reporter", {}) or {}
-            reporter_name = reporter.get("displayName", "Unknown")
-            reporter_email = reporter.get("emailAddress") or ""
-            project = fields.get("project", {}).get("key", "Unknown")
-            
-            # Create grounded summary with structured formatting and a brief leadership note
-            canonical_key = issue.get("key", ticket_key).upper()
-            response_text = (
-                f"{canonical_key}: {summary}\n\n"
-                f"- Status: {status}\n"
-                f"- Type: {issue_type}\n"
-                f"- Priority: {priority}\n"
-                f"- Assignee: {assignee_name}\n"
-                f"- Reporter: {reporter_name}{f' ({reporter_email})' if reporter_email else ''}\n"
-                f"- Project: {project}\n\n"
-                f"Leadership note: {assignee_name} owns this {issue_type.lower()} currently {status.lower()}. Priority is {priority.lower()}."
-            )
-            
-            return {
-                "success": True,
-                "response": response_text
-            }
-            
-        except Exception as e:
-            logger.error(f"Failed to get issue {ticket_key}: {e}")
-            return {
-                "success": True,
-                "response": f"Sorry, I couldn't find details for {ticket_key}. The ticket might not exist or there might be a connection issue."
-            }
+    # Skip basic ticket detection - let IntelligentAIEngine handle ALL queries for enhanced responses
+    # This ensures ticket queries get strategic analysis instead of basic info
+    # ticket_match = re.search(ISSUE_KEY_RE, user_q, re.IGNORECASE)
+    # (Commented out to allow OpenAI to handle ticket queries with strategic insights)
     
     # If Confluence is configured and the user asks about wiki/Confluence/docs, try Confluence first
     if app_state.confluence_configured and app_state.confluence_client:
@@ -1745,16 +2106,46 @@ async def chat_endpoint(request: ChatRequest):
         except Exception as e:
             logger.warning(f"Confluence search failed: {e}")
 
-    # No ticket key detected, proceed with enhanced slot-based flow
-    # New AI intent router first
+    # No ticket key detected, proceed with intelligent AI processing
+    # 🚀 NEW: Intelligent AI Engine (OpenAI-powered) - Primary Route
+    if jira_available:
+        try:
+            # Initialize intelligent AI engine if not already done
+            if not app_state.intelligent_ai_engine:
+                app_state.intelligent_ai_engine = IntelligentAIEngine(app_state.jira_client)
+            
+            # Process query with intelligent AI
+            logger.info(f"🤖 Processing with Intelligent AI: {user_q}")
+            ai_result = await app_state.intelligent_ai_engine.process_query(user_q)
+            
+            if ai_result.get("success"):
+                # Persist list context for pagination/export
+                if ai_result.get("jql"):
+                    app_state.last_list_jql = ai_result.get("jql")
+                    app_state.last_list_offset = 0
+                
+                logger.info(f"✅ Intelligent AI succeeded: {ai_result.get('intent')}")
+                return {
+                    "success": True,
+                    "mode": "intelligent_ai",
+                    "jql": ai_result.get("jql", ""),
+                    "raw": {"count": len(ai_result.get("data", []))},
+                    "response": ai_result.get("response", ""),
+                    "intent": ai_result.get("intent", "")
+                }
+        except Exception as e:
+            logger.warning(f"⚠️ Intelligent AI engine failed, falling back to legacy: {e}")
+            # Continue to fallback methods below
+    
+    # Fallback: Legacy AI intent router
     try:
         ai_answer = await ai_handle(user_q, app_state.jira_client)
-        if ai_answer and isinstance(ai_answer, dict) and ai_answer.get("text") and not ai_answer.get("text").startswith("I couldn’t map"):
+        if ai_answer and isinstance(ai_answer, dict) and ai_answer.get("text") and not ai_answer.get("text").startswith("I couldn't map"):
             # Persist list context if it's a listing intent
             if 'list' in (jql_loader.intent_of(user_q) or '').lower() or 'stories' in user_q.lower() or 'list' in user_q.lower():
                 app_state.last_list_jql = ai_answer.get("jql") or app_state.last_list_jql
                 app_state.last_list_offset = 0
-            return {"success": True, "mode": "ai_router", "response": ai_answer.get("text"), "jql": ai_answer.get("jql")}
+            return {"success": True, "mode": "ai_router_fallback", "response": ai_answer.get("text"), "jql": ai_answer.get("jql")}
     except Exception as _e:
         logger.info(f"AI router fallback: {_e}")
 
@@ -2499,6 +2890,347 @@ async def get_team_performance():
         logger.error(f"Team performance error: {e}")
         return create_error_response("Team performance analysis failed", str(e))
 
+# ===================================================================
+# DASHBOARD METRICS ENDPOINTS
+# ===================================================================
+
+class MetricsRequest(BaseModel):
+    project_key: Optional[str] = None
+    window_days: Optional[int] = 30
+
+@app.post("/api/metrics/completed", tags=["Metrics"], summary="Get completed items with trend")
+async def get_completed_metrics(request: MetricsRequest):
+    """Get completed stories/bugs with weekly trend comparison"""
+    if not app_state.jira_configured or not app_state.jira_client:
+        raise HTTPException(status_code=400, detail="Jira not configured")
+    
+    try:
+        project_clause = f'project = "{request.project_key}" AND ' if request.project_key else ''
+        
+        # Current week completed items
+        current_week_jql = f'{project_clause}status IN ("Done", "Closed", "Resolved") AND issuetype IN ("Story", "Bug", "Task") AND resolved >= -7d'
+        current_count = await app_state.jira_client.count(current_week_jql)
+        
+        # Previous week completed items
+        previous_week_jql = f'{project_clause}status IN ("Done", "Closed", "Resolved") AND issuetype IN ("Story", "Bug", "Task") AND resolved >= -14d AND resolved < -7d'
+        previous_count = await app_state.jira_client.count(previous_week_jql)
+        
+        # Calculate trend
+        if previous_count > 0:
+            trend_percent = round(((current_count - previous_count) / previous_count) * 100, 1)
+        else:
+            trend_percent = 100.0 if current_count > 0 else 0.0
+        
+        delta = current_count - previous_count
+        
+        return {
+            "count": current_count,
+            "trend": {
+                "delta": delta,
+                "percent": trend_percent
+            }
+        }
+        
+    except Exception as e:
+        logger.error(f"Completed metrics error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/metrics/blockers", tags=["Metrics"], summary="Get active blockers by priority")
+async def get_blockers_metrics(request: MetricsRequest):
+    """Get active blockers grouped by priority"""
+    if not app_state.jira_configured or not app_state.jira_client:
+        raise HTTPException(status_code=400, detail="Jira not configured")
+    
+    try:
+        project_clause = f'project = "{request.project_key}" AND ' if request.project_key else ''
+        
+        # Get all active blockers
+        blockers_jql = f'{project_clause}(status = "Blocked" OR labels IN ("blocker", "blocked", "impediment")) AND status != "Done"'
+        
+        # Get blockers with priority field
+        blockers_result = await app_state.jira_client.search(blockers_jql, max_results=1000, fields=["priority"])
+        blockers_issues = blockers_result.get("issues", [])
+        
+        # Group by priority
+        priority_breakdown = {
+            "Highest": 0,
+            "High": 0, 
+            "Medium": 0,
+            "Low": 0
+        }
+        
+        for issue in blockers_issues:
+            priority = issue.get("fields", {}).get("priority", {})
+            priority_name = priority.get("name", "Medium") if priority else "Medium"
+            
+            if priority_name in priority_breakdown:
+                priority_breakdown[priority_name] += 1
+            else:
+                priority_breakdown["Medium"] += 1  # Default to Medium
+        
+        total_blockers = sum(priority_breakdown.values())
+        
+        return {
+            "total": total_blockers,
+            "by_priority": priority_breakdown
+        }
+        
+    except Exception as e:
+        logger.error(f"Blockers metrics error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/metrics/contributors", tags=["Metrics"], summary="Get top contributors")
+async def get_contributors_metrics(request: MetricsRequest):
+    """Get top contributors based on completed items"""
+    if not app_state.jira_configured or not app_state.jira_client:
+        raise HTTPException(status_code=400, detail="Jira not configured")
+    
+    try:
+        window_days = request.window_days or 30
+        project_clause = f'project = "{request.project_key}" AND ' if request.project_key else ''
+        
+        # Get completed items in the time window
+        completed_jql = f'{project_clause}status IN ("Done", "Closed", "Resolved") AND resolved >= -{window_days}d'
+        completed_result = await app_state.jira_client.search(completed_jql, max_results=1000, fields=["assignee"])
+        completed_issues = completed_result.get("issues", [])
+        
+        # Count by assignee
+        assignee_counts = {}
+        for issue in completed_issues:
+            assignee = issue.get("fields", {}).get("assignee", {})
+            if assignee:
+                name = assignee.get("displayName", "Unknown")
+                assignee_counts[name] = assignee_counts.get(name, 0) + 1
+        
+        # Sort and get top 5
+        top_contributors = sorted(assignee_counts.items(), key=lambda x: x[1], reverse=True)[:5]
+        leaders = [{"name": name, "closed": count} for name, count in top_contributors]
+        
+        return {
+            "window_days": window_days,
+            "leaders": leaders
+        }
+        
+    except Exception as e:
+        logger.error(f"Contributors metrics error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/metrics/resolution", tags=["Metrics"], summary="Get average resolution time")
+async def get_resolution_metrics(request: MetricsRequest):
+    """Get average resolution time for completed items"""
+    if not app_state.jira_configured or not app_state.jira_client:
+        raise HTTPException(status_code=400, detail="Jira not configured")
+    
+    try:
+        project_clause = f'project = "{request.project_key}" AND ' if request.project_key else ''
+        
+        # Get recently completed items
+        completed_jql = f'{project_clause}status IN ("Done", "Closed", "Resolved") AND resolved >= -90d'
+        completed_result = await app_state.jira_client.search(completed_jql, max_results=100, fields=["created", "resolved"])
+        completed_issues = completed_result.get("issues", [])
+        
+        if not completed_issues:
+            return {"avg_days": 0, "sample": 0}
+        
+        # Calculate resolution times
+        resolution_times = []
+        for issue in completed_issues:
+            fields = issue.get("fields", {})
+            created = fields.get("created")
+            resolved = fields.get("resolved")
+            
+            if created and resolved:
+                try:
+                    created_dt = datetime.fromisoformat(created.replace("Z", "+00:00"))
+                    resolved_dt = datetime.fromisoformat(resolved.replace("Z", "+00:00"))
+                    
+                    # Calculate business days (excluding weekends)
+                    delta = resolved_dt - created_dt
+                    days = delta.total_seconds() / (24 * 3600)
+                    
+                    # Simple business days calculation (rough estimate)
+                    business_days = days * (5/7)  # Assume 5 business days per 7 calendar days
+                    resolution_times.append(business_days)
+                    
+                except Exception:
+                    continue
+        
+        if resolution_times:
+            avg_days = round(sum(resolution_times) / len(resolution_times), 1)
+        else:
+            avg_days = 0
+        
+        return {
+            "avg_days": avg_days,
+            "sample": len(resolution_times)
+        }
+        
+    except Exception as e:
+        logger.error(f"Resolution metrics error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/metrics/velocity", tags=["Metrics"], summary="Get sprint velocity comparison")
+async def get_velocity_metrics(request: MetricsRequest):
+    """Get current vs previous sprint velocity"""
+    if not app_state.jira_configured or not app_state.jira_client:
+        raise HTTPException(status_code=400, detail="Jira not configured")
+    
+    try:
+        project_clause = f'project = "{request.project_key}" AND ' if request.project_key else ''
+        
+        # Get current sprint completed items
+        current_sprint_jql = f'{project_clause}sprint IN openSprints() AND status IN ("Done", "Closed", "Resolved")'
+        current_result = await app_state.jira_client.search(current_sprint_jql, max_results=500, fields=["customfield_10016"])  # Story Points field
+        current_issues = current_result.get("issues", [])
+        
+        # Get previous sprint completed items
+        previous_sprint_jql = f'{project_clause}sprint IN closedSprints() AND status IN ("Done", "Closed", "Resolved") ORDER BY created DESC'
+        previous_result = await app_state.jira_client.search(previous_sprint_jql, max_results=500, fields=["customfield_10016"])
+        previous_issues = previous_result.get("issues", [])
+        
+        # Calculate story points (use count if story points not available)
+        def calculate_points(issues):
+            total_points = 0
+            for issue in issues:
+                fields = issue.get("fields", {})
+                story_points = fields.get("customfield_10016") or fields.get("storyPoints") or 1  # Default to 1 if no story points
+                if isinstance(story_points, (int, float)):
+                    total_points += story_points
+                else:
+                    total_points += 1  # Default story point value
+            return total_points
+        
+        current_velocity = calculate_points(current_issues)
+        
+        # For previous sprint, take issues from the most recent closed sprint
+        # This is simplified - in reality you'd need to identify the specific previous sprint
+        previous_velocity = calculate_points(previous_issues[:len(current_issues)]) if previous_issues else 0
+        
+        # Calculate change percentage
+        if previous_velocity > 0:
+            change_percent = round(((current_velocity - previous_velocity) / previous_velocity) * 100, 1)
+        else:
+            change_percent = 100.0 if current_velocity > 0 else 0.0
+        
+        return {
+            "current": current_velocity,
+            "previous": previous_velocity,
+            "change_percent": change_percent
+        }
+        
+    except Exception as e:
+        logger.error(f"Velocity metrics error: {e}")
+        # Return fallback data
+        return {
+            "current": len(current_result.get("issues", [])) if 'current_result' in locals() else 0,
+            "previous": 0,
+            "change_percent": 0.0
+        }
+
+@app.post("/api/metrics/summary", tags=["Metrics"], summary="Get AI-powered insights summary")
+async def get_metrics_summary(request: dict):
+    """Generate AI-powered leadership insights from all metrics"""
+    try:
+        # Extract metrics from request
+        project = request.get("project", "ALL")
+        completed = request.get("completed", {})
+        blockers = request.get("blockers", {})
+        contributors = request.get("contributors", {})
+        resolution = request.get("resolution", {})
+        velocity = request.get("velocity", {})
+        
+        # Create deterministic insights first
+        insights = []
+        
+        # Completion insights
+        if completed.get("count", 0) > 0:
+            trend = completed.get("trend", {}).get("percent", 0)
+            if trend > 20:
+                insights.append(f"✅ Strong delivery momentum with {completed['count']} items completed ({trend:+.1f}% vs last week)")
+            elif trend < -20:
+                insights.append(f"⚠️ Delivery pace slowing: {completed['count']} items completed ({trend:+.1f}% vs last week)")
+            else:
+                insights.append(f"📊 Steady delivery: {completed['count']} items completed ({trend:+.1f}% vs last week)")
+        
+        # Blockers insights
+        total_blockers = blockers.get("total", 0)
+        if total_blockers > 0:
+            priority_breakdown = blockers.get("by_priority", {})
+            high_priority = priority_breakdown.get("Highest", 0) + priority_breakdown.get("High", 0)
+            if high_priority > 0:
+                insights.append(f"🚨 {total_blockers} active blockers ({high_priority} high priority) - immediate leadership attention needed")
+            else:
+                insights.append(f"⚠️ {total_blockers} active blockers - monitor for escalation")
+        else:
+            insights.append("🟢 No active blockers detected - clear path for delivery")
+        
+        # Contributors insights
+        leaders = contributors.get("leaders", [])
+        if leaders:
+            top_contributor = leaders[0]
+            insights.append(f"🏆 Top performer: {top_contributor['name']} ({top_contributor['closed']} items)")
+        
+        # Resolution time insights
+        avg_days = resolution.get("avg_days", 0)
+        if avg_days > 0:
+            if avg_days > 7:
+                insights.append(f"⏳ Resolution time averaging {avg_days} days - consider process optimization")
+            elif avg_days < 3:
+                insights.append(f"⚡ Excellent resolution time: {avg_days} days average")
+            else:
+                insights.append(f"📈 Healthy resolution time: {avg_days} days average")
+        
+        # Velocity insights
+        current_vel = velocity.get("current", 0)
+        change_pct = velocity.get("change_percent", 0)
+        if abs(change_pct) > 15:
+            direction = "accelerating" if change_pct > 0 else "decelerating"
+            insights.append(f"📊 Team velocity {direction}: {current_vel} points ({change_pct:+.1f}%)")
+        
+        # Combine insights
+        base_summary = " • ".join(insights[:3])  # Limit to top 3 insights
+        
+        # Try OpenAI enhancement
+        try:
+            openai_key = os.getenv("OPENAI_API_KEY")
+            if openai_key:
+                client = OpenAI(api_key=openai_key)
+                
+                prompt = f"""Analyze these team metrics for {project} project:
+
+Completed Items: {completed.get('count', 0)} ({completed.get('trend', {}).get('percent', 0):+.1f}% vs last week)
+Active Blockers: {total_blockers} total ({blockers.get('by_priority', {})})
+Top Contributors: {[f"{l['name']} ({l['closed']})" for l in leaders[:3]]}
+Avg Resolution: {avg_days} days ({resolution.get('sample', 0)} items)
+Sprint Velocity: {current_vel} vs {velocity.get('previous', 0)} points ({change_pct:+.1f}%)
+
+Provide a concise executive summary (2-3 sentences) highlighting:
+1. Key performance indicators
+2. Critical risks or achievements  
+3. One actionable recommendation
+
+Keep it leadership-focused and actionable."""
+
+                response = client.chat.completions.create(
+                    model="gpt-4o-mini",
+                    messages=[{"role": "user", "content": prompt}],
+                    temperature=0.7,
+                    max_tokens=200
+                )
+                
+                ai_insight = response.choices[0].message.content.strip()
+                return {"insight": ai_insight}
+                
+        except Exception as ai_error:
+            logger.warning(f"OpenAI insight generation failed: {ai_error}")
+        
+        # Fallback to deterministic summary
+        return {"insight": base_summary}
+        
+    except Exception as e:
+        logger.error(f"Metrics summary error: {e}")
+        return {"insight": "Unable to generate insights at this time. Please refresh to try again."}
+
 @app.post("/api/chat/semantic-search", tags=["Chat"], summary="Semantic Search for Tickets")
 async def semantic_search_endpoint(request: ChatRequest):
     """Perform semantic search for tickets"""
@@ -2523,6 +3255,277 @@ async def semantic_search_endpoint(request: ChatRequest):
     except Exception as e:
         logger.error(f"Semantic search error: {e}")
         return create_error_response("Semantic search failed", str(e))
+
+@app.get("/api/leadership/status")
+async def get_leadership_access_status():
+    """Check if leadership access is available"""
+    try:
+        # Check if shared service account is configured
+        shared_client = await leadership_access_manager.get_jira_client_for_leaders()
+        has_shared_access = shared_client is not None
+        
+        # Check if cached data is available
+        has_cached_data = bool(leadership_access_manager.cached_data)
+        cache_valid = leadership_access_manager.is_cache_valid()
+        
+        return {
+            "success": True,
+            "leadership_access_available": has_shared_access or has_cached_data,
+            "shared_service_account": has_shared_access,
+            "cached_data_available": has_cached_data,
+            "cache_valid": cache_valid,
+            "last_cache_update": leadership_access_manager.last_cache_update.isoformat() if leadership_access_manager.last_cache_update else None,
+            "message": "Leadership access ready" if (has_shared_access or has_cached_data) else "Configure shared service account or enable caching"
+        }
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e)
+        }
+
+@app.post("/api/leadership/enable")
+async def enable_leadership_access():
+    """Enable leadership access by setting up shared connection"""
+    try:
+        # Try to get shared Jira client
+        shared_client = await leadership_access_manager.get_jira_client_for_leaders()
+        
+        if not shared_client:
+            return {
+                "success": False,
+                "error": "No shared service account configured. Set JIRA_SHARED_EMAIL, JIRA_SHARED_TOKEN, and JIRA_SHARED_URL environment variables in backend/config.env and restart the server."
+            }
+        
+        # Refresh cached data
+        await leadership_access_manager.refresh_cached_data(shared_client)
+        
+        return {
+            "success": True,
+            "message": "Leadership access enabled with cached data",
+            "cached_projects": len(leadership_access_manager.cached_data.get('analytics', {}))
+        }
+        
+    except Exception as e:
+        return {
+            "success": False,
+            "error": f"Failed to enable leadership access: {str(e)}"
+        }
+
+@app.post("/api/leadership/save-config")
+async def save_leadership_config(config_data: dict):
+    """Save leadership configuration (for UI feedback - actual config needs to be in backend/config.env)"""
+    try:
+        # In a real implementation, this would update the config.env file
+        # For now, we just validate the data and provide instructions
+        
+        required_fields = ["email", "token", "url"]
+        for field in required_fields:
+            if not config_data.get(field):
+                return {
+                    "success": False,
+                    "error": f"Missing required field: {field}"
+                }
+        
+        # Validate URL format
+        url = config_data["url"]
+        if not url.startswith("https://") or not url.endswith(".atlassian.net"):
+            return {
+                "success": False,
+                "error": "URL should be in format: https://company.atlassian.net"
+            }
+        
+        # In a production system, you would:
+        # 1. Update the config.env file with new values
+        # 2. Reload environment variables
+        # 3. Restart services if needed
+        
+        return {
+            "success": True,
+            "message": "Configuration validated successfully",
+            "next_steps": [
+                f"Add JIRA_SHARED_EMAIL={config_data['email']} to backend/config.env",
+                f"Add JIRA_SHARED_TOKEN={config_data['token']} to backend/config.env", 
+                f"Add JIRA_SHARED_URL={config_data['url']} to backend/config.env",
+                "Restart backend server",
+                "Click 'Connect Leadership Access' button"
+            ]
+        }
+        
+    except Exception as e:
+        return {
+            "success": False,
+            "error": f"Failed to save configuration: {str(e)}"
+        }
+
+@app.get("/api/leadership/summary")
+async def get_leadership_summary():
+    """Get high-level summary for leadership without requiring individual Jira access"""
+    try:
+        # Check if we have any access method available
+        shared_client = await leadership_access_manager.get_jira_client_for_leaders()
+        
+        # If we have shared access and cache is stale, refresh it
+        if shared_client and not leadership_access_manager.is_cache_valid():
+            await leadership_access_manager.refresh_cached_data(shared_client)
+        
+        # Get leadership summary
+        summary = leadership_access_manager.get_leadership_summary()
+        
+        if not summary or "error" in summary:
+            return {
+                "success": False,
+                "error": "No data available. Configure shared service account or enable caching.",
+                "setup_instructions": {
+                    "step1": "Set up shared service account with JIRA_SHARED_EMAIL, JIRA_SHARED_TOKEN, JIRA_SHARED_URL",
+                    "step2": "Call /api/leadership/enable to initialize cached data",
+                    "step3": "Access leadership insights without individual Jira tokens"
+                }
+            }
+        
+        return {
+            "success": True,
+            "summary": summary,
+            "access_mode": "shared_service_account" if shared_client else "cached_data",
+            "last_updated": summary.get('last_updated')
+        }
+        
+    except Exception as e:
+        return {
+            "success": False,
+            "error": f"Failed to get leadership summary: {str(e)}"
+        }
+
+@app.post("/api/leadership/chat")
+async def leadership_chat(request: ChatRequest):
+    """Chat endpoint for leaders without Jira access - uses shared service account or cached data"""
+    try:
+        user_query = request.message.strip()
+        
+        # Try to get shared Jira client
+        shared_client = await leadership_access_manager.get_jira_client_for_leaders()
+        
+        if shared_client:
+            # Use shared client for real-time queries
+            if not app_state.intelligent_ai_engine:
+                app_state.intelligent_ai_engine = IntelligentAIEngine(shared_client)
+            
+            # Process query with shared access
+            ai_result = await app_state.intelligent_ai_engine.process_query(user_query)
+            
+            if ai_result.get("success"):
+                return {
+                    "success": True,
+                    "response": ai_result.get("response", ""),
+                    "mode": "leadership_shared_access",
+                    "jql": ai_result.get("jql", ""),
+                    "data_source": "live_jira_data"
+                }
+        
+        # Fallback to cached data analysis
+        cached_analytics = leadership_access_manager.get_cached_analytics()
+        
+        if not cached_analytics:
+            return {
+                "success": False,
+                "response": "Leadership access not configured. Please set up shared service account or enable data caching.",
+                "setup_required": True
+            }
+        
+        # Generate response based on cached data
+        response = generate_cached_data_response(user_query, cached_analytics)
+        
+        return {
+            "success": True,
+            "response": response,
+            "mode": "leadership_cached_data",
+            "data_source": "cached_analytics",
+            "last_updated": leadership_access_manager.cached_data.get('last_updated')
+        }
+        
+    except Exception as e:
+        return {
+            "success": False,
+            "response": f"Leadership chat error: {str(e)}",
+            "error": True
+        }
+
+def generate_cached_data_response(query: str, cached_analytics: Dict[str, Any]) -> str:
+    """Generate response based on cached analytics data"""
+    query_lower = query.lower()
+    
+    # Project-specific queries
+    if any(project in query_lower for project in cached_analytics.keys()):
+        for project_key in cached_analytics.keys():
+            if project_key.lower() in query_lower:
+                project_data = cached_analytics[project_key]
+                return format_project_analysis(project_key, project_data)
+    
+    # General queries
+    if any(word in query_lower for word in ['summary', 'overview', 'status', 'health']):
+        return format_leadership_overview(cached_analytics)
+    
+    # Default response
+    return format_leadership_overview(cached_analytics)
+
+def format_project_analysis(project_key: str, project_data: Dict[str, Any]) -> str:
+    """Format project analysis from cached data"""
+    total = project_data.get('total_issues', 0)
+    by_status = project_data.get('by_status', {})
+    by_assignee = project_data.get('by_assignee', {})
+    
+    response_parts = [
+        f"**{project_key} Project Analysis** (Based on cached data)",
+        f"",
+        f"📊 **Overview**: {total} total issues",
+        f""
+    ]
+    
+    if by_status:
+        response_parts.append("**Status Breakdown:**")
+        for status, count in sorted(by_status.items(), key=lambda x: x[1], reverse=True):
+            response_parts.append(f"- {status}: {count}")
+        response_parts.append("")
+    
+    if by_assignee:
+        response_parts.append("**Team Workload:**")
+        for assignee, count in sorted(by_assignee.items(), key=lambda x: x[1], reverse=True)[:5]:
+            response_parts.append(f"- {assignee}: {count} items")
+        response_parts.append("")
+    
+    response_parts.append("💡 **Note**: This data is from cached analytics. For real-time data, configure shared service account access.")
+    
+    return "\n".join(response_parts)
+
+def format_leadership_overview(cached_analytics: Dict[str, Any]) -> str:
+    """Format leadership overview from cached data"""
+    total_projects = len(cached_analytics)
+    total_issues = sum(data.get('total_issues', 0) for data in cached_analytics.values())
+    
+    # Find top projects by activity
+    top_projects = sorted(
+        [(k, v.get('total_issues', 0)) for k, v in cached_analytics.items()], 
+        key=lambda x: x[1], 
+        reverse=True
+    )[:5]
+    
+    response_parts = [
+        "**🎯 Leadership Dashboard Overview** (Cached Data)",
+        "",
+        f"📈 **Portfolio Status**: {total_projects} active projects, {total_issues} total issues",
+        "",
+        "**Top Active Projects:**"
+    ]
+    
+    for project, issue_count in top_projects:
+        response_parts.append(f"- {project}: {issue_count} issues")
+    
+    response_parts.extend([
+        "",
+        "💡 **Leadership Access**: This view uses cached data for leaders without direct Jira access.",
+        "For real-time insights, your admin can configure shared service account access."
+    ])
+    
+    return "\n".join(response_parts)
 
 @app.post("/api/jira/test")
 async def test_jira_connection(config: JiraConfigRequest):
@@ -2891,6 +3894,611 @@ async def leadership_overview(board_id: int, history: int = 5, future: int = 2):
         "suggestions": suggestions
     }
     return {"success": True, "data": payload}
+
+@app.post("/api/leadership/dashboard")
+async def enhanced_leadership_dashboard(request: dict):
+    """Enhanced leadership dashboard with AI-powered insights"""
+    try:
+        # Debug: Log the request
+        logger.info(f"Dashboard request: {request}")
+        
+        # For now, return mock data to test the frontend
+        mock_dashboard = {
+            "portfolio_summary": {
+                "total_projects": 5,
+                "total_issues": 150,
+                "completed_items": 120,
+                "completion_rate": 80.0,
+                "active_contributors": 12
+            },
+            "project_health": {
+                "CCM": {"status": "healthy", "velocity": 15, "issues": 30},
+                "CES": {"status": "at_risk", "velocity": 8, "issues": 25},
+                "TI": {"status": "healthy", "velocity": 12, "issues": 20}
+            },
+            "team_performance": {
+                "top_contributors": [
+                    {"name": "John Doe", "completed": 15, "velocity": 9.1},
+                    {"name": "Jane Smith", "completed": 12, "velocity": 8.5}
+                ]
+            },
+            "quality_metrics": {
+                "defect_rate": 5.2,
+                "resolution_time": 2.5,
+                "reopened_rate": 3.1
+            },
+            "strategic_insights": {
+                "ai_analysis": "Team performance is strong with 80% completion rate. Focus on CES project which shows at-risk status.",
+                "risk_assessment": [
+                    {"type": "medium", "description": "CES project behind schedule", "priority": "high"}
+                ],
+                "opportunities": [
+                    {"type": "efficiency", "description": "Automate testing processes", "priority": "medium"}
+                ],
+                "key_recommendations": [
+                    {"action": "Increase CES project resources", "impact": "high", "effort": "medium"}
+                ]
+            },
+            "generated_at": "2025-01-09T18:00:00Z"
+        }
+        
+        logger.info("Returning mock dashboard data")
+        return {
+            "success": True,
+            "dashboard": mock_dashboard
+        }
+        
+    except Exception as e:
+        logger.error(f"Enhanced dashboard error: {e}")
+        import traceback
+        logger.error(f"Traceback: {traceback.format_exc()}")
+        return {
+            "success": False,
+            "error": f"Failed to generate dashboard: {str(e)}"
+        }
+
+async def generate_enhanced_dashboard_data(jira_client, ai_engine, project_filter, detailed_analysis):
+    """Generate comprehensive dashboard data with AI insights"""
+    
+    # Get all projects
+    projects_response = await jira_client.get_projects()
+    all_projects = projects_response if isinstance(projects_response, list) else projects_response.get('projects', [])
+    
+    # Filter projects if specified
+    if project_filter != "ALL":
+        filtered_projects = [p for p in all_projects if p['key'] == project_filter]
+    else:
+        filtered_projects = all_projects
+    
+    # Portfolio Summary
+    portfolio_summary = await calculate_portfolio_summary(jira_client, filtered_projects)
+    
+    # Project Health Assessment
+    project_health = await assess_project_health(jira_client, filtered_projects, ai_engine)
+    
+    # Team Performance Analysis
+    team_performance = await analyze_team_performance(jira_client, filtered_projects)
+    
+    # Quality Metrics
+    quality_metrics = await calculate_quality_metrics(jira_client, filtered_projects)
+    
+    # Strategic Insights (AI-powered)
+    strategic_insights = await generate_strategic_insights(
+        ai_engine, 
+        portfolio_summary, 
+        project_health, 
+        team_performance, 
+        quality_metrics,
+        project_filter
+    )
+    
+    return {
+        "portfolio_summary": portfolio_summary,
+        "project_health": project_health,
+        "team_performance": team_performance,
+        "quality_metrics": quality_metrics,
+        "strategic_insights": strategic_insights,
+        "generated_at": datetime.now().isoformat()
+    }
+
+async def calculate_portfolio_summary(jira_client, projects):
+    """Calculate high-level portfolio metrics"""
+    total_projects = len(projects)
+    total_issues = 0
+    completed_items = 0
+    active_contributors = set()
+    
+    for project in projects:
+        try:
+            # Get all issues for this project
+            jql = f'project = "{project["key"]}"'
+            search_result = await jira_client.search(jql, max_results=1000)
+            
+            # Handle both list and dict responses
+            if isinstance(search_result, list):
+                issues = search_result
+            else:
+                issues = search_result.get('issues', [])
+            
+            total_issues += len(issues)
+            
+            for issue in issues:
+                fields = issue.get('fields', {})
+                
+                # Count completed items
+                status = fields.get('status', {}).get('statusCategory', {}).get('name', '')
+                if status == 'Done':
+                    completed_items += 1
+                
+                # Track contributors
+                assignee = fields.get('assignee')
+                if assignee:
+                    active_contributors.add(assignee.get('displayName', 'Unknown'))
+                
+                reporter = fields.get('reporter')
+                if reporter:
+                    active_contributors.add(reporter.get('displayName', 'Unknown'))
+                    
+        except Exception as e:
+            logger.warning(f"Error processing project {project['key']}: {e}")
+            continue
+    
+    completion_rate = (completed_items / total_issues * 100) if total_issues > 0 else 0
+    
+    return {
+        "total_projects": total_projects,
+        "total_issues": total_issues,
+        "completed_items": completed_items,
+        "completion_rate": round(completion_rate, 1),
+        "active_contributors": len(active_contributors)
+    }
+
+async def assess_project_health(jira_client, projects, ai_engine):
+    """Assess health of each project"""
+    project_health = {}
+    
+    for project in projects:
+        try:
+            # Get project issues
+            jql = f'project = "{project["key"]}"'
+            search_result = await jira_client.search(jql, max_results=1000)
+            
+            # Handle both list and dict responses
+            if isinstance(search_result, list):
+                issues = search_result
+            else:
+                issues = search_result.get('issues', [])
+            
+            # Calculate metrics
+            total_issues = len(issues)
+            completed = 0
+            in_progress = 0
+            blocked = 0
+            
+            for issue in issues:
+                fields = issue.get('fields', {})
+                status_name = fields.get('status', {}).get('name', '').lower()
+                status_category = fields.get('status', {}).get('statusCategory', {}).get('name', '')
+                
+                if status_category == 'Done':
+                    completed += 1
+                elif 'progress' in status_name or 'development' in status_name:
+                    in_progress += 1
+                elif 'blocked' in status_name or 'impediment' in status_name:
+                    blocked += 1
+            
+            # Calculate health score
+            completion_rate = (completed / total_issues * 100) if total_issues > 0 else 0
+            blocked_rate = (blocked / total_issues * 100) if total_issues > 0 else 0
+            progress_rate = (in_progress / total_issues * 100) if total_issues > 0 else 0
+            
+            # Health score algorithm
+            health_score = min(100, max(0, 
+                completion_rate * 0.4 +  # 40% weight on completion
+                (100 - blocked_rate) * 0.3 +  # 30% weight on lack of blockers
+                min(progress_rate, 30) * 0.3  # 30% weight on active progress (capped at 30%)
+            ))
+            
+            # Determine status
+            if health_score >= 80:
+                status = 'excellent'
+            elif health_score >= 60:
+                status = 'good'
+            elif health_score >= 40:
+                status = 'needs_attention'
+            else:
+                status = 'critical'
+            
+            # Velocity trend (simplified)
+            velocity_trend = 'stable'  # Would need historical data for accurate trend
+            if completion_rate > 70:
+                velocity_trend = 'up'
+            elif completion_rate < 30:
+                velocity_trend = 'down'
+            
+            project_health[project["key"]] = {
+                "name": project.get("name", project["key"]),
+                "health_score": round(health_score, 1),
+                "status": status,
+                "total_issues": total_issues,
+                "completed": completed,
+                "in_progress": in_progress,
+                "blocked": blocked,
+                "velocity_trend": velocity_trend
+            }
+            
+        except Exception as e:
+            logger.warning(f"Error assessing health for project {project['key']}: {e}")
+            continue
+    
+    return project_health
+
+async def analyze_team_performance(jira_client, projects):
+    """Analyze team performance and workload distribution"""
+    contributor_stats = {}
+    
+    for project in projects:
+        try:
+            # Get recent completed issues
+            jql = f'project = "{project["key"]}" AND statusCategory = "Done" AND updated >= -30d'
+            search_result = await jira_client.search(jql, max_results=500)
+            
+            # Handle both list and dict responses
+            if isinstance(search_result, list):
+                issues = search_result
+            else:
+                issues = search_result.get('issues', [])
+            
+            for issue in issues:
+                fields = issue.get('fields', {})
+                assignee = fields.get('assignee')
+                
+                if assignee:
+                    name = assignee.get('displayName', 'Unknown')
+                    
+                    if name not in contributor_stats:
+                        contributor_stats[name] = {
+                            "completed_items": 0,
+                            "total_assigned": 0
+                        }
+                    
+                    contributor_stats[name]["completed_items"] += 1
+            
+            # Get all assigned issues for workload analysis
+            jql = f'project = "{project["key"]}" AND statusCategory != "Done"'
+            search_result = await jira_client.search(jql, max_results=500)
+            
+            # Handle both list and dict responses
+            if isinstance(search_result, list):
+                issues = search_result
+            else:
+                issues = search_result.get('issues', [])
+            
+            for issue in issues:
+                fields = issue.get('fields', {})
+                assignee = fields.get('assignee')
+                
+                if assignee:
+                    name = assignee.get('displayName', 'Unknown')
+                    
+                    if name not in contributor_stats:
+                        contributor_stats[name] = {
+                            "completed_items": 0,
+                            "total_assigned": 0
+                        }
+                    
+                    contributor_stats[name]["total_assigned"] += 1
+                    
+        except Exception as e:
+            logger.warning(f"Error analyzing team performance for project {project['key']}: {e}")
+            continue
+    
+    # Calculate efficiency and workload balance
+    top_performers = []
+    workload_distribution = {"balanced": 0, "overloaded": 0, "underutilized": 0}
+    
+    for name, stats in contributor_stats.items():
+        completed = stats["completed_items"]
+        total_assigned = stats["total_assigned"]
+        
+        # Calculate efficiency score
+        efficiency_score = 100
+        if total_assigned > 0:
+            efficiency_score = min(100, (completed / (completed + total_assigned)) * 100)
+        
+        # Determine workload balance
+        workload_balance = "optimal"
+        if total_assigned > 10:
+            workload_balance = "heavy"
+            workload_distribution["overloaded"] += 1
+        elif total_assigned < 3 and completed < 2:
+            workload_balance = "light"
+            workload_distribution["underutilized"] += 1
+        else:
+            workload_distribution["balanced"] += 1
+        
+        top_performers.append({
+            "name": name,
+            "completed_items": completed,
+            "efficiency_score": round(efficiency_score, 1),
+            "workload_balance": workload_balance
+        })
+    
+    # Sort by completed items and efficiency
+    top_performers.sort(key=lambda x: (x["completed_items"], x["efficiency_score"]), reverse=True)
+    top_performers = top_performers[:10]  # Top 10
+    
+    # Calculate capacity utilization
+    total_contributors = len(contributor_stats)
+    capacity_utilization = 75  # Placeholder - would need more sophisticated calculation
+    
+    return {
+        "top_performers": top_performers,
+        "workload_distribution": workload_distribution,
+        "capacity_utilization": capacity_utilization
+    }
+
+async def calculate_quality_metrics(jira_client, projects):
+    """Calculate quality-related metrics"""
+    total_issues = 0
+    defects = 0
+    resolution_times = []
+    
+    for project in projects:
+        try:
+            # Get recent issues
+            jql = f'project = "{project["key"]}" AND updated >= -60d'
+            search_result = await jira_client.search(jql, max_results=500)
+            
+            # Handle both list and dict responses
+            if isinstance(search_result, list):
+                issues = search_result
+            else:
+                issues = search_result.get('issues', [])
+            
+            for issue in issues:
+                fields = issue.get('fields', {})
+                issue_type = fields.get('issuetype', {}).get('name', '').lower()
+                
+                total_issues += 1
+                
+                # Count defects
+                if 'bug' in issue_type or 'defect' in issue_type:
+                    defects += 1
+                
+                # Calculate resolution time for completed issues
+                status_category = fields.get('status', {}).get('statusCategory', {}).get('name', '')
+                if status_category == 'Done':
+                    created = fields.get('created')
+                    resolved = fields.get('resolutiondate')
+                    
+                    if created and resolved:
+                        try:
+                            from datetime import datetime
+                            created_date = datetime.fromisoformat(created.replace('Z', '+00:00'))
+                            resolved_date = datetime.fromisoformat(resolved.replace('Z', '+00:00'))
+                            resolution_time = (resolved_date - created_date).days
+                            if resolution_time > 0:
+                                resolution_times.append(resolution_time)
+                        except:
+                            pass
+                            
+        except Exception as e:
+            logger.warning(f"Error calculating quality metrics for project {project['key']}: {e}")
+            continue
+    
+    # Calculate metrics
+    defect_rate = (defects / total_issues * 100) if total_issues > 0 else 0
+    average_resolution_days = sum(resolution_times) / len(resolution_times) if resolution_times else 0
+    
+    # Determine resolution trend (placeholder - would need historical data)
+    resolution_trend = "stable"
+    if average_resolution_days < 5:
+        resolution_trend = "improving"
+    elif average_resolution_days > 15:
+        resolution_trend = "declining"
+    
+    return {
+        "defect_rate": round(defect_rate, 1),
+        "resolution_time": {
+            "average_days": round(average_resolution_days, 1),
+            "trend": resolution_trend
+        },
+        "customer_satisfaction": 85,  # Placeholder - would integrate with customer feedback
+        "technical_debt_score": 65   # Placeholder - would analyze code quality metrics
+    }
+
+async def generate_strategic_insights(ai_engine, portfolio_summary, project_health, team_performance, quality_metrics, project_filter):
+    """Generate AI-powered strategic insights"""
+    
+    # Prepare context for AI analysis
+    context = f"""
+Portfolio Overview:
+- {portfolio_summary['total_projects']} projects
+- {portfolio_summary['total_issues']} total issues
+- {portfolio_summary['completion_rate']}% completion rate
+- {portfolio_summary['active_contributors']} active contributors
+
+Project Health:
+{format_project_health_for_ai(project_health)}
+
+Team Performance:
+- Top performers: {', '.join([p['name'] + f" ({p['completed_items']} items)" for p in team_performance['top_performers'][:3]])}
+- Workload distribution: {team_performance['workload_distribution']['balanced']} balanced, {team_performance['workload_distribution']['overloaded']} overloaded, {team_performance['workload_distribution']['underutilized']} underutilized
+- Capacity utilization: {team_performance['capacity_utilization']}%
+
+Quality Metrics:
+- Defect rate: {quality_metrics['defect_rate']}%
+- Average resolution time: {quality_metrics['resolution_time']['average_days']} days
+- Resolution trend: {quality_metrics['resolution_time']['trend']}
+"""
+
+    # Generate AI analysis if available
+    ai_analysis = "Analyzing portfolio data and generating strategic insights..."
+    risk_assessment = []
+    opportunities = []
+    key_recommendations = []
+    
+    if ai_engine:
+        try:
+            # Use AI engine to generate insights
+            ai_response = await ai_engine.process_query(
+                f"Analyze this portfolio data and provide strategic leadership insights, risk assessment, growth opportunities, and key recommendations:\n\n{context}"
+            )
+            
+            if ai_response.get("success") and ai_response.get("response"):
+                ai_analysis = ai_response["response"]
+                
+        except Exception as e:
+            logger.warning(f"AI analysis failed: {e}")
+    
+    # Generate deterministic insights as fallback
+    if not ai_analysis or "Analyzing portfolio" in ai_analysis:
+        ai_analysis = generate_deterministic_insights(portfolio_summary, project_health, team_performance, quality_metrics)
+    
+    # Generate risk assessment
+    risk_assessment = generate_risk_assessment(portfolio_summary, project_health, team_performance, quality_metrics)
+    
+    # Generate opportunities
+    opportunities = generate_opportunities(portfolio_summary, project_health, team_performance, quality_metrics)
+    
+    # Generate recommendations
+    key_recommendations = generate_key_recommendations(portfolio_summary, project_health, team_performance, quality_metrics)
+    
+    return {
+        "ai_analysis": ai_analysis,
+        "risk_assessment": risk_assessment,
+        "opportunities": opportunities,
+        "key_recommendations": key_recommendations
+    }
+
+def format_project_health_for_ai(project_health):
+    """Format project health data for AI analysis"""
+    health_summary = []
+    for key, project in project_health.items():
+        health_summary.append(f"- {project['name']} ({key}): {project['health_score']}/100 health score, {project['status']} status, {project['completed']}/{project['total_issues']} completed, {project['blocked']} blocked")
+    return '\n'.join(health_summary)
+
+def generate_deterministic_insights(portfolio_summary, project_health, team_performance, quality_metrics):
+    """Generate deterministic insights when AI is not available"""
+    insights = []
+    
+    # Portfolio insights
+    if portfolio_summary['completion_rate'] > 70:
+        insights.append("🟢 Strong portfolio performance with high completion rate")
+    elif portfolio_summary['completion_rate'] < 40:
+        insights.append("🔴 Portfolio completion rate needs improvement")
+    else:
+        insights.append("🟡 Portfolio showing steady progress")
+    
+    # Project health insights
+    critical_projects = [p for p in project_health.values() if p['status'] == 'critical']
+    if critical_projects:
+        insights.append(f"⚠️ {len(critical_projects)} project(s) in critical status require immediate attention")
+    
+    # Team insights
+    overloaded_count = team_performance['workload_distribution']['overloaded']
+    if overloaded_count > 0:
+        insights.append(f"👥 {overloaded_count} team member(s) appear overloaded - consider workload rebalancing")
+    
+    # Quality insights
+    if quality_metrics['defect_rate'] > 15:
+        insights.append("🐛 High defect rate indicates potential quality issues")
+    
+    return '\n\n'.join(insights)
+
+def generate_risk_assessment(portfolio_summary, project_health, team_performance, quality_metrics):
+    """Generate risk assessment"""
+    risks = []
+    
+    # Check for critical projects
+    critical_projects = [p for p in project_health.values() if p['status'] == 'critical']
+    if critical_projects:
+        risks.append({
+            "type": "high",
+            "description": f"{len(critical_projects)} project(s) in critical health status",
+            "impact": "Potential delivery delays and resource drain",
+            "recommendation": "Immediate leadership intervention and resource reallocation"
+        })
+    
+    # Check for team overload
+    overloaded_count = team_performance['workload_distribution']['overloaded']
+    if overloaded_count > 2:
+        risks.append({
+            "type": "medium",
+            "description": f"{overloaded_count} team members showing signs of overload",
+            "impact": "Risk of burnout and decreased quality",
+            "recommendation": "Redistribute workload and monitor team capacity"
+        })
+    
+    # Check quality metrics
+    if quality_metrics['defect_rate'] > 20:
+        risks.append({
+            "type": "high",
+            "description": f"High defect rate of {quality_metrics['defect_rate']}%",
+            "impact": "Customer satisfaction and technical debt accumulation",
+            "recommendation": "Implement quality gates and increase testing coverage"
+        })
+    
+    return risks
+
+def generate_opportunities(portfolio_summary, project_health, team_performance, quality_metrics):
+    """Generate growth opportunities"""
+    opportunities = []
+    
+    # High-performing projects
+    excellent_projects = [p for p in project_health.values() if p['status'] == 'excellent']
+    if excellent_projects:
+        opportunities.append({
+            "title": "Scale Best Practices",
+            "description": f"{len(excellent_projects)} project(s) showing excellent performance",
+            "potential_impact": "Apply successful patterns to underperforming projects"
+        })
+    
+    # Underutilized team members
+    underutilized_count = team_performance['workload_distribution']['underutilized']
+    if underutilized_count > 0:
+        opportunities.append({
+            "title": "Optimize Resource Allocation",
+            "description": f"{underutilized_count} team member(s) with capacity for additional work",
+            "potential_impact": "Increase overall throughput and skill development"
+        })
+    
+    return opportunities
+
+def generate_key_recommendations(portfolio_summary, project_health, team_performance, quality_metrics):
+    """Generate key recommendations"""
+    recommendations = []
+    
+    # Critical project recommendations
+    critical_projects = [p for p in project_health.values() if p['status'] == 'critical']
+    if critical_projects:
+        recommendations.append({
+            "priority": "urgent",
+            "action": f"Conduct immediate review of {len(critical_projects)} critical project(s)",
+            "expected_outcome": "Stabilize project health and prevent further degradation",
+            "timeline": "Within 1 week"
+        })
+    
+    # Team balance recommendations
+    if team_performance['workload_distribution']['overloaded'] > 0:
+        recommendations.append({
+            "priority": "high",
+            "action": "Rebalance team workloads and implement capacity monitoring",
+            "expected_outcome": "Improved team satisfaction and sustainable delivery pace",
+            "timeline": "Within 2 weeks"
+        })
+    
+    # Quality improvement recommendations
+    if quality_metrics['defect_rate'] > 15:
+        recommendations.append({
+            "priority": "medium",
+            "action": "Implement enhanced quality assurance processes",
+            "expected_outcome": "Reduced defect rate and improved customer satisfaction",
+            "timeline": "Within 1 month"
+        })
+    
+    return recommendations
 
 @app.post("/api/export/pdf", tags=["Export"], summary="Export Chat to PDF")
 async def export_pdf():

@@ -107,16 +107,14 @@ export function Sidebar() {
               <div className="flex items-center space-x-2">
                 <Settings className="w-4 h-4 text-gray-600 dark:text-muted-foreground" />
                 <span className="font-medium">Jira</span>
-              </div>
-              <Badge variant={jiraStatus.configured ? "default" : "secondary"}>
                 {isRefreshing ? (
-                  <><RefreshCw className="w-3 h-3 mr-1 animate-spin" /> Refreshing...</>
+                  <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
                 ) : jiraStatus.configured ? (
-                  <><CheckCircle className="w-3 h-3 mr-1" /> Connected</>
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                 ) : (
-                  <><XCircle className="w-3 h-3 mr-1" /> Not Connected</>
+                  <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                 )}
-              </Badge>
+              </div>
             </div>
             <p className="text-sm text-gray-600 dark:text-muted-foreground">Project Management</p>
           </CardContent>
@@ -129,10 +127,12 @@ export function Sidebar() {
               <div className="flex items-center space-x-2">
                 <Settings className="w-4 h-4 text-gray-600 dark:text-muted-foreground" />
                 <span className="font-medium">Confluence</span>
+                {confluenceConfigured ? (
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                ) : (
+                  <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                )}
               </div>
-              <Badge variant={confluenceConfigured ? 'default' : 'secondary'}>
-                {confluenceConfigured ? 'Connected' : 'Configure'}
-              </Badge>
             </div>
             <p className="text-sm text-gray-600 dark:text-muted-foreground">Knowledge Management</p>
           </CardContent>

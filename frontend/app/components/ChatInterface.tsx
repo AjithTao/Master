@@ -5,22 +5,31 @@ import { Button } from './ui/button'
 import { Card, CardContent } from './ui/card'
 import { Input } from './ui/input'
 import { ScrollArea } from './ui/scroll-area'
-import { Send, Loader2, Download, FileText, Presentation } from 'lucide-react'
+import { Send, Loader2, Download, FileText, Presentation, Crown, Shield, Clock } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
-import { useChat } from '../contexts/ChatContext'
+import { useChat, Message } from '../contexts/ChatContext'
+import { Badge } from './ui/badge'
 
-interface Message {
-  role: 'user' | 'assistant'
-  content: string
-}
 
 interface ChatResponse {
   response: string
+  error?: string
+  jql?: string
+  data?: any[]
+  intent?: string
+  success?: boolean
   decision: string
   metadata?: {
     type: string
     decision: string
   }
+  mode?: string
+  export_data?: {
+    filename: string
+    data: string
+  }
+  data_source?: string
+  last_updated?: string
 }
 
 export const ChatInterface = forwardRef<{ sendQuickMessage: (message: string) => void }, {}>((props, ref) => {
@@ -72,9 +81,16 @@ export const ChatInterface = forwardRef<{ sendQuickMessage: (message: string) =>
     addMessage({ role: 'user', content: message })
 
     try {
-      let finalMessage = augmentMessageWithLastIssue(message)
+      let finalMessage = message
+      
+      // Always augment messages - the backend will handle leadership mode automatically
+      finalMessage = augmentMessageWithLastIssue(message)
       finalMessage = augmentMessageWithLastProject(finalMessage)
-      const response = await fetch('http://localhost:8000/api/chat', {
+      
+      // Always use the main chat endpoint - it will automatically route to leadership mode if needed
+      const endpoint = 'http://localhost:8000/api/chat'
+      
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -85,9 +101,28 @@ export const ChatInterface = forwardRef<{ sendQuickMessage: (message: string) =>
       const data: ChatResponse = await response.json()
 
       if (response.ok) {
-        addMessage({ role: 'assistant', content: data.response })
-        // If an issue key is present, fetch details for cache
-        const match = data.response && data.response.match(ISSUE_KEY_RE)
+        // Check if this was automatic leadership mode
+        const isAutoLeadershipMode = (data as any).auto_leadership_mode || false
+        const actualLeadershipMode = isAutoLeadershipMode
+        
+        // Add leadership mode metadata to assistant messages
+        const assistantMessage: Message = {
+          role: 'assistant',
+          content: data.response || data.error || 'No response received',
+          isLeadershipMode: actualLeadershipMode,
+          dataSource: (data as any).data_source,
+          lastUpdated: (data as any).last_updated
+        }
+        
+        // Add helpful message if auto-leadership was used
+        if (isAutoLeadershipMode && (data as any).message) {
+          assistantMessage.content = `${(data as any).message}\n\n${data.response || data.error || 'No response received'}`
+        }
+        
+        addMessage(assistantMessage)
+        // If an issue key is present, fetch details for cache (only in regular mode)
+        const responseText = typeof data.response === 'string' ? data.response : JSON.stringify(data.response)
+        const match = !actualLeadershipMode && responseText && responseText.match(ISSUE_KEY_RE)
         if (match && match[1]) {
           const key = match[1]
           try {
@@ -104,7 +139,7 @@ export const ChatInterface = forwardRef<{ sendQuickMessage: (message: string) =>
       } else {
         addMessage({ 
           role: 'assistant', 
-          content: `Error: ${data.response || 'Failed to get response'}` 
+          content: `Error: ${data.error || data.response || 'Failed to get response'}` 
         })
       }
       
@@ -215,9 +250,28 @@ export const ChatInterface = forwardRef<{ sendQuickMessage: (message: string) =>
       const data: ChatResponse = await response.json()
 
       if (response.ok) {
-        addMessage({ role: 'assistant', content: data.response })
-        // If an issue key is present, fetch details for cache
-        const match = data.response && data.response.match(ISSUE_KEY_RE)
+        // Check if this was automatic leadership mode
+        const isAutoLeadershipMode = (data as any).auto_leadership_mode || false
+        const actualLeadershipMode = isAutoLeadershipMode
+        
+        // Add leadership mode metadata to assistant messages
+        const assistantMessage: Message = {
+          role: 'assistant',
+          content: data.response || data.error || 'No response received',
+          isLeadershipMode: actualLeadershipMode,
+          dataSource: (data as any).data_source,
+          lastUpdated: (data as any).last_updated
+        }
+        
+        // Add helpful message if auto-leadership was used
+        if (isAutoLeadershipMode && (data as any).message) {
+          assistantMessage.content = `${(data as any).message}\n\n${data.response || data.error || 'No response received'}`
+        }
+        
+        addMessage(assistantMessage)
+        // If an issue key is present, fetch details for cache (only in regular mode)
+        const responseText = typeof data.response === 'string' ? data.response : JSON.stringify(data.response)
+        const match = !actualLeadershipMode && responseText && responseText.match(ISSUE_KEY_RE)
         if (match && match[1]) {
           const key = match[1]
           try {
@@ -234,7 +288,7 @@ export const ChatInterface = forwardRef<{ sendQuickMessage: (message: string) =>
       } else {
         addMessage({ 
           role: 'assistant', 
-          content: `Error: ${data.response || 'Failed to get response'}` 
+          content: `Error: ${data.error || data.response || 'Failed to get response'}` 
         })
       }
       
@@ -376,9 +430,36 @@ export const ChatInterface = forwardRef<{ sendQuickMessage: (message: string) =>
                     className={`max-w-[80%] rounded-lg p-4 ${
                       message.role === 'user'
                         ? 'bg-blue-600 text-white dark:bg-primary dark:text-primary-foreground'
+                        : message.isLeadershipMode 
+                        ? 'bg-purple-50 text-gray-900 dark:bg-purple-900/20 dark:text-foreground border border-purple-200'
                         : 'bg-gray-100 text-gray-900 dark:bg-muted dark:text-foreground'
                     }`}
                   >
+                    {/* Leadership Mode Indicator */}
+                    {message.role === 'assistant' && message.isLeadershipMode && (
+                      <div className="flex items-center gap-2 mb-2 text-xs">
+                        <Badge variant="secondary" className="bg-purple-100 text-purple-800 border-purple-200">
+                          <Crown className="w-3 h-3 mr-1" />
+                          Leadership Mode
+                        </Badge>
+                        {message.dataSource === 'live_jira_data' ? (
+                          <Badge variant="default" className="bg-green-100 text-green-800 border-green-200">
+                            <Shield className="w-3 h-3 mr-1" />
+                            Live Data
+                          </Badge>
+                        ) : (
+                          <Badge variant="outline" className="bg-blue-100 text-blue-800 border-blue-200">
+                            <Clock className="w-3 h-3 mr-1" />
+                            Cached Data
+                          </Badge>
+                        )}
+                        {message.lastUpdated && (
+                          <span className="text-gray-500">
+                            Updated {new Date(message.lastUpdated).toLocaleTimeString()}
+                          </span>
+                        )}
+                      </div>
+                    )}
                     <div className="prose prose-sm max-w-none">
                       <ReactMarkdown
                         components={{
@@ -400,7 +481,7 @@ export const ChatInterface = forwardRef<{ sendQuickMessage: (message: string) =>
                           li: ({ children }) => <li className="mb-1">{children}</li>,
                         }}
                       >
-                        {message.content}
+                        {typeof message.content === 'string' ? message.content : JSON.stringify(message.content)}
                       </ReactMarkdown>
                     </div>
                   </div>
