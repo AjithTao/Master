@@ -8,3 +8,14 @@ reportlab
 python-pptx
 # fuzzy matching (faster than difflib)
 rapidfuzz
+# Missing dependencies causing deployment failure:
+httpx
+openai
+python-dotenv
+lxml
+pillow
+xlsxwriter
+# Additional missing dependencies found in imports:
+numpy
+# Standard library dependencies (usually included but adding for safety):
+typing-extensions

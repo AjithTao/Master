@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { CheckCircle, XCircle, AlertCircle } from 'lucide-react'
+import { getApiUrl } from '../../lib/api-config'
 
 interface ApiStatusIndicatorProps {
   className?: string
@@ -13,7 +14,7 @@ export function ApiStatusIndicator({ className = '' }: ApiStatusIndicatorProps) 
   useEffect(() => {
     const checkApiStatus = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/jira/status')
+        const response = await fetch(getApiUrl('/api/jira/status'))
         if (response.ok) {
           setStatus('online')
         } else {
