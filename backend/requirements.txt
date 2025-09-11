@@ -15,3 +15,7 @@ python-dotenv
 lxml
 pillow
 xlsxwriter
+# Additional missing dependencies found in imports:
+numpy
+# Standard library dependencies (usually included but adding for safety):
+typing-extensions
